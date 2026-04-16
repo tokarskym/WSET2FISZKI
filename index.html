@@ -984,19 +984,641 @@ const QS = [
 {id:259,cat:'winemaking',q:'What should be done with a mature red wine that has formed a large amount of deposit in the bottle?',a:['It should be returned to the winery','It should be filtered before sale','It should normally be decanted before serving','It should be shaken to dissolve the deposit'],c:2},
 
   // GRAPE VARIETIES
-  {id:21, cat:'grapes',     q:'Który szczep dominuje w Bordeaux rouge na lewym brzegu?',
-   a:['Pinot Noir','Cabernet Sauvignon','Syrah','Grenache'], c:1},
-  {id:22, cat:'grapes',     q:'Czym charakteryzuje się aromat Sauvignon Blanc?',
-   a:['Wanilia i kokos','Agrest, trawa, cytrusy','Kwiat pomarańczy','Dym i pieprz'], c:1},
-  {id:23, cat:'grapes',     q:'W którym regionie produkuje się Barolo?',
-   a:['Bordeaux, Francja','Toskania, Włochy','Piemont, Włochy','Rioja, Hiszpania'], c:2},
-  {id:24, cat:'grapes',     q:'Który szczep jest podstawą Chablis?',
-   a:['Pinot Gris','Chardonnay','Aligoté','Viognier'], c:1},
-  {id:25, cat:'grapes',     q:'Pinot Noir znany jest z:',
-   a:['Intensywnego koloru i wysokich tanin','Delikatnego koloru, niskich tanin i elegancji','Silnego smaku śliwki i pieprzu','Słodkości i niskiej kwasowości'], c:1},
+
+{id:260,cat:'grapes',q:'What type of skin does Pinot Noir have?',a:['Thick skin','Medium skin','Thin skin','Very tough skin'],c:2},
+
+{id:261,cat:'grapes',q:'What climate does Pinot Noir require to produce good-quality grapes?',a:['Hot and dry','Tropical','Cool to moderate','Warm and humid'],c:2},
+
+{id:262,cat:'grapes',q:'What happens to Pinot Noir grapes if the growing conditions are too warm?',a:['They develop too much acidity','They lose fresh fruit flavours and taste cooked','They produce wines with too much tannin','They fail to ripen at all'],c:1},
+
+{id:263,cat:'grapes',q:'Which disease-related problem is Pinot Noir particularly prone to?',a:['Powdery mildew only','Sunburn','Rot and disease','Phylloxera'],c:2},
+
+{id:264,cat:'grapes',q:'What is the typical colour of a Pinot Noir wine?',a:['Deep purple to black','Pale to medium','Garnet to brown','Ruby to tawny'],c:1},
+
+{id:265,cat:'grapes',q:'Which of the following best describes the tannin level of Pinot Noir?',a:['High tannins','Medium to high tannins','Low to medium tannins','No tannins'],c:2},
+
+{id:266,cat:'grapes',q:'Which red fruit flavours are typical of Pinot Noir?',a:['Blackcurrant, plum and blueberry','Strawberry, raspberry and red cherry','Dark cherry, blackberry and cassis','Fig, prune and dried fruit'],c:1},
+
+{id:267,cat:'grapes',q:'What notable exception exists to Pinot Noir being produced as a single-varietal wine?',a:['It is blended with Merlot in Bordeaux','It is used in sparkling wines such as Champagne','It is blended with Syrah in the Rhône','It is always blended in New World regions'],c:1},
+
+{id:268,cat:'grapes',q:'Why are older and/or larger oak barrels preferred for maturing Pinot Noir?',a:['They are cheaper to use','They add more intense vanilla flavours','They impart less flavour and do not overwhelm the delicate wine','They allow faster oxygen exchange'],c:2},
+
+{id:269,cat:'grapes',q:'Which subtle oak-derived aromas are associated with the best Pinot Noirs?',a:['Vanilla, coconut and charred wood','Smoke, cloves and vanilla','Caramel, dried fruit and hazelnut','Toast, butter and bread'],c:1},
+
+{id:270,cat:'grapes',q:'What tertiary flavours can develop in outstanding Pinot Noirs with bottle age?',a:['Tropical fruit and floral notes','Vanilla, coconut and spice','Forest floor and mushroom','Dried apricot, honey and nut'],c:2},
+
+{id:271,cat:'grapes',q:'Where is Pinot Noir considered to have its home?',a:['Alsace','Champagne','Burgundy','The Loire Valley'],c:2},
+
+{id:272,cat:'grapes',q:'In Burgundy, where are the best vineyard sites typically located?',a:['On flat valley floors near rivers','On north-facing slopes for cool conditions','On south- and south-east-facing slopes that benefit from extra sunlight','In the highest altitude mountain locations'],c:2},
+
+{id:273,cat:'grapes',q:'What is the Côte d\'Or and how is it divided?',a:['A river valley divided into east and west banks','The most celebrated part of Burgundy, divided into Côte de Nuits in the north and Côte de Beaune in the south','A sub-region of Champagne divided into grand cru and premier cru zones','The southern half of Burgundy divided into village and regional appellations'],c:1},
+
+{id:274,cat:'grapes',q:'Which two villages are examples of famous Pinot Noir appellations in the Côte de Nuits?',a:['Beaune and Pommard','Meursault and Puligny-Montrachet','Gevrey-Chambertin and Nuits-Saint-Georges','Volnay and Santenay'],c:2},
+
+{id:275,cat:'grapes',q:'Which two appellations are examples from the Côte de Beaune?',a:['Gevrey-Chambertin and Nuits-Saint-Georges','Beaune and Pommard','Chambolle-Musigny and Vosne-Romanée','Morey-Saint-Denis and Fixin'],c:1},
+
+{id:276,cat:'grapes',q:'How are Bourgogne AOC red wines typically described?',a:['Full-bodied with high tannins and dark fruit','Light to medium-bodied with low tannins, high acidity and fresh red-fruit flavours','Rich and oaky with pronounced vanilla and spice','Sweet and fruity, best served chilled'],c:1},
+
+{id:277,cat:'grapes',q:'Why can even basic Bourgogne AOC wines be high priced?',a:['They are aged for many years before release','They are made from very low yields','Due to the high demand for red Burgundy','They are always made in new oak barrels'],c:2},
+
+{id:278,cat:'grapes',q:'What is at the bottom of the Burgundy appellation hierarchy?',a:['Village appellations','Premier Cru','Grand Cru','Regional appellations such as Bourgogne AOC'],c:3},
+
+{id:279,cat:'grapes',q:'What is the broadest regional appellation in Burgundy that covers the whole region?',a:['Côte de Nuits','Gevrey-Chambertin AOC','Bourgogne AOC','Côte d\'Or AOC'],c:2},
+
+{id:280,cat:'grapes',q:'What generally distinguishes village appellation wines from regional appellation wines in Burgundy?',a:['Village wines are always cheaper','Village wines offer more flavour concentration, complexity and length on the finish','Village wines are made from white grapes only','Village wines must be drunk younger'],c:1},
+
+{id:281,cat:'grapes',q:'What term appears on the label of a Burgundy Premier Cru wine alongside the village appellation name?',a:['Grand Cru AOC','Cru Classé','Premier Cru Contrôlée','Appellation Contrôlée Supérieure'],c:2},
+
+{id:282,cat:'grapes',q:'What makes Grand Cru vineyards in Burgundy unique in terms of labelling?',a:['They must include the producer\'s name in large print','The vineyard name appears on the label with the term Grand Cru AOC — they have their own appellation','They always show the vintage year prominently','They are labelled with the regional appellation only'],c:1},
+
+{id:283,cat:'grapes',q:'Which flavours are associated with premier cru and grand cru Pinot Noir from Burgundy?',a:['Tropical fruit, high alcohol and heavy oak','Concentrated strawberries and red cherries with subtle oak aromas and tertiary notes of forest floor and mushroom','Green pepper, grass and herbaceous notes','Light, simple red fruit with no oak influence'],c:1},
+
+{id:284,cat:'grapes',q:'Why are Burgundy Grand Cru wines exceptionally expensive?',a:['They are always made from grapes harvested by hand','They require a minimum of 10 years ageing before release','Due to their quality, rarity and the prestige of their individual vineyard appellations','They are only produced in years with perfect weather'],c:2},
+
+{id:285,cat:'grapes',q:'Which two New Zealand regions are well suited to Pinot Noir and produce very good and outstanding examples?',a:['Hawke\'s Bay and Gisborne','Central Otago and Waiheke Island','Martinborough and Marlborough','Auckland and Nelson'],c:2},
+
+{id:286,cat:'grapes',q:'What is special about Central Otago as a Pinot Noir region despite its southerly latitude?',a:['It has a very cool maritime climate similar to Burgundy','It is protected from sea breezes by mountains and has intensely sunny days followed by cool nights, producing the ripest NZ Pinot Noir','It receives high rainfall that concentrates flavours','It is located at very high altitude with constant cloud cover'],c:1},
+
+{id:287,cat:'grapes',q:'How are Central Otago Pinot Noirs typically described?',a:['Pale, light-bodied with delicate red fruit','Pronounced fruit flavours, medium to full body and medium tannins','High tannin, austere and needing decades to open','Light and low in alcohol with high acidity'],c:1},
+
+{id:288,cat:'grapes',q:'What is Pinot Noir renowned for in terms of its relationship to the vineyard?',a:['Its ability to produce consistent wines regardless of location','Its resistance to expressing terroir differences','Its ability to express even small changes in the vineyard environment','Its consistent flavour profile across all climates'],c:2},
+
+{id:289,cat:'grapes',q:'Why has Pinot Noir been planted in regions that are too warm for quality production?',a:['Winemakers prefer warmer climates for Pinot Noir','Its continued popularity and supply-and-demand issues have driven planting in unsuitable regions','Warm-climate Pinot Noir receives higher critical scores','It is easier to grow in warm climates'],c:1},
+
+{id:290,cat:'grapes',q:'What is a typical fault of Pinot Noir grown in regions that are too warm?',a:['Excessive acidity and green flavours','Overly alcoholic wines that lack identifiable Pinot Noir fruit flavours','Too much tannin and deep colour','Wines that are too light and watery'],c:1},
+
+{id:291,cat:'grapes',q:'Which statement best describes most Pinot Noir wines in terms of drinking style?',a:['They require at least 20 years of ageing to be enjoyable','They are intended to be consumed while youthful and fruity','They must always be decanted before drinking','They are best served at room temperature after 10 years'],c:1},
+
+{id:292,cat:'grapes',q:'Which of the following is the premier black grape variety of New Zealand?',a:['Cabernet Sauvignon','Merlot','Syrah','Pinot Noir'],c:3},
+
+{id:293,cat:'grapes',q:'What do the finest examples of Pinot Noir require that most everyday examples do not?',a:['Extensive filtration before bottling','Long maturation in new oak barrels','Several years of bottle age to show their full potential and develop complex tertiary flavours','Blending with Gamay for added freshness'],c:2},
+
+{id:294,cat:'grapes',q:'A Burgundy label showing a vineyard name alongside "Grand Cru AOC" with no village name indicates which level of the hierarchy?',a:['Regional appellation','Village appellation','Premier Cru','Grand Cru — the vineyard has its own appellation'],c:3},
+
+{id:295,cat:'grapes',q:'A Burgundy label shows a village name, a vineyard name, and the term "Premier Cru Contrôlée". What does this indicate?',a:['It is a basic regional Bourgogne AOC wine','It is a Grand Cru wine with its own appellation','It is a wine from a high-quality premier cru vineyard within a village appellation','It is a village wine with no special classification'],c:2},
+
+{id:296,cat:'grapes',q:'What is Zinfandel called in the southern Italian region of Puglia?',a:['Sangiovese','Primitivo','Nero d\'Avola','Barbera'],c:1},
+
+{id:297,cat:'grapes',q:'What type of climate does Zinfandel/Primitivo need to ripen successfully?',a:['Cool and wet','Moderate and coastal','Warm','Cold continental'],c:2},
+
+{id:298,cat:'grapes',q:'As Zinfandel ripens fully, its flavours change from red fruits to which type of flavours?',a:['Tropical and floral','Black fruits such as black plums, blackberries and blueberries','Herbaceous and green pepper','Citrus and mineral'],c:1},
+
+{id:299,cat:'grapes',q:'What happens when some grapes within a Zinfandel bunch start to raisin before the others have ripened?',a:['The wine becomes more acidic','It gives high sugar levels and dried fruit flavours such as prune and raisins','The wine loses colour and body','It results in a lighter, more delicate wine style'],c:1},
+
+{id:300,cat:'grapes',q:'In California, Zinfandel is used to make which two styles of wine?',a:['Sparkling wine and dry red wine','Fortified wine and dry white wine','Rosé wine labelled White Zinfandel and red wine','Sweet white wine and dry rosé'],c:2},
+
+{id:301,cat:'grapes',q:'How is White Zinfandel typically described in terms of sweetness and colour?',a:['Dry and deeply coloured red wine','Bone dry white wine with citrus flavours','Medium-sweet pink rosé wine with red fruit aromas','Full-bodied dry rosé with high tannins'],c:2},
+
+{id:302,cat:'grapes',q:'What winemaking technique is typically used to make White Zinfandel?',a:['Extended maceration with skins','Short maceration rosé winemaking process','Full red winemaking with skin contact throughout','Carbonic maceration'],c:1},
+
+{id:303,cat:'grapes',q:'What is the typical alcohol level of White Zinfandel?',a:['5–7%','8–10%','13–14%','15–16%'],c:1},
+
+{id:304,cat:'grapes',q:'How is the residual sweetness in White Zinfandel typically achieved?',a:['By adding sugar after fermentation','By using very ripe grapes with concentrated sugar','By removing the yeasts before fermentation has finished','By blending with a sweet wine'],c:2},
+
+{id:305,cat:'grapes',q:'Which aromas are typical of White Zinfandel?',a:['Blackcurrant, plum and spice','Tropical fruit, mango and passion fruit','Simple red fruit aromas such as strawberry and raspberry','Vanilla, toast and dried fruit'],c:2},
+
+{id:306,cat:'grapes',q:'How are California\'s red Zinfandels made in terms of skin contact?',a:['With no skin contact, like a white wine','With short maceration only','Using complete fermentation with the juice in contact with the skins throughout','By blending red and white wine'],c:2},
+
+{id:307,cat:'grapes',q:'Which of the following best describes the flavour profile of a typical red Zinfandel from California?',a:['Light red fruit, high acidity, low alcohol','Pronounced red and black fruit, dried fruit, oak, dry, medium to high acidity and tannin, high alcohol, full body','Delicate floral aromas, low tannin, low alcohol','Green pepper, herbaceous, medium body, low alcohol'],c:1},
+
+{id:308,cat:'grapes',q:'What oak-derived flavours can be found in red Zinfandel?',a:['Lemon, lime and green apple','Vanilla and coffee','Mushroom and forest floor','Floral and rose petal'],c:1},
+
+{id:309,cat:'grapes',q:'What makes old-vine Zinfandel from California particularly distinctive?',a:['Old vines produce high quantities of fruit with simple flavours','Old vines produce low quantities of very concentrated fruit that can develop tertiary flavours of earth and meat','Old vines are used exclusively for White Zinfandel production','Old vines produce wines that must be drunk very young'],c:1},
+
+{id:310,cat:'grapes',q:'Which tertiary flavours can develop in bottle-aged old-vine Zinfandel?',a:['Tropical fruit and flowers','Vanilla and coconut','Earth and meat','Dried apricot and honey'],c:2},
+
+{id:311,cat:'grapes',q:'In which Italian region is Primitivo an important grape variety?',a:['Tuscany','Piedmont','Sicily','Puglia'],c:3},
+
+{id:312,cat:'grapes',q:'What role does Puglia play in the global wine market in terms of Primitivo?',a:['It produces only small quantities of very expensive wine','It is an important source of soft, fruity, dry red wine for high-volume brands','It is known exclusively for sparkling Primitivo','It produces Primitivo only for domestic consumption'],c:1},
+
+{id:313,cat:'grapes',q:'What is needed to produce very good or outstanding Primitivo from Puglia?',a:['Very high yields to increase volume','Controlled yields of grapes','Extended ageing in new French oak','Blending with international varieties'],c:1},
+
+{id:314,cat:'grapes',q:'What label term indicates that a red Zinfandel is made from old vines?',a:['Riserva','Grand Cru','Old Vine','Classico'],c:2},
+
+{id:315,cat:'grapes',q:'A label reading "White Zinfandel, Wine of California, 8.5% vol" indicates which style of wine?',a:['A dry full-bodied red wine','A medium-sweet low-alcohol rosé wine','A sparkling wine made from Zinfandel','A fortified wine from California'],c:1},
+
+{id:316,cat:'grapes',q:'What does a high ABV on a red Zinfandel label (e.g. 15.5%) typically indicate compared to White Zinfandel?',a:['It is a sweeter style of wine','Red Zinfandels typically have a high ABV whereas rosé Zinfandels typically have a low ABV','It has been fortified with grape spirit','It is an old-vine wine from Puglia'],c:1},
+
+{id:317,cat:'grapes',q:'A label showing "Primitivo, Puglia IGT" indicates the wine is from which country?',a:['USA','Spain','France','Italy'],c:3},
+
+{id:318,cat:'grapes',q:'What type of climate does Riesling prefer?',a:['Hot and dry','Tropical and humid','Cool to moderate','Warm Mediterranean'],c:2},
+
+{id:319,cat:'grapes',q:'Which natural characteristic makes Riesling suitable for producing wines at all sweetness levels?',a:['Low acidity and thick skin','High natural acidity and susceptibility to botrytis','High sugar levels at harvest','Resistance to frost and disease'],c:1},
+
+{id:320,cat:'grapes',q:'What flavours does Riesling produce when grapes are just-ripe at harvest?',a:['Peach, apricot and mango','Blackcurrant, plum and spice','Green apple, pear, lemon, lime and blossom','Dried apricot, honey and petrol'],c:2},
+
+{id:321,cat:'grapes',q:'What flavours develop in Riesling made from extra-ripe grapes?',a:['Green fruit and citrus only','Stone fruit such as peach and apricot, tropical fruit, and sometimes dried fruit','Red fruit such as strawberry and raspberry','Earthy, meaty and forest floor notes'],c:1},
+
+{id:322,cat:'grapes',q:'What is Süssreserve in the context of Riesling winemaking?',a:['A German term for botrytis-affected grapes','Unfermented grape juice added to create sweetness','A method of freezing grapes to concentrate sugar','A type of late-harvest Riesling from Alsace'],c:1},
+
+{id:323,cat:'grapes',q:'How is sweetness achieved in the sweetest styles of Riesling?',a:['By adding sugar after fermentation','By using Süssreserve','By using extra-ripe grapes where the juice is so high in sugar that fermentation stops naturally','By fortifying the wine with grape spirit'],c:2},
+
+{id:324,cat:'grapes',q:'Why do winemakers typically ferment Riesling in inert vessels such as stainless steel?',a:['To add vanilla and oak flavours','To preserve its floral aromas','To increase the alcohol level','To encourage malolactic conversion'],c:1},
+
+{id:325,cat:'grapes',q:'What tertiary flavours can develop in aged Riesling?',a:['Forest floor and mushroom','Vanilla, coconut and charred wood','Honey and petrol (gasoline)','Fig, prune and meat'],c:2},
+
+{id:326,cat:'grapes',q:'What allows the finest Rieslings to age for years or even decades?',a:['High alcohol levels','High residual sugar and oak influence','High natural acidity that keeps the wine fresh','Thick grape skins that provide high tannins'],c:2},
+
+{id:327,cat:'grapes',q:'What is the most important grape variety in Germany?',a:['Pinot Noir','Müller-Thurgau','Gewurztraminer','Riesling'],c:3},
+
+{id:328,cat:'grapes',q:'Which German wine region is one of the most northerly and known for lighter-bodied Rieslings with medium sweetness and very high acidity?',a:['Rheingau','Pfalz','Mosel','Baden'],c:2},
+
+{id:329,cat:'grapes',q:'What three natural factors help grapes ripen in the Mosel region despite its northerly latitude?',a:['High altitude, sandy soils and warm rainfall','Southerly aspect of slopes, stony soils and reflected sunlight from the river','Warm ocean currents, clay soils and south-facing flat land','Mountain protection, volcanic soils and high temperatures'],c:1},
+
+{id:330,cat:'grapes',q:'How do Rheingau Rieslings typically differ from Mosel Rieslings?',a:['They are lighter in body and sweeter','They are typically drier in style and have more body','They have lower acidity and simpler fruit flavours','They are always made from botrytis-affected grapes'],c:1},
+
+{id:331,cat:'grapes',q:'Where are the Rheingau vineyards situated?',a:['On flat valley floors along the Mosel River','On steep south-facing slopes on the north bank of the River Rhine','On high-altitude plateaus near the French border','On east-facing slopes protected by the Black Forest'],c:1},
+
+{id:332,cat:'grapes',q:'What climatic feature characterises the Pfalz region?',a:['It is the coldest and most northerly region in Germany','It has a warm, dry, sunny climate protected by mountains to the west','It is heavily influenced by the Atlantic Ocean','It has the highest rainfall of all German wine regions'],c:1},
+
+{id:333,cat:'grapes',q:'Which French region is Pfalz climatically similar to?',a:['Burgundy','Champagne','Alsace','Bordeaux'],c:2},
+
+{id:334,cat:'grapes',q:'How is a typical Pfalz Riesling described?',a:['Light-bodied and very sweet','Dry and medium-bodied','Sparkling and off-dry','Full-bodied and heavily oaked'],c:1},
+
+{id:335,cat:'grapes',q:'What does German labelling terminology primarily reflect?',a:['The region and producer name','The oak ageing method used','The degree of ripeness of the grapes at the time of harvest measured in sugar levels','The alcohol content of the finished wine'],c:2},
+
+{id:336,cat:'grapes',q:'What is Landwein in the German wine classification system?',a:['A PDO wine from one of 13 winegrowing areas','The highest quality category of German wine','A PGI wine, typically light-bodied and dry to off-dry','A sweet wine made from botrytis-affected grapes'],c:2},
+
+{id:337,cat:'grapes',q:'What is Qualitätswein and where must the grapes come from?',a:['A PGI wine that can come from anywhere in Germany','A PDO wine that must come from one of 13 designated winegrowing areas and achieve a higher ripeness level than Landwein','The lightest and most basic category of German wine','A wine exclusively made from frozen grapes'],c:1},
+
+{id:338,cat:'grapes',q:'What is required to qualify as a Prädikatswein?',a:['A minimum alcohol level of 13%','The wine must be aged in oak for at least one year','A higher minimum level of sugar in the grapes than required for Qualitätswein, from a single winegrowing area','The wine must be made exclusively from Riesling'],c:2},
+
+{id:339,cat:'grapes',q:'How many Prädikat categories exist in the German classification system?',a:['Three','Four','Five','Six'],c:3},
+
+{id:340,cat:'grapes',q:'Which is the lightest and most delicate Prädikat category?',a:['Spätlese','Auslese','Kabinett','Beerenauslese'],c:2},
+
+{id:341,cat:'grapes',q:'What flavours are typical of a Kabinett Riesling?',a:['Stone fruit, tropical fruit and dried fruit','Concentrated dark fruit, spice and oak','Delicate green fruit such as green apple, citrus such as lime, and floral aromas','Rich honey, botrytis and caramelised fruit'],c:2},
+
+{id:342,cat:'grapes',q:'What does Spätlese mean and how does it differ from Kabinett?',a:['It means early harvest and produces lighter wines than Kabinett','It means late harvest and produces more concentrated flavours and fuller body than Kabinett','It means selected harvest and is always made from botrytis-affected grapes','It means ice wine and is made from frozen grapes'],c:1},
+
+{id:343,cat:'grapes',q:'What fruit flavours are typical of a Spätlese Riesling?',a:['Green apple, lime and blossom','Riper citrus such as lemon and lime, and some stone fruit such as peach','Honey, botrytis and dried apricot','Fig, prune and meat'],c:1},
+
+{id:344,cat:'grapes',q:'What does Auslese mean and from what type of grapes is it made?',a:['Late harvest from overripe whole bunches','Selected harvest from carefully selected extra-ripe bunches','Harvest from individually selected dried berries affected by botrytis','Ice wine made from grapes frozen on the vine'],c:1},
+
+{id:345,cat:'grapes',q:'Which flavours are typical of an Auslese Riesling?',a:['Simple green fruit and citrus only','Stone fruit such as apricot, tropical fruit such as mango, and dried fruits','Deep berry fruit, leather and tobacco','Fresh raspberry, strawberry and red cherry'],c:1},
+
+{id:346,cat:'grapes',q:'Can Auslese wines be made in a dry style?',a:['No, Auslese wines are always sweet','Yes, Auslese wines can be made in a trocken (dry) style, though most have some sweetness','Yes, but only if labelled Halbtrocken','No, they must have a minimum of 50g/l residual sugar'],c:1},
+
+{id:347,cat:'grapes',q:'How is Eiswein made?',a:['From grapes dried on mats in the sun','From grapes affected by botrytis noble rot','From grapes that have frozen on the vine','From extra-ripe grapes harvested very late in November'],c:2},
+
+{id:348,cat:'grapes',q:'Why are Eiswein wines low in alcohol and naturally sweet?',a:['Because fermentation is stopped by adding sulphur','Because the grape sugar is so concentrated that yeast cannot ferment it all into alcohol','Because the wine is fortified before fermentation is complete','Because Süssreserve is always added after fermentation'],c:1},
+
+{id:349,cat:'grapes',q:'Why do Eiswein wines command high prices?',a:['They are aged for many years in expensive new oak barrels','They are produced only in the warmest vintages','The specific weather conditions required do not occur every year, yields are very small and production is labour-intensive','They must be imported from Austria to qualify as Eiswein'],c:2},
+
+{id:350,cat:'grapes',q:'What is Beerenauslese (BA) and what has concentrated the sugars in the grapes?',a:['A wine made from whole frozen bunches','A wine made from selected bunches or berries concentrated by botrytis','A wine made from extra-ripe grapes dried on the vine','A wine made by adding grape spirit to stop fermentation'],c:1},
+
+{id:351,cat:'grapes',q:'How does Trockenbeerenauslese (TBA) differ from Beerenauslese (BA)?',a:['TBA is drier and lighter in style than BA','TBA is made from individually selected berries dried through botrytis, producing rarer and more intense wines than BA','TBA is made from frozen grapes while BA uses botrytis-affected grapes','TBA must come from the Mosel only while BA can come from any region'],c:1},
+
+{id:352,cat:'grapes',q:'What does the term "Trocken" on a German wine label indicate?',a:['The wine is a late harvest style','The wine is sweet','The wine is dry','The wine is sparkling'],c:2},
+
+{id:353,cat:'grapes',q:'What does "Halbtrocken" indicate on a German wine label?',a:['The wine is bone dry','The wine has some sweetness','The wine is very sweet and made from botrytis grapes','The wine is a blend of dry and sweet wines'],c:1},
+
+{id:354,cat:'grapes',q:'A label reading "Riesling Spätlese, Mosel" indicates which of the following?',a:['A dry, full-bodied wine from the Pfalz','A late-harvest wine from the Mosel with more concentrated flavours and fuller body than a Kabinett','The lightest and most delicate Prädikat wine from Germany','A wine made from botrytis-selected individual berries'],c:1},
+
+{id:355,cat:'grapes',q:'Looking at two labels — one reading "Riesling Kabinett, Mosel" and one "Riesling Auslese, Mosel" — which statement is correct?',a:['Kabinett will be richer and sweeter than Auslese','Both wines will be identical in style and flavour','Auslese will have more concentrated fruit flavours and typically more sweetness than Kabinett','Kabinett is always dry while Auslese is always sweet'],c:2},
+
+{id:356,cat:'grapes',q:'Which Prädikat categories require sugar concentration through botrytis or freezing on the vine?',a:['Kabinett, Spätlese and Auslese','Spätlese, Auslese and Eiswein','Beerenauslese, Trockenbeerenauslese and Eiswein','All six Prädikat categories'],c:2},
+
+{id:357,cat:'grapes',q:'Which climates can Chenin Blanc grow well in?',a:['Only cool climates','Only warm and hot climates','Cool, moderate and warm climates','Tropical and desert climates only'],c:2},
+
+{id:358,cat:'grapes',q:'What natural characteristic makes Chenin Blanc suitable for late harvesting and botrytis-affected sweet wines?',a:['Low acidity and thick skin','High natural acidity','High sugar levels at harvest','Resistance to frost'],c:1},
+
+{id:359,cat:'grapes',q:'What range of styles can Chenin Blanc produce?',a:['Only dry white wines','Only sweet botrytis wines','Only sparkling wines','Dry through to sweet, both oaked and unoaked'],c:3},
+
+{id:360,cat:'grapes',q:'What flavours does Chenin Blanc show at lower ripeness levels?',a:['Peach, pineapple and mango','Blackcurrant, plum and spice','Green fruit such as apple and citrus such as lemon','Honey, dried fruit and caramel'],c:2},
+
+{id:361,cat:'grapes',q:'What flavours develop in Chenin Blanc as grapes become riper?',a:['Green apple and lime only','Stone fruit such as peach and tropical fruit such as pineapple and mango','Red cherry, raspberry and strawberry','Mushroom, forest floor and meat'],c:1},
+
+{id:362,cat:'grapes',q:'In which French wine region is Vouvray AOC located?',a:['Burgundy','Bordeaux','Alsace','The Loire Valley'],c:3},
+
+{id:363,cat:'grapes',q:'What is the only grape variety permitted in Vouvray AOC?',a:['Sauvignon Blanc','Chardonnay','Chenin Blanc','Sémillon'],c:2},
+
+{id:364,cat:'grapes',q:'Which styles of wine are produced in Vouvray AOC?',a:['Red and rosé wines only','Dry, off-dry, medium, sweet and sparkling','Dry white wines only','Fortified wines only'],c:1},
+
+{id:365,cat:'grapes',q:'What term on a Vouvray label indicates an off-dry or medium style?',a:['Trocken','Sec','Demi-Sec','Moelleux'],c:2},
+
+{id:366,cat:'grapes',q:'Why are Vouvray wines typically unoaked?',a:['Oak is too expensive in the Loire Valley','To retain their fresh fruit characteristics','Because regulations prohibit oak use','Because Chenin Blanc cannot tolerate oak flavours'],c:1},
+
+{id:367,cat:'grapes',q:'Which is the most planted white grape variety in South Africa?',a:['Chardonnay','Sauvignon Blanc','Riesling','Chenin Blanc'],c:3},
+
+{id:368,cat:'grapes',q:'Why is Chenin Blanc particularly prized in South Africa?',a:['It produces high alcohol wines suited to the export market','Its ability to retain high acidity in a warm climate','It is resistant to the heat and produces very sweet wines naturally','It produces deeply coloured wines similar to red wine'],c:1},
+
+{id:369,cat:'grapes',q:'How are inexpensive South African Chenin Blancs labelled and what are they typically like?',a:['Labelled Western Cape, dry and medium-bodied with peach, pineapple and sometimes vanilla from oak chips','Labelled Stellenbosch, full-bodied and heavily oaked','Labelled Vouvray, sweet and botrytis-affected','Labelled Hunter Valley, light and low in alcohol'],c:0},
+
+{id:370,cat:'grapes',q:'What flavours do high-quality old-vine South African Chenin Blancs display?',a:['Simple green apple and citrus only','Pronounced tropical fruit aromas of pineapple and mango, often with smoke and vanilla from oak','Red fruit, spice and leather','Honey, petrol and dried apricot'],c:1},
+
+{id:371,cat:'grapes',q:'A label reading "Vouvray, Demi-Sec, Appellation Vouvray Contrôlée, Produit de France" indicates which style of wine?',a:['A dry, unoaked white wine from the Loire Valley','An off-dry to medium Chenin Blanc from the Loire Valley','A sweet botrytis wine from Bordeaux','A sparkling wine from Champagne'],c:1},
+
+{id:372,cat:'grapes',q:'A label reading "Old Vine Chenin Blanc, Wine of South Africa" indicates which of the following?',a:['A wine that must legally be dry','A wine from old vines that may show concentrated fruit flavours','A fortified wine from the Western Cape','A sparkling wine from Vouvray'],c:1},
+
+{id:373,cat:'grapes',q:'What climates does Sémillon/Semillon primarily grow in?',a:['Cool and cold climates only','Moderate and warm climates','Tropical and desert climates','High-altitude cold climates only'],c:1},
+
+{id:374,cat:'grapes',q:'What are the typical primary flavours of young Semillon wines?',a:['Blackcurrant, plum and spice','Peach, apricot and honey','Apple, lemon and grass','Raspberry, strawberry and red cherry'],c:2},
+
+{id:375,cat:'grapes',q:'What is the most important region for Sémillon in France?',a:['The Loire Valley','Burgundy','Alsace','Bordeaux'],c:3},
+
+{id:376,cat:'grapes',q:'With which grape variety is Sémillon commonly blended in Bordeaux?',a:['Chardonnay','Viognier','Sauvignon Blanc','Riesling'],c:2},
+
+{id:377,cat:'grapes',q:'What does Sémillon contribute to blends in Bordeaux?',a:['High acidity and green fruit flavours','Body and ageing potential','Intense floral aromas and low alcohol','Deep colour and high tannins'],c:1},
+
+{id:378,cat:'grapes',q:'What is Sauternes AOC and where is it located?',a:['A dry white wine region in the Loire Valley','A small sweet wine sub-region of Bordeaux where botrytis-concentrated grapes produce sweet white wine','A sparkling wine region in Champagne','A red wine appellation in the southern Rhône'],c:1},
+
+{id:379,cat:'grapes',q:'Why is Sémillon the most important variety grown in Sauternes?',a:['It has the highest sugar levels of all white grapes','It is particularly susceptible to botrytis/noble rot','It is the only variety permitted by law in Sauternes','It produces the highest yields in the region'],c:1},
+
+{id:380,cat:'grapes',q:'How is a typical Sauternes wine described?',a:['Dry, light-bodied and high in acidity','Sweet, medium to high in alcohol, full-bodied with high acidity and flavours of stone fruit, oak and complex tertiary characters','Off-dry, light-bodied with simple citrus flavours','Sparkling, sweet and low in alcohol'],c:1},
+
+{id:381,cat:'grapes',q:'What tertiary characters can develop in aged Sauternes?',a:['Forest floor, mushroom and meat','Vanilla, coconut and charred wood','Dried fruit, honey and caramel','Green pepper, grass and herbaceous notes'],c:2},
+
+{id:382,cat:'grapes',q:'What distinctive style of Semillon does Hunter Valley in Australia produce?',a:['Full-bodied, oaked, high-alcohol sweet wine','Dry, single-varietal, light body, low alcohol, made in inert vessels','Botrytis-affected sweet wine blended with Sauvignon Blanc','Sparkling Semillon aged on lees'],c:1},
+
+{id:383,cat:'grapes',q:'Why are Hunter Valley Semillon grapes harvested early?',a:['To avoid the risk of botrytis','To keep sugar levels low and acidity high','To blend with Chardonnay before full ripeness','To produce a wine with maximum colour extraction'],c:1},
+
+{id:384,cat:'grapes',q:'How do Hunter Valley Semillons develop with bottle age?',a:['They become lighter and more acidic over time','They lose their fruit flavours rapidly after five years','Initially neutral in flavour, they develop pronounced complex flavours of honey and nuts with several years of bottle age','They develop botrytis characters even without noble rot'],c:2},
+
+{id:385,cat:'grapes',q:'A label reading "Sauternes, Appellation Sauternes Contrôlée" indicates which style of wine?',a:['A dry Sémillon-Sauvignon Blanc blend from Bordeaux','A sweet botrytis white wine from a sub-region of Bordeaux','A dry Riesling from Germany','A medium-sweet Chenin Blanc from the Loire Valley'],c:1},
+
+{id:386,cat:'grapes',q:'In which country and region is Furmint most widely grown?',a:['Austria, in the Wachau region','Germany, in the Mosel','Hungary, in the Tokaj region','France, in Alsace'],c:2},
+
+{id:387,cat:'grapes',q:'What two natural characteristics make Furmint ideal for producing sweet wines?',a:['Thick skin and low acidity','Naturally high acidity and high susceptibility to botrytis','Low sugar levels and resistance to rot','Early ripening and high yields'],c:1},
+
+{id:388,cat:'grapes',q:'What is Tokaji Aszú?',a:['A dry white wine made from Furmint in northern Hungary','A sparkling wine from the Tokaj region','A sweet wine made from botrytis-affected Furmint grapes from the Tokaj region of north-east Hungary','A fortified wine made by adding grape spirit to Furmint'],c:2},
+
+{id:389,cat:'grapes',q:'Is Tokaji Aszú always sweet or can it be made dry?',a:['It can be dry or sweet depending on the vintage','It is always sweet','It is always dry','It can be either dry or sparkling'],c:1},
+
+{id:390,cat:'grapes',q:'What does the number of Puttonyos on a Tokaji Aszú label indicate?',a:['The number of years the wine has been aged in oak','The altitude of the vineyard where the grapes were grown','The level of sweetness — 6 Puttonyos has more sweetness than 5 Puttonyos','The percentage of Furmint used in the blend'],c:2},
+
+{id:391,cat:'grapes',q:'Why are Tokaji Aszú wines amber in colour?',a:['They are made from red grapes blended with white','They are heavily filtered which concentrates the colour','They traditionally spend a significant amount of time ageing in oak','They are made from sun-dried grapes with very concentrated pigments'],c:2},
+
+{id:392,cat:'grapes',q:'Which combination of aromas and flavours is characteristic of Tokaji Aszú?',a:['Green apple, citrus and floral blossom','Fresh and dried stone fruits, citrus, oak-derived aromas, and tertiary notes of dried fruit, caramel and nuts','Light red fruit, low tannin and earthy notes','Tropical fruit, grass and herbaceous character'],c:1},
+
+{id:393,cat:'grapes',q:'What structural feature of Tokaji Aszú balances its high sweetness and contributes to its long ageing potential?',a:['High alcohol and heavy oak','High natural acidity','High tannin levels from skin contact','High glycerol from botrytis alone'],c:1},
+
+{id:394,cat:'grapes',q:'A label reading "Tokaji Aszú 5 Puttonyos, Product of Hungary" indicates which of the following?',a:['A dry white wine from Hungary with moderate body','A sweet botrytis wine from Hungary with a high level of sweetness, slightly less than 6 Puttonyos','A sparkling wine from the Tokaj region','A fortified wine similar to Port from Hungary'],c:1},
+
+{id:395,cat:'grapes',q:'In which climates can Chardonnay produce outstanding-quality wines?',a:['Cool climates only','Warm and hot climates only','Cool, moderate and warm climates','Tropical climates only'],c:2},
+
+{id:396,cat:'grapes',q:'What flavours are typical of a cool-climate Chardonnay?',a:['Peach, pineapple and banana','Green fruits such as apple and pear, citrus such as lemon, and wet stones','Stone fruit and tropical fruit dominated by melon','Vanilla, smoke and coconut from oak'],c:1},
+
+{id:397,cat:'grapes',q:'What flavours are typical of a moderate-climate Chardonnay?',a:['Green apple, lime and wet stones','Pineapple, banana and high alcohol','Lemon, stone fruit such as peach, and sometimes tropical fruit such as melon','Dried fruit, honey and petrol'],c:2},
+
+{id:398,cat:'grapes',q:'What flavours are typical of a warm-climate Chardonnay?',a:['Green fruit, citrus and high acidity','Light body, wet stones and blossom','Full body, medium acidity and stone fruit such as peach and tropical fruit such as pineapple and banana','Delicate floral aromas and low alcohol'],c:2},
+
+{id:399,cat:'grapes',q:'What secondary flavours can malolactic conversion add to Chardonnay?',a:['Vanilla, smoke and coconut','Honey, petrol and dried fruit','Butter and cream','Bread, biscuit and brioche'],c:2},
+
+{id:400,cat:'grapes',q:'What flavours can lees contact during maturation add to Chardonnay?',a:['Butter and cream','Bread and biscuit','Vanilla and coconut','Dried fruit and honey'],c:1},
+
+{id:401,cat:'grapes',q:'What flavours does oak barrel fermentation and/or maturation add to Chardonnay?',a:['Petrol and honey','Bread, biscuit and brioche','Smoke, vanilla and coconut','Fresh citrus and green apple'],c:2},
+
+{id:402,cat:'grapes',q:'Why might a winemaker add acid to a warm-climate Chardonnay during winemaking?',a:['To add floral aromas','To balance the high alcohol and full body of the wine','To increase the level of residual sugar','To prevent malolactic conversion'],c:1},
+
+{id:403,cat:'grapes',q:'What terms might appear on a Chardonnay label to indicate no oak has been used?',a:['Trocken or Halbtrocken','Demi-Sec or Sec','Unoaked or unwooded','Classico or Riserva'],c:2},
+
+{id:404,cat:'grapes',q:'What tertiary flavours can develop in very good or outstanding Chardonnay with bottle age?',a:['Forest floor and mushroom','Hazelnut and mushroom','Dried apricot, honey and petrol','Fig, prune and meat'],c:1},
+
+{id:405,cat:'grapes',q:'What is the main white grape variety of the Burgundy region?',a:['Riesling','Sauvignon Blanc','Pinot Gris','Chardonnay'],c:3},
+
+{id:406,cat:'grapes',q:'How are Bourgogne AOC white wines typically described?',a:['Full-bodied with heavy oak and tropical fruit','Usually simple with apple and lemon characteristics and high acidity','Rich and sweet with botrytis character','Medium-sweet with stone fruit and floral aromas'],c:1},
+
+{id:407,cat:'grapes',q:'What is the style of Chablis AOC Chardonnay?',a:['Full-bodied, oaked and tropical fruit driven','Dry, light to medium-bodied with high acidity and flavours of apple, lemon and wet stones','Medium-sweet with stone fruit flavours','Dry and full-bodied with prominent vanilla and spice from new oak'],c:1},
+
+{id:408,cat:'grapes',q:'Why is frost a key concern in Chablis?',a:['It kills the yeast during fermentation','It can limit the amount of Chablis produced each year in this cool region','It prevents botrytis from developing','It causes the grapes to raisin before harvest'],c:1},
+
+{id:409,cat:'grapes',q:'Why are Chablis wines typically unoaked?',a:['Oak is prohibited by law in Chablis','Producers typically prefer to preserve the delicacy of cool-climate fruit flavours by fermenting in inert vessels','Oak barrels are unavailable in the region','Malolactic conversion is always prevented in Chablis'],c:1},
+
+{id:410,cat:'grapes',q:'Which area within the Côte d\'Or is the focus of Chardonnay production?',a:['Côte de Nuits in the north','Côte de Beaune in the south of the Côte d\'Or','The Mâconnais in the south of Burgundy','The flatlands around Dijon'],c:1},
+
+{id:411,cat:'grapes',q:'Which two Côte de Beaune villages are famous for producing very good and outstanding Chardonnay?',a:['Gevrey-Chambertin and Nuits-Saint-Georges','Pommard and Beaune','Meursault and Puligny-Montrachet','Volnay and Santenay'],c:2},
+
+{id:412,cat:'grapes',q:'What winemaking techniques add complexity and body to premium Côte de Beaune Chardonnay?',a:['Short maceration and cold stabilisation','Fermenting in inert vessels and preventing malolactic conversion','Fermenting and/or maturing in oak barrels and contact with lees','Fortification and late harvesting'],c:2},
+
+{id:413,cat:'grapes',q:'Which sub-region of Burgundy in the south produces mostly fruity, unoaked Chardonnay labelled Mâcon AOC?',a:['Chablis','Côte de Beaune','Mâconnais','Côte de Nuits'],c:2},
+
+{id:414,cat:'grapes',q:'What distinguishes Pouilly-Fuissé AOC from Mâcon AOC?',a:['Pouilly-Fuissé is a red wine appellation','Pouilly-Fuissé offers higher-quality wines with concentrated stone-fruit and tropical-fruit flavours, often fermented and/or matured in oak','Pouilly-Fuissé is located in the Côte de Beaune','Pouilly-Fuissé wines are always unoaked and light-bodied'],c:1},
+
+{id:415,cat:'grapes',q:'In which part of France is Languedoc-Roussillon located?',a:['Northern France near Champagne','Along the Mediterranean coast in southern France','In the western Loire Valley','In the Alps near the Italian border'],c:1},
+
+{id:416,cat:'grapes',q:'How is most Chardonnay from Languedoc-Roussillon labelled?',a:['Bourgogne AOC','Vin de France','Pays d\'Oc IGP','Côtes du Rhône AOC'],c:2},
+
+{id:417,cat:'grapes',q:'What style of Chardonnay does inland Central Valley California typically produce?',a:['Elegant, cool-climate wines with high acidity and green fruit','High-volume wines with peach and pineapple flavours, medium acidity, medium body and oak from chips or staves','Light, unoaked wines similar to Chablis','Sweet botrytis wines with honey and dried fruit'],c:1},
+
+{id:418,cat:'grapes',q:'Which California region is cooled by morning fogs from the San Pablo Bay, helping grapes retain acidity?',a:['Napa Valley','Santa Barbara County','Los Carneros','Central Valley'],c:2},
+
+{id:419,cat:'grapes',q:'What style of Chardonnay is Napa Valley known for?',a:['Light, unoaked wines with high acidity and green fruit','Full-bodied wines with pronounced tropical fruit flavours complemented by vanilla and spice from new oak','Delicate cool-climate wines similar to Chablis','Off-dry wines with stone fruit and floral aromas'],c:1},
+
+{id:420,cat:'grapes',q:'What cooling influence affects Santa Barbara County vineyards, helping produce quality Chardonnay?',a:['Mountain altitude','Morning fogs from the San Pablo Bay','Sea breezes funnelled inland by lateral valleys','Cold river currents from the north'],c:2},
+
+{id:421,cat:'grapes',q:'How is Oregon Chardonnay typically described compared to California?',a:['Fuller-bodied with more tropical fruit and heavier oak','Refreshingly high acidity with a broad range of flavours from citrus to tropical notes, and smaller production','Sweet and botrytis-affected','Identical in style to Napa Valley Chardonnay'],c:1},
+
+{id:422,cat:'grapes',q:'What label term covers high-volume Chardonnay from grapes grown across a very broad area of Australia?',a:['Margaret River','Yarra Valley','South Eastern Australia','Western Cape'],c:2},
+
+{id:423,cat:'grapes',q:'What moderating influence cools the Adelaide Hills region in South Australia for Chardonnay production?',a:['Ocean currents from the south','Morning fogs from the bay','Altitude','Cold river systems'],c:2},
+
+{id:424,cat:'grapes',q:'What moderating influence cools the Yarra Valley in Victoria for Chardonnay production?',a:['Altitude','Ocean currents from the south','Mountain protection from winds','Cold river systems'],c:1},
+
+{id:425,cat:'grapes',q:'What flavours are typical of Adelaide Hills and Yarra Valley Chardonnays?',a:['Simple citrus and high acidity only','Ripe stone-fruit flavours such as peach, sometimes tropical fruit, with medium to high acidity and balanced oak','Heavy tropical fruit, low acidity and dominant new oak','Sweet and botrytis-affected with honey and dried apricot'],c:1},
+
+{id:426,cat:'grapes',q:'What is Margaret River known for in terms of Chardonnay?',a:['Very high volumes of inexpensive wine','Consistently high-quality wines that are medium to full in body with ripe stone-fruit and tropical-fruit flavours','Unoaked, light-bodied wines similar to Chablis','Botrytis-affected sweet wines'],c:1},
+
+{id:427,cat:'grapes',q:'What climate factor moderates temperatures in Margaret River to aid slow ripening of Chardonnay?',a:['Altitude and mountain ranges','Morning fogs from the bay','Cooling sea breezes','Cold river systems from the south'],c:2},
+
+{id:428,cat:'grapes',q:'Which New Zealand region produces Chardonnay with ripe lemon, peach and melon characters, high acidity and subtle oak?',a:['Central Otago','Hawke\'s Bay','Marlborough','Martinborough'],c:2},
+
+{id:429,cat:'grapes',q:'What style of Chardonnay does Hawke\'s Bay in New Zealand produce?',a:['Light, unoaked wines with green fruit and very high acidity','Full-bodied wines balanced by high acidity with pronounced stone-fruit flavours','Sweet botrytis wines with tropical fruit','Sparkling wines made by the traditional method'],c:1},
+
+{id:430,cat:'grapes',q:'Which Chilean Chardonnay region is influenced by sea breezes and morning fogs from the Pacific Ocean?',a:['Central Valley','Maipo Valley','Casablanca Valley','Colchagua Valley'],c:2},
+
+{id:431,cat:'grapes',q:'What flavours does Casablanca Valley Chardonnay typically display?',a:['Full-bodied tropical fruit with heavy new oak','Citrus such as lemon and stone fruit such as peach with varying levels of oak','Simple, neutral flavours with low acidity','Rich dried fruit, honey and botrytis character'],c:1},
+
+{id:432,cat:'grapes',q:'Which South African region is among the coolest in the country for Chardonnay, producing wines with high acidity and ripe stone-fruit and tropical-fruit flavours?',a:['Western Cape inland vineyards','Stellenbosch','Walker Bay','Paarl'],c:2},
+
+{id:433,cat:'grapes',q:'A label reading "Chardonnay, South Eastern Australia" indicates which of the following?',a:['A premium single-vineyard wine from a specific cool-climate region','A high-volume wine that can be made from grapes grown anywhere within a very broad area of Australia','A wine exclusively from the Margaret River region','A wine made without any oak influence'],c:1},
+
+{id:434,cat:'grapes',q:'A label reading "Chardonnay, Santa Barbara County" indicates which of the following?',a:['A high-volume wine from California\'s inland Central Valley','A full-bodied Napa Valley wine with heavy new oak','A wine from a California coastal county known for quality Chardonnay cooled by sea breezes','A sweet botrytis wine from Santa Barbara'],c:2},
+
+{id:435,cat:'grapes',q:'Why has Chablis maintained steady popularity despite Chardonnay\'s mixed reputation in some markets?',a:['It is the most expensive Chardonnay in the world','Its popularity is partly due to its unoaked style and the fact that it is labelled by region not grape variety','It is the only legal Chardonnay appellation in France','Chablis is always made with new oak which consumers prefer'],c:1},
+
+{id:436,cat:'grapes',q:'What was the main criticism of Chardonnay wines from the 1980s and 1990s?',a:['They were too acidic and lacking in fruit','They were associated with heavy oak flavours that overpowered the fruit','They were too sweet and low in alcohol','They lacked sufficient colour and body'],c:1},
+  
+{id:437,cat:'grapes',q:'What are the most distinctive aromatic characteristics of Sauvignon Blanc?',a:['Vanilla, coconut and smoke from oak','Pronounced herbaceous aromas such as grass, green bell pepper and asparagus','Honey, petrol and dried fruit','Butter, cream and biscuit from malolactic conversion'],c:1},
+
+{id:438,cat:'grapes',q:'What body and acidity level does Sauvignon Blanc typically produce?',a:['Full body and low acidity','Light to medium body and high acidity','Full body and medium acidity','Medium body and low acidity'],c:1},
+
+{id:439,cat:'grapes',q:'What primary fruit flavours does Sauvignon Blanc show at lower ripeness levels?',a:['Peach, apricot and mango','Blackcurrant, plum and cassis','Green fruits such as apple and gooseberry, citrus such as grapefruit, and wet stones','Pineapple, banana and passion fruit'],c:2},
+
+{id:440,cat:'grapes',q:'What flavours develop in Sauvignon Blanc as grapes become riper?',a:['Green bell pepper and asparagus only','Stone fruit such as peach and tropical fruit such as passion fruit','Dried fruit, honey and caramel','Mushroom, forest floor and meat'],c:1},
+
+{id:441,cat:'grapes',q:'Why is Sauvignon Blanc most commonly produced in inert vessels?',a:['To add body and ageing potential','To prevent malolactic conversion and increase acidity','Its distinctive herbaceous characters can be easily overwhelmed by the flavours of new oak','Because oak barrels are too expensive for this variety'],c:2},
+
+{id:442,cat:'grapes',q:'What term on a Sauvignon Blanc label typically indicates that oak has been used during winemaking?',a:['Unoaked','Unwooded','Barrel aged','Old Vine'],c:2},
+
+{id:443,cat:'grapes',q:'When should Sauvignon Blanc typically be consumed?',a:['After at least 10 years of bottle ageing','When young and fresh, as even outstanding examples can lose their fresh aromas within a couple of years','Only after decanting for several hours','After a minimum of 5 years in bottle'],c:1},
+
+{id:444,cat:'grapes',q:'With which grape variety is Sauvignon Blanc sometimes blended?',a:['Chardonnay','Riesling','Viognier','Semillon'],c:3},
+
+{id:445,cat:'grapes',q:'In which two Loire Valley appellations is Sauvignon Blanc the only white variety permitted?',a:['Vouvray AOC and Muscadet AOC','Touraine AOC and Bourgueil AOC','Sancerre AOC and Pouilly-Fumé AOC','Chinon AOC and Anjou AOC'],c:2},
+
+{id:446,cat:'grapes',q:'What is the typical style of Sancerre AOC and Pouilly-Fumé AOC Sauvignon Blanc?',a:['Full-bodied, oaked wines with tropical fruit','Dry wines with high acidity, green fruit, herbaceous notes and sometimes wet stones','Medium-sweet wines with stone fruit aromas','Sparkling wines with autolytic biscuit character'],c:1},
+
+{id:447,cat:'grapes',q:'What is Touraine AOC Sauvignon Blanc typically described as?',a:['Complex, concentrated and expensive','Fruity and inexpensive','Full-bodied and heavily oaked','Sweet and botrytis-affected'],c:1},
+
+{id:448,cat:'grapes',q:'What style does simple Bordeaux AOC Sauvignon Blanc typically show?',a:['Complex, concentrated stone fruit with heavy oak','Fresh aromas of grass and green apple, as single varietal or blend with Sémillon','Rich, full-bodied wines with honey and dried fruit','Sweet botrytis wines with apricot and caramel'],c:1},
+
+{id:449,cat:'grapes',q:'What does Sémillon contribute when blended with Sauvignon Blanc in Graves AOC and Pessac-Léognan AOC?',a:['High acidity and herbaceous aromas','Tropical fruit flavours and floral aromas','Body and ageing potential','Deep colour and high tannins'],c:2},
+
+{id:450,cat:'grapes',q:'What flavours can very good or outstanding Graves AOC and Pessac-Léognan AOC white wines develop in the bottle?',a:['Forest floor, mushroom and leather','Honey and nuts','Dried apricot, petrol and beeswax','Green pepper and asparagus'],c:1},
+
+{id:451,cat:'grapes',q:'How is most Sauvignon Blanc from Languedoc-Roussillon labelled?',a:['Bordeaux AOC','Sancerre AOC','Pays d\'Oc IGP','Vin de France'],c:2},
+
+{id:452,cat:'grapes',q:'Which New Zealand region has become most closely associated with Sauvignon Blanc?',a:['Central Otago','Hawke\'s Bay','Martinborough','Marlborough'],c:3},
+
+{id:453,cat:'grapes',q:'How do Marlborough Sauvignon Blancs typically differ from Loire Valley examples?',a:['They are lighter and more delicate with less fruit intensity','They typically have more pronounced characteristics including grapefruit, peach, passion fruit alongside green bell pepper and asparagus','They are always oaked and full-bodied','They are always medium-sweet with stone fruit flavours'],c:1},
+
+{id:454,cat:'grapes',q:'How are Marlborough Sauvignon Blanc wines often made to display a broad range of fruit flavours?',a:['By blending with Chardonnay from different regions','By blending across different vineyard sites or grapes harvested at different ripeness levels','By using botrytis-affected grapes alongside normal harvest grapes','By fermenting at very high temperatures'],c:1},
+
+{id:455,cat:'grapes',q:'In which Australian region has Sauvignon Blanc built a reputation, most commonly as a blend with Semillon?',a:['Yarra Valley','Barossa Valley','Margaret River','Hunter Valley'],c:2},
+
+{id:456,cat:'grapes',q:'In which Australian region is Sauvignon Blanc the most widely planted white grape variety, with wines ranging from citrus to tropical fruit?',a:['Margaret River','Adelaide Hills','Barossa Valley','Clare Valley'],c:1},
+
+{id:457,cat:'grapes',q:'Which Chilean region has an established reputation for very good quality Sauvignon Blanc due to cooling sea breezes and morning fogs?',a:['Central Valley','Maipo Valley','Colchagua Valley','Casablanca Valley'],c:3},
+
+{id:458,cat:'grapes',q:'Where are South Africa\'s best Sauvignon Blanc vineyards concentrated and why?',a:['In hot inland areas where grapes ripen fully','In coastal regions, as inland vineyards are generally too warm','In high-altitude mountain vineyards only','In the northernmost regions near the equator'],c:1},
+
+{id:459,cat:'grapes',q:'What style of Sauvignon Blanc does Constantia in South Africa produce?',a:['Full-bodied, oaked and high alcohol','Refreshing wines with ripe tropical fruit and herbaceous aromas, cooled by sea breezes from the Southern Ocean','Sweet botrytis wines with apricot and honey','Very light, neutral wines for blending'],c:1},
+
+{id:460,cat:'grapes',q:'What is distinctive about Elgin as a South African Sauvignon Blanc region?',a:['It is the warmest wine region in South Africa','It is often cited as the coolest wine region in South Africa, cooled by altitude, producing wines with green-fruit flavours and wet stones','It is protected by mountains giving a very dry, sunny climate','It is located on the coast and produces tropical-fruit-dominated wines'],c:1},
+
+{id:461,cat:'grapes',q:'Why is most of California generally not ideal for producing the classic fresh, herbaceous style of Sauvignon Blanc?',a:['The soils are too acidic','The climate is mostly too warm','There is insufficient rainfall','The altitude is too high'],c:1},
+
+{id:462,cat:'grapes',q:'In which cooler area of California can very good herbaceous Sauvignon Blanc be found, sometimes made with oak contact?',a:['Central Valley','Santa Barbara County','Napa Valley cooler areas','Sonoma inland vineyards'],c:2},
+
+{id:463,cat:'grapes',q:'A label reading "Sancerre, Appellation Sancerre Contrôlée, Produit de France" indicates which grape variety?',a:['Chardonnay','Chenin Blanc','Pinot Gris','Sauvignon Blanc'],c:3},
+
+{id:464,cat:'grapes',q:'A label reading "Sauvignon Blanc, Marlborough" indicates wine from which country?',a:['France','Australia','South Africa','New Zealand'],c:3},
+
+{id:465,cat:'grapes',q:'Why do some Marlborough producers experiment with small amounts of oak or lees contact?',a:['To meet legal requirements for AOC status','To add complexity and body beyond the classic herbaceous style','To reduce the alcohol level of the wine','To make the wine suitable for longer ageing like red wines'],c:1},
+
+{id:466,cat:'grapes',q:'What are the two names for the same white grape variety — Pinot Grigio and Pinot Gris?',a:['Pinot Grigio is the French name and Pinot Gris is the Italian name','Pinot Grigio is the Italian name and Pinot Gris is the French name','Pinot Grigio is the German name and Pinot Gris is the Spanish name','They are completely different grape varieties'],c:1},
+
+{id:467,cat:'grapes',q:'What primarily determines which of the two distinct styles of Pinot Grigio/Pinot Gris is produced?',a:['The country of origin only','The type of vessel used for fermentation','Grape-growing and harvesting choices — yield levels and timing of harvest','The level of oak maturation'],c:2},
+
+{id:468,cat:'grapes',q:'What is the result of making Pinot Grigio from high yields of grapes harvested early?',a:['A full-bodied, complex wine with stone fruit and tropical fruit','A sweet wine with honey and ginger notes','A dry, light-bodied wine with medium to high acidity and simple flavours of pear and lemon','A sparkling wine with autolytic biscuit character'],c:2},
+
+{id:469,cat:'grapes',q:'What style of Pinot Gris results from controlled yields and delayed harvesting?',a:['A very light, neutral wine with simple citrus flavours','A powerful, full-bodied wine with medium acidity and pronounced flavours of lemon, peach and mango/banana','A sweet botrytis wine similar to Sauternes','A sparkling wine with high acidity and green fruit'],c:1},
+
+{id:470,cat:'grapes',q:'In what type of vessel is Pinot Grigio/Pinot Gris typically fermented and why?',a:['In new oak barrels to add vanilla and spice','In inert vessels to preserve its fruity flavours','In old oak barrels to allow gentle oxygen exposure','In concrete eggs to add texture'],c:1},
+
+{id:471,cat:'grapes',q:'How is sweetness sometimes achieved in the riper, fuller-bodied style of Pinot Gris?',a:['By adding Süssreserve after fermentation','By using botrytis-affected grapes','By interrupting fermentation through removing the yeasts to retain off-dry or medium sweetness','By late harvesting only, without any interruption'],c:2},
+
+{id:472,cat:'grapes',q:'When should lighter styles of Pinot Grigio be consumed?',a:['After at least 10 years of bottle ageing','While fresh and young, as their simple flavours fade quickly','Only after decanting for several hours','After a minimum of 5 years in bottle'],c:1},
+
+{id:473,cat:'grapes',q:'What flavours can the more concentrated, full-bodied Pinot Gris develop over time in the bottle?',a:['Forest floor, mushroom and meat','Ginger and honey','Petrol and dried apricot','Vanilla, coconut and charred wood'],c:1},
+
+{id:474,cat:'grapes',q:'How are most Italian Pinot Grigio wines typically described?',a:['Complex, full-bodied and heavily oaked','Simple, unoaked and light in body with a short finish','Sweet and botrytis-affected with tropical fruit','Full-bodied and high in alcohol with stone fruit'],c:1},
+
+{id:475,cat:'grapes',q:'In which Italian region are most high-volume Pinot Grigio wines produced?',a:['Tuscany','Piedmont','Sicily','Veneto'],c:3},
+
+{id:476,cat:'grapes',q:'Under which labels are most high-volume Italian Pinot Grigio wines sold?',a:['Friuli DOC or Trentino DOC','delle Venezie DOC or Veneto IGT','Pinot Grigio delle Alpi DOC or Lombardia IGT','Soave DOC or Valpolicella DOC'],c:1},
+
+{id:477,cat:'grapes',q:'Where in Italy can a more complex and fuller-bodied style of Pinot Grigio be found?',a:['Sicily in southern Italy','Tuscany in central Italy','Friuli-Venezia Giulia in northern Italy\'s eastern corner','Piedmont in north-west Italy'],c:2},
+
+{id:478,cat:'grapes',q:'How does Alsace AOC Pinot Gris differ from typical Italian Pinot Grigio?',a:['Alsace Pinot Gris is always lighter and drier than Italian Pinot Grigio','Alsace Pinot Gris is made from extra-ripe grapes, giving medium to full body, medium acidity and pronounced flavours of peach and mango','Alsace Pinot Gris is always made with new oak unlike Italian versions','Alsace Pinot Gris is always sparkling'],c:1},
+
+{id:479,cat:'grapes',q:'What flavours can Alsace Pinot Gris develop in the bottle?',a:['Forest floor and mushroom','Honey and ginger','Petrol and beeswax','Vanilla and coconut'],c:1},
+
+{id:480,cat:'grapes',q:'What range of sweetness styles does Alsace AOC Pinot Gris cover?',a:['Always bone dry','Always sweet','Dry to medium in sweetness depending on the winemaker\'s preference','Always medium-sweet with residual sugar above 20g/l'],c:2},
+
+{id:481,cat:'grapes',q:'What is the regional appellation that covers the entire Alsace wine area?',a:['Alsace Grand Cru AOC','Alsace Village AOC','Alsace AOC','Vin d\'Alsace IGP'],c:2},
+
+{id:482,cat:'grapes',q:'How are wines from Alsace AOC typically labelled?',a:['By region only, with no grape variety on the label','With their grape variety on the label','By village appellation similar to Burgundy','By sweetness level only'],c:1},
+
+{id:483,cat:'grapes',q:'What is required for a wine to be labelled Alsace Grand Cru AOC?',a:['It must come from any vineyard within Alsace AOC','It must be blended from at least three grape varieties','It must be made from grapes grown in specific grand cru vineyards mostly on the steeply sloped foothills of the Vosges Mountains','It must be aged for at least three years in oak'],c:2},
+
+{id:484,cat:'grapes',q:'Why do Alsace Grand Cru vineyards on the Vosges Mountain foothills produce riper wines than those on the plains?',a:['The soils are richer and more fertile on the slopes','The slopes face east/south-east, receiving more sunlight, resulting in riper flavours and fuller body','The altitude is lower on the slopes reducing acidity','The mountain protection keeps the vines warmer at night'],c:1},
+
+{id:485,cat:'grapes',q:'Which grape varieties are typical eligible varieties for Alsace Grand Cru?',a:['Chardonnay, Sauvignon Blanc and Riesling','Pinot Gris, Riesling and Gewurztraminer','Pinot Noir, Pinot Blanc and Auxerrois','Muscat, Sylvaner and Pinot Blanc'],c:1},
+
+{id:486,cat:'grapes',q:'What does "Vendanges Tardives" (VT) mean on an Alsace label?',a:['Early harvest — a light, dry style','Late harvest — typically denotes a medium to sweet wine made from extra-ripe grapes','Grand Cru — the wine comes from a specific classified vineyard','Old vine — the wine is made from low-yielding old vines'],c:1},
+
+{id:487,cat:'grapes',q:'Which sweetness level does Vendanges Tardives typically indicate in Alsace?',a:['Bone dry','Medium to sweet','Always fully dry','Sparkling and off-dry'],c:1},
+
+{id:488,cat:'grapes',q:'Which grape varieties can be labelled Vendanges Tardives in Alsace?',a:['Chardonnay, Sauvignon Blanc and Pinot Blanc','Pinot Gris, Riesling and Gewurztraminer','Any grape variety grown in Alsace','Only Riesling and Pinot Gris'],c:1},
+
+{id:489,cat:'grapes',q:'Can both Alsace AOC and Alsace Grand Cru wines be labelled Vendanges Tardives?',a:['No, only Alsace AOC wines can use VT','No, only Grand Cru wines can use VT','Yes, both Alsace AOC and Alsace Grand Cru wines can be labelled VT','Only wines from the Vosges Mountain slopes can use the VT label'],c:2},
+
+{id:490,cat:'grapes',q:'What general convention exists outside Italy and France for the naming of Pinot Grigio vs Pinot Gris?',a:['Pinot Gris always means a dry style and Pinot Grigio means sweet','Producers typically use Pinot Grigio to signify a higher-acid, lighter-bodied style and Pinot Gris to signify more body and complexity','The names are used completely interchangeably with no distinction','Pinot Grigio is used only in New World regions and Pinot Gris only in Europe'],c:1},
+
+{id:491,cat:'grapes',q:'A label reading "Alsace Grand Cru Sonnenglanz, Pinot Gris, Appellation Alsace Grand Cru Contrôlée" indicates which of the following?',a:['A simple regional Alsace wine from high-volume production','A wine from a specific classified grand cru vineyard in Alsace, likely fuller-bodied and riper than standard Alsace AOC','A wine labelled by village appellation similar to Burgundy','A sweet Vendanges Tardives wine from any Alsace vineyard'],c:1},
+
+{id:492,cat:'grapes',q:'A label reading "Alsace, Pinot Gris, Vendanges Tardives, Appellation Alsace Contrôlée" indicates which style?',a:['A bone-dry, light-bodied wine from early-harvested grapes','A medium to sweet wine made from extra-ripe late-harvested grapes from the regional Alsace AOC','A sparkling wine from the Vosges Mountain foothills','A Grand Cru wine from a specific classified vineyard'],c:1},
+
+{id:493,cat:'grapes',q:'In what climate does Gewurztraminer grow best?',a:['Hot and dry','Tropical and humid','Cool to moderate','Cold continental'],c:2},
+
+{id:494,cat:'grapes',q:'What is the typical acidity level of Gewurztraminer?',a:['Very high acidity','Medium to high acidity','Low to medium acidity','No detectable acidity'],c:2},
+
+{id:495,cat:'grapes',q:'Which of the following best describes the flavour profile of a typical Gewurztraminer?',a:['Light, crisp and herbaceous with green fruit','Full-bodied with pronounced floral aromas of rose, stone fruit such as peach and apricot, and tropical fruit such as lychee','Delicate citrus and wet stone with very high acidity','Simple pear and lemon with neutral character'],c:1},
+
+{id:496,cat:'grapes',q:'Why is Gewurztraminer typically unoaked?',a:['Oak is prohibited by law in all regions where it is grown','To preserve its distinctive floral aromas','Oak makes the wine too acidic','Gewurztraminer cannot withstand the heat of barrel fermentation'],c:1},
+
+{id:497,cat:'grapes',q:'What style range does Gewurztraminer cover?',a:['Dry wines only','Sparkling wines only','Dry to sweet','Off-dry to fortified'],c:2},
+
+{id:498,cat:'grapes',q:'What happens when Gewurztraminer grapes are fermented to dryness given their high sugar levels?',a:['The wine is light-bodied and low in alcohol','The result is a high-alcohol wine','The fermentation always stops before dryness','The wine becomes sparkling naturally'],c:1},
+
+{id:499,cat:'grapes',q:'What flavours can very good or outstanding Gewurztraminer develop in the bottle?',a:['Forest floor and mushroom','Petrol and wet stones','Honey and dried fruit','Vanilla, coconut and smoke'],c:2},
+
+{id:500,cat:'grapes',q:'What is the most famous region for Gewurztraminer?',a:['Mosel in Germany','Condrieu AOC in the Rhône','Alsace AOC in France','Vouvray AOC in the Loire Valley'],c:2},
+
+{id:501,cat:'grapes',q:'Alongside which other grape varieties does Gewurztraminer produce some of Alsace\'s highest-quality grand cru wines?',a:['Chardonnay and Sauvignon Blanc','Riesling and Pinot Gris','Chenin Blanc and Viognier','Pinot Blanc and Sylvaner'],c:1},
+
+{id:502,cat:'grapes',q:'In what climate does Viognier primarily grow?',a:['Cool climates only','Moderate climates','Cold continental climates','Tropical climates'],c:1},
+
+{id:503,cat:'grapes',q:'What is the typical acidity level and body of Viognier?',a:['High acidity and light body','Low to medium acidity, medium to full body','Very high acidity and full body','Low acidity and light body'],c:1},
+
+{id:504,cat:'grapes',q:'Which aromas are characteristic of Viognier?',a:['Grass, asparagus and grapefruit','Blackcurrant, plum and spice','Pronounced floral aromas of blossom and stone fruit such as peach and apricot','Green apple, lime and wet stones'],c:2},
+
+{id:505,cat:'grapes',q:'How is Viognier unusual compared to other aromatic white varieties in terms of winemaking?',a:['It is always fermented at very low temperatures','It is the only aromatic variety permitted to be blended with red wines','Some oak-aged Viogniers are made, which is unusual for an aromatic variety','It must always be fermented using wild yeast'],c:2},
+
+{id:506,cat:'grapes',q:'Which appellation in France\'s Northern Rhône is dedicated to single-varietal Viognier?',a:['Châteauneuf-du-Pape AOC','Hermitage AOC','Crozes-Hermitage AOC','Condrieu AOC'],c:3},
+
+{id:507,cat:'grapes',q:'What oak-derived flavour can sometimes be found in Condrieu AOC wines?',a:['Smoke and charred wood','Vanilla','Caramel and dried fruit','Toast and biscuit'],c:1},
+
+{id:508,cat:'grapes',q:'What role can Viognier play beyond producing single-varietal wines?',a:['It is used to sweeten red wines in warm climates','It can be used as a blending partner to add floral notes and body','It is used exclusively for fortified wine production','It is blended only with Riesling for aromatic white blends'],c:1},
+
+{id:509,cat:'grapes',q:'In which Spanish region and DO is Albariño grown?',a:['Rioja DO in north-central Spain','Ribera del Duero DO in central Spain','Rías Baixas DO in north-west Spain','Jerez DO in southern Spain'],c:2},
+
+{id:510,cat:'grapes',q:'How does the climate of Rías Baixas differ from most other Spanish wine regions?',a:['It is hotter and drier than most Spanish regions','It is notably cooler, wetter and cloudier than many of Spain\'s other wine regions due to its proximity to the Atlantic Ocean','It has a continental climate with extreme temperature variations','It is a very hot, arid Mediterranean climate'],c:1},
+
+{id:511,cat:'grapes',q:'What is the typical flavour profile of Albariño?',a:['Full-bodied with tropical fruit, low acidity and heavy oak','Dry, medium-bodied, high acidity with citrus fruit such as lemon and grapefruit and stone fruit such as peach and apricot','Light-bodied, very sweet with botrytis character','Herbaceous and green with asparagus and grass notes'],c:1},
+
+{id:512,cat:'grapes',q:'How is Albariño most commonly made in terms of oak and drinking style?',a:['Heavily oaked and intended for long ageing','Unoaked and intended to be drunk when young','Always sweet and made from botrytis-affected grapes','Sparkling, made by the traditional method'],c:1},
+
+{id:513,cat:'grapes',q:'What winemaking technique is sometimes used with Albariño to add body and complexity?',a:['Extended maceration on the skins','Malolactic conversion','A small amount of lees contact','Fermentation in new oak barrels'],c:2},
+
+{id:514,cat:'grapes',q:'A label reading "Rías Baixas, Denominación de Origen" indicates a wine from which country and grape variety?',a:['Portugal, made from Alvarinho','Italy, made from Pinot Grigio','Spain, most likely made from Albariño','France, made from Viognier'],c:2},
+
+{id:515,cat:'grapes',q:'What is the typical acidity and tannin level of a single-varietal Merlot?',a:['High acidity and high tannins','Low acidity and low tannins','Medium acidity and medium tannins','Very high tannins and low acidity'],c:2},
+
+{id:516,cat:'grapes',q:'What flavours do just-ripe Merlot grapes produce?',a:['Blackberry, black plum and cooked fruit','Strawberry, red plum and herbaceous notes such as green bell pepper','Vanilla, coconut and smoke from oak','Dried fruit, tobacco and leather'],c:1},
+
+{id:517,cat:'grapes',q:'What flavours do riper Merlot grapes produce?',a:['Fresh red fruit and herbaceous notes','Light citrus and floral aromas','Medium to full body with cooked black fruit such as blackberry and black plum','Delicate green fruit and wet stones'],c:2},
+
+{id:518,cat:'grapes',q:'What does Merlot contribute when blended with Cabernet Sauvignon?',a:['High tannins and deep colour','Red-fruit flavours and lower tannin levels, making the blend ready to drink earlier','High acidity and herbaceous character','Oak flavours and body'],c:1},
+
+{id:519,cat:'grapes',q:'What tertiary flavours can the best age-worthy Merlot-dominated wines develop in the bottle?',a:['Forest floor, mushroom and wet leaves','Honey, petrol and beeswax','Dried fruit and tobacco','Vanilla, coconut and charred wood'],c:2},
+
+{id:520,cat:'grapes',q:'Where is the classic home of Merlot?',a:['The Rhône Valley in France','The Loire Valley in France','Burgundy in France','Bordeaux in France'],c:3},
+
+{id:521,cat:'grapes',q:'What geographical feature naturally divides the Bordeaux region into Left Bank and Right Bank?',a:['The Pyrenees mountains','The Massif Central highlands','The Gironde Estuary where the Garonne and Dordogne Rivers meet','The Loire River valley'],c:2},
+
+{id:522,cat:'grapes',q:'Which districts are located on the Left Bank of Bordeaux?',a:['Saint-Émilion and Pomerol','Médoc, Graves and Sauternes','Fronsac and Canon-Fronsac','Pomerol and Lalande-de-Pomerol'],c:1},
+
+{id:523,cat:'grapes',q:'Which districts are the principal ones on the Right Bank of Bordeaux?',a:['Médoc and Graves','Pauillac and Margaux','Saint-Émilion and Pomerol','Sauternes and Barsac'],c:2},
+
+{id:524,cat:'grapes',q:'On which bank of Bordeaux is Merlot the most important variety?',a:['Left Bank','Right Bank','Both banks equally','Neither — Merlot is rare in Bordeaux'],c:1},
+
+{id:525,cat:'grapes',q:'Which grape variety is typically dominant in Left Bank Bordeaux blends?',a:['Merlot','Cabernet Franc','Petit Verdot','Cabernet Sauvignon'],c:3},
+
+{id:526,cat:'grapes',q:'What are the two most famous Merlot-dominated appellations on the Right Bank of Bordeaux?',a:['Pauillac AOC and Margaux AOC','Graves AOC and Pessac-Léognan AOC','Saint-Émilion AOC and Pomerol AOC','Haut-Médoc AOC and Listrac AOC'],c:2},
+
+{id:527,cat:'grapes',q:'What is the more prestigious sub-classification within Saint-Émilion AOC?',a:['Saint-Émilion Cru Classé AOC','Saint-Émilion Premier AOC','Saint-Émilion Grand Cru AOC','Saint-Émilion Supérieur AOC'],c:2},
+
+{id:528,cat:'grapes',q:'How are wines labelled Bordeaux AOC or Bordeaux Supérieur AOC typically described?',a:['Always single-varietal Merlot from Right Bank vineyards','Typically Merlot-dominated blends made from vines planted anywhere throughout the Bordeaux region','Only from Left Bank Cabernet Sauvignon-dominated estates','Always sweet white wines made from botrytis-affected Sémillon'],c:1},
+
+{id:529,cat:'grapes',q:'What distinguishes Bordeaux Supérieur AOC from Bordeaux AOC?',a:['Bordeaux Supérieur must come only from the Right Bank','Bordeaux Supérieur is subject to slightly stricter rules on yields, ageing and minimum alcohol levels','Bordeaux Supérieur is always a single-varietal Merlot','Bordeaux Supérieur must be aged for a minimum of 5 years'],c:1},
+
+{id:530,cat:'grapes',q:'Where is the Haut-Médoc AOC located within Bordeaux?',a:['To the south of the city of Bordeaux in the Graves district','To the north of the city of Bordeaux within the Médoc district on the Left Bank','On the Right Bank north of the Dordogne','In the centre of the Bordeaux region near Sauternes'],c:1},
+
+{id:531,cat:'grapes',q:'Which two smaller appellations are located within the Haut-Médoc?',a:['Graves AOC and Pessac-Léognan AOC','Pomerol AOC and Saint-Émilion AOC','Margaux AOC and Pauillac AOC','Fronsac AOC and Canon-Fronsac AOC'],c:2},
+
+{id:532,cat:'grapes',q:'What style do outstanding Saint-Émilion AOC and Pomerol AOC wines display?',a:['Light, simple red fruit for early drinking','Full-bodied with pronounced black fruit aromas, oak flavours and ageing potential, developing dried fruit and tobacco with age','Pale, delicate and low in tannin','Medium-sweet with berry fruit and minimal tannin'],c:1},
+
+{id:533,cat:'grapes',q:'A label reading "Pauillac, Appellation Pauillac Contrôlée" indicates a wine from which bank of Bordeaux and which dominant grape?',a:['Right Bank, dominated by Merlot','Left Bank, dominated by Cabernet Sauvignon','Right Bank, dominated by Cabernet Franc','Left Bank, dominated by Merlot'],c:1},
+
+{id:534,cat:'grapes',q:'A label reading "Saint-Émilion Grand Cru, Appellation Saint-Émilion Grand Cru Contrôlée" indicates which of the following?',a:['A basic regional Bordeaux wine from the Left Bank','A prestigious Right Bank wine where Merlot is the most important variety','A Left Bank Cabernet Sauvignon-dominated wine from the Médoc','A sweet wine from the Sauternes sub-region'],c:1},
+
+{id:535,cat:'grapes',q:'How is Merlot from Languedoc-Roussillon typically labelled?',a:['Bordeaux AOC','Saint-Émilion AOC','Pays d\'Oc IGP','Vin de France'],c:2},
+
+{id:536,cat:'grapes',q:'What style of Merlot is produced in Chile\'s Central Valley and for what market is it primarily intended?',a:['Complex, age-worthy wines for fine dining','Soft, medium-bodied Merlot for high-volume brands intended for immediate consumption','Heavily oaked, full-bodied wines similar to Napa Valley','Sweet, botrytis-affected wines for dessert'],c:1},
+
+{id:537,cat:'grapes',q:'Which South African region has developed a strong reputation for complex, age-worthy red wines from classic Bordeaux varieties including Merlot?',a:['Walker Bay','Constantia','Stellenbosch','Elgin'],c:2},
+
+{id:538,cat:'grapes',q:'In which Australian region has Merlot traditionally been used as part of a high-quality blend with Cabernet Sauvignon?',a:['Barossa Valley','Yarra Valley','Clare Valley','Margaret River'],c:3},
+
+{id:539,cat:'grapes',q:'From which New Zealand region does most of the country\'s Merlot come?',a:['Marlborough','Central Otago','Martinborough','Hawke\'s Bay'],c:3},
+
+{id:540,cat:'grapes',q:'What style range does New Zealand Merlot from Hawke\'s Bay cover?',a:['Only light and fruity for immediate consumption','Only full-bodied and long-lived','From light and fruity through to full-bodied and long-lived, as single varietal or blend with Cabernet Sauvignon','Only sweet and botrytis-affected'],c:2},
+
+{id:541,cat:'grapes',q:'What oak flavours are commonly tasted in California red Merlot wines?',a:['Honey, petrol and beeswax','Vanilla, coconut and smoke','Dried apricot and ginger','Forest floor and mushroom'],c:1},
+
+{id:542,cat:'grapes',q:'Where is Graves AOC located within Bordeaux and what notable sub-appellation does it include?',a:['North of the city of Bordeaux within the Médoc, including Pauillac','South of the city of Bordeaux on the Left Bank, including the high-quality Pessac-Léognan AOC','On the Right Bank north of the Dordogne, including Pomerol','In the centre of the region, including Saint-Émilion'],c:1},
+
+{id:543,cat:'grapes',q:'What structural characteristics make Merlot a wonderfully versatile grape variety?',a:['High tannins and high acidity','Very low alcohol and light body','Medium tannins and medium acidity','Full body and very high alcohol'],c:2},
+
+{id:544,cat:'grapes',q:'What range of wine styles is Merlot capable of producing?',a:['Only light, fruity wines for immediate consumption','Only powerful, heavily oaked wines requiring long ageing','Refreshing unoaked wines at all quality levels through to powerfully flavoured wines benefiting from oak and bottle maturation','Only blended wines — it cannot make impressive single-varietal wines'],c:2},
+{id:545,cat:'grapes',q:'What are the key characteristics of Cabernet Sauvignon as a grape variety?',a:['Thin skin, low tannins and delicate floral aromas','Thick skin with high levels of colour, flavour and tannin, pronounced black fruit and herbaceous aromas, high acidity','Pale colour, low acidity and simple red fruit flavours','Medium tannins and pronounced tropical fruit flavours'],c:1},
+
+{id:546,cat:'grapes',q:'What climate challenge does Cabernet Sauvignon face in moderate climates?',a:['It ripens too quickly producing overripe flavours','It can struggle to ripen in all but the warmest sites','It always produces wines with too much acidity','It is very prone to rot and disease'],c:1},
+
+{id:547,cat:'grapes',q:'What is the typical flavour profile of a single-varietal Cabernet Sauvignon?',a:['Light-bodied, low acidity with simple red fruit','Dry, deeply coloured, high acidity, high tannins, medium to full body with pronounced black fruit such as blackcurrant and black cherry, and herbal or herbaceous notes','Medium-bodied, low tannin with tropical fruit','Pale, delicate with stone fruit and floral aromas'],c:1},
+
+{id:548,cat:'grapes',q:'What happens to Cabernet Sauvignon fruit flavours in warm climates?',a:['They become more herbaceous and green','They develop into fresh red fruit flavours','They can become cooked in character','They fade completely and become neutral'],c:2},
+
+{id:549,cat:'grapes',q:'Why is Cabernet Sauvignon often blended with Merlot?',a:['Merlot adds more tannin and colour','Blending can help soften Cabernet Sauvignon\'s very high tannin and acidity levels','Merlot adds herbaceous character to the blend','Merlot adds high acidity to balance Cabernet Sauvignon\'s low acidity'],c:1},
+
+{id:550,cat:'grapes',q:'Why is Cabernet Sauvignon typically matured in oak barrels for several months or even years?',a:['To add residual sweetness to the wine','Oak maturation allows small amounts of oxygen to soften the tannins','To increase the alcohol level of the wine','To add herbaceous and green pepper aromas'],c:1},
+
+{id:551,cat:'grapes',q:'What secondary flavours does a new-oak barrel impart to Cabernet Sauvignon?',a:['Honey, petrol and beeswax','Butter, cream and bread','Smoke, vanilla, cloves and cedar','Ginger, honey and dried apricot'],c:2},
+
+{id:552,cat:'grapes',q:'What tertiary flavours develop in very good or outstanding Cabernet Sauvignon with bottle age?',a:['Tropical fruit and floral notes','Dried fruits, earth and forest floor','Vanilla, coconut and charred wood','Fresh blackcurrant and mint'],c:1},
+
+{id:553,cat:'grapes',q:'Why are gravel soils particularly beneficial for Cabernet Sauvignon on the Left Bank of Bordeaux?',a:['Gravel soils are very fertile and produce high yields','Gravel permits quick drainage after heavy rainfall and absorbs heat during the day, maintaining warmth into the evening to aid ripening','Gravel soils contain high levels of minerals that add complexity to the wine','Gravel retains water well ensuring vines never suffer drought stress'],c:1},
+
+{id:554,cat:'grapes',q:'Why is blending particularly important in Bordeaux for Cabernet Sauvignon?',a:['Blending is required by law for all Bordeaux appellations','In some years Cabernet Sauvignon struggles to ripen even on the Left Bank, so the proportion of Merlot may increase','Blending reduces the cost of production','Single-varietal wines are not permitted in Bordeaux'],c:1},
+
+{id:555,cat:'grapes',q:'Which Left Bank appellations are known for Cabernet Sauvignon-dominated blends?',a:['Saint-Émilion AOC and Pomerol AOC','Sauternes AOC and Barsac AOC','Haut-Médoc AOC including Margaux AOC and Pauillac AOC, and Graves AOC including Pessac-Léognan AOC','Vouvray AOC and Chinon AOC'],c:2},
+
+{id:556,cat:'grapes',q:'What does the term "Château" on a Bordeaux label indicate?',a:['The wine must come from a grand historic building','The wine has been made from grapes grown on the producer\'s own land rather than bought-in grapes','The wine is a Grand Cru Classé by definition','The wine has been aged for a minimum of two years in oak'],c:1},
+
+{id:557,cat:'grapes',q:'What does "Grand Cru Classé" or "Cru Classé" on a Bordeaux label indicate?',a:['The wine is from a basic regional appellation','The wine comes from a classified château considered a strong indication of quality, typically among the most expensive and age-worthy wines of Bordeaux','The wine is made from organically grown grapes','The wine has been aged in new oak for at least three years'],c:1},
+
+{id:558,cat:'grapes',q:'What is "Cru Bourgeois" in Bordeaux?',a:['A classification for Right Bank Merlot-dominated wines','A term for wines from the Médoc that have not been classified as Grand Cru Classé but can be very good to outstanding with long ageing potential','A classification for sweet wines from Sauternes','A term for basic Bordeaux AOC wines intended for immediate consumption'],c:1},
+
+{id:559,cat:'grapes',q:'A label reading "Grand Vin, Château Douglas, Appellation Margaux Contrôlée, Grand Cru Classé" indicates which of the following?',a:['A basic regional Bordeaux wine from the Right Bank','A classified Left Bank Bordeaux wine from Margaux AOC, likely Cabernet Sauvignon-dominated, among the most sought-after wines of Bordeaux','A Merlot-dominated Right Bank wine from Saint-Émilion','A sweet botrytis wine from the Sauternes sub-region'],c:1},
+
+{id:560,cat:'grapes',q:'A label reading "Château Beauclerc, Haut-Médoc, Cru Bourgeois" indicates which of the following?',a:['A Grand Cru Classé wine commanding very high prices','A Médoc wine not classified as Grand Cru Classé but potentially very good to outstanding quality with ageing potential','A sweet white wine from the Left Bank','A Merlot-dominated Right Bank wine from Pomerol'],c:1},
+
+{id:561,cat:'grapes',q:'How is Cabernet Sauvignon from Languedoc-Roussillon typically labelled?',a:['Bordeaux AOC','Margaux AOC','Pays d\'Oc IGP','Haut-Médoc AOC'],c:2},
+
+{id:562,cat:'grapes',q:'What is the climate of Napa Valley and why is it well suited to Cabernet Sauvignon?',a:['Cool and wet — ideal for retaining acidity','Warm and sunny with a long growing season ideal for fully ripening Cabernet Sauvignon','Cold continental with extreme temperature variations','Moderate and maritime similar to Bordeaux'],c:1},
+
+{id:563,cat:'grapes',q:'Which Napa Valley sub-regions are known for full-bodied Cabernet Sauvignon with pronounced ripe black fruit and high ripe tannins?',a:['Los Carneros and Santa Barbara','Oakville and Rutherford','Sonoma and Mendocino','Central Valley and Lodi'],c:1},
+
+{id:564,cat:'grapes',q:'What is the warmer, most full-bodied sub-region at the far north of Napa Valley?',a:['Oakville','Rutherford','Carneros','Calistoga'],c:3},
+
+{id:565,cat:'grapes',q:'How are high-volume "California" labelled Cabernet Sauvignon wines typically described?',a:['Complex, age-worthy wines from cool coastal vineyards','Intended for immediate consumption, fruit often from hot irrigated Central Valley vineyards, with some oak from chips or staves','Always single-vineyard wines with very high tannins requiring decades of ageing','Sweet and low in alcohol with simple red fruit'],c:1},
+
+{id:566,cat:'grapes',q:'What is Cabernet Sauvignon\'s status in Chile?',a:['It is rarely planted and considered a minor variety','It is Chile\'s most widely planted variety','It is planted only in the cool coastal regions','It is used only for sweet wine production'],c:1},
+
+{id:567,cat:'grapes',q:'Which two Chilean sub-regions within the broader Central Valley are particularly important for Cabernet Sauvignon?',a:['Casablanca Valley and Elqui Valley','Limari Valley and Bio-Bio Valley','Maipo Valley and Colchagua Valley','Aconcagua Valley and San Antonio Valley'],c:2},
+
+{id:568,cat:'grapes',q:'What distinctive flavour characteristics do Chilean Cabernet Sauvignons from mountain foothills often display?',a:['Tropical fruit and floral aromas with low tannin','Herbal mint and herbaceous green bell pepper alongside black fruit and oak flavours','Simple neutral fruit with very low acidity','Heavy botrytis character with honey and dried apricot'],c:1},
+
+{id:569,cat:'grapes',q:'What is a "Cape Blend" in South Africa?',a:['A blend of Chenin Blanc and Sauvignon Blanc','A blend of Cabernet Sauvignon, Merlot and the local speciality grape Pinotage','A blend of Syrah and Grenache in the style of the Rhône','A blend of Riesling and Gewurztraminer from the cooler coastal regions'],c:1},
+
+{id:570,cat:'grapes',q:'What style range does Stellenbosch Cabernet Sauvignon cover?',a:['Only light, fresh and fruity wines for early drinking','Only sweet and botrytis-affected wines','From fresh and herbal through to full-bodied with cooked-fruit flavours and high alcohol, varying with altitude and sea breeze influence','Only sparkling wines made by the traditional method'],c:2},
+
+{id:571,cat:'grapes',q:'What makes Margaret River in Australia well suited to Cabernet Sauvignon?',a:['It is a very cool region similar to Burgundy','A warm climate moderated by coastal breezes and plentiful winter rainfall, producing wines with ripe black fruit and subtle oak','It is Australia\'s hottest region producing the most concentrated wines','It has the highest altitude vineyards in Australia'],c:1},
+
+{id:572,cat:'grapes',q:'What makes Coonawarra in South Australia distinctive for Cabernet Sauvignon?',a:['It is the warmest wine region in Australia','It is moderated by cloud cover and cooling breezes from the south, producing wines with distinctive herbal mint character, blackcurrant, smoke and cedar from oak, typically very good to outstanding','It produces only blended wines with Shiraz','It is known exclusively for sweet botrytis wines'],c:1},
+
+{id:573,cat:'grapes',q:'In New Zealand\'s Hawke\'s Bay, why must Cabernet Sauvignon be planted in the warmest sites?',a:['To avoid frost damage in spring','Because the moderate climate means it can struggle to achieve full ripeness','To maximise water retention in the dry soils','To avoid the influence of sea breezes that reduce sugar levels'],c:1},
+
+{id:574,cat:'grapes',q:'What style of Cabernet Sauvignon-based wine does Hawke\'s Bay New Zealand typically produce?',a:['Deeply coloured, high tannin wines similar to Napa Valley','Blends with Merlot showing fresh red and black fruit with herbaceous notes','Sweet botrytis wines with honey and dried fruit','Light, pale, low-tannin wines for immediate consumption'],c:1},
+
+{id:575,cat:'grapes',q:'What trend in Cabernet Sauvignon winemaking allows wines to be enjoyed at a younger age?',a:['Using more new oak to add complexity immediately','Blending with more Merlot to increase sweetness','Using gentler winemaking practices that extract less tannin, producing fresher, fruitier wines','Harvesting grapes earlier to reduce alcohol'],c:2},
 
 
-  // OTHER STYLES
+
+// OTHER STYLES
   {id:26, cat:'other',      q:'Co oznacza "late harvest" (późny zbiór)?',
    a:['Mniejsza zawartość alkoholu','Wyższy cukier resztkowy, koncentrat smaku','Brak tanin','Dłuższa maceracja'], c:1},
   {id:27, cat:'other',      q:'Czym jest Port?',
