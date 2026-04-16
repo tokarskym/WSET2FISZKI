@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WSET2 Fiszki</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --burg: #6B1E2E;
+  --burg-dk: #3D0F1A;
+  --burg-lt: #9B3A4E;
+  --cream: #F7F0E3;
+  --cream-dk: #E8DFC8;
+  --gold: #C9A84C;
+  --gold-lt: #E8D08A;
+  --ink: #1A0A0F;
+  --muted: #6A4A52;
+  --ok: #2D7A4F;
+  --ok-bg: #EAF5F0;
+  --err: #8B2020;
+  --err-bg: #FAEAEA;
+  --r: 14px;
+  --r-sm: 8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+#home{background:var(--burg-dk);align-items:center;justify-content:center;padding:2rem;text-align:center;gap:0}
+.h-eyebrow{font-size:.72rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem}
+.h-title{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,8vw,3.8rem);color:var(--cream);line-height:1.05;margin-bottom:.4rem}
+.h-sub{font-size:.88rem;color:rgba(247,240,227,.5);font-weight:300;margin-bottom:3rem}
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.25rem;width:100%;max-width:560px}
+.m-card{background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.25);border-radius:var(--r);padding:2rem 1.75rem;cursor:pointer;transition:background .25s,border-color .25s,transform .2s;text-align:left}
+.m-card:hover{background:rgba(201,168,76,.1);border-color:var(--gold);transform:translateY(-3px)}
+.m-icon{font-size:1.8rem;margin-bottom:1rem}
+.m-card h2{font-family:'Playfair Display',serif;color:var(--cream);font-size:1.3rem;margin-bottom:.4rem}
+.m-card p{color:rgba(247,240,227,.55);font-size:.82rem;line-height:1.55}
+.h-stats{display:flex;gap:1.75rem;margin-top:2.5rem;flex-wrap:wrap;justify-content:center}
+.h-stat{text-align:center;color:rgba(247,240,227,.45);font-size:.75rem}
+.h-stat strong{display:block;font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);font-weight:400;line-height:1.1}
+.hdr{background:var(--burg-dk);padding:.9rem 1.25rem;display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.btn-back{background:none;border:1px solid rgba(201,168,76,.35);color:var(--gold-lt);padding:.35rem .8rem;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.8rem;transition:background .2s;flex-shrink:0}
+.btn-back:hover{background:rgba(201,168,76,.12)}
+.hdr-title{font-family:'Playfair Display',serif;color:var(--cream);font-size:1rem;flex:1}
+.hdr-badge{background:rgba(201,168,76,.15);color:var(--gold);padding:.25rem .75rem;border-radius:20px;font-size:.78rem;font-weight:500;white-space:nowrap}
+.cat-bar{padding:.75rem 1.25rem;background:#fff;border-bottom:1px solid var(--cream-dk);flex-shrink:0}
+.cat-label{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:.45rem}
+.cat-pills{display:flex;gap:.4rem;flex-wrap:wrap}
+.pill{padding:.3rem .75rem;border-radius:20px;border:1px solid var(--cream-dk);background:var(--cream);font-size:.76rem;cursor:pointer;color:var(--muted);transition:all .2s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.pill:hover:not(.on){border-color:var(--burg-lt)}
+.pill.on{background:var(--burg);color:#fff;border-color:var(--burg)}
+.qbody{flex:1;padding:1.25rem;max-width:680px;margin:0 auto;width:100%}
+.prog-wrap{margin-bottom:1.25rem}
+.prog-meta{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-bottom:.4rem}
+.prog-bar{background:var(--cream-dk);border-radius:4px;height:5px;overflow:hidden}
+.prog-fill{background:linear-gradient(90deg,var(--burg),var(--gold));height:100%;border-radius:4px;transition:width .4s ease}
+.q-card{background:#fff;border-radius:var(--r);padding:1.75rem;margin-bottom:1.1rem;box-shadow:0 2px 16px rgba(107,30,46,.07)}
+.q-cat{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--burg-lt);margin-bottom:.9rem;font-weight:500}
+.q-text{font-family:'Playfair Display',serif;font-size:clamp(1.05rem,3vw,1.25rem);line-height:1.55;color:var(--ink)}
+.ans-list{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.1rem}
+.ans-btn{background:#fff;border:1.5px solid var(--cream-dk);border-radius:10px;padding:.9rem 1.1rem;text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--ink);transition:border-color .18s,background .18s;display:flex;align-items:center;gap:.7rem}
+.ans-btn:hover:not(:disabled):not(.sel):not(.ok):not(.err){border-color:var(--burg-lt);background:rgba(107,30,46,.03)}
+.aletter{width:26px;height:26px;border-radius:50%;background:var(--cream-dk);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:500;flex-shrink:0;color:var(--muted);transition:background .18s,color .18s}
+.ans-btn.sel{border-color:var(--burg)}
+.ans-btn.sel .aletter{background:var(--burg);color:#fff}
+.ans-btn.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ans-btn.ok .aletter{background:var(--ok);color:#fff}
+.ans-btn.err{border-color:var(--err);background:var(--err-bg)}
+.ans-btn.err .aletter{background:var(--err);color:#fff}
+.ans-btn:disabled{cursor:default}
+.feedback{border-radius:10px;font-size:.88rem;line-height:1.5;padding:.9rem 1.1rem;display:none;margin-bottom:1.1rem}
+.feedback.show{display:block}
+.feedback.ok{background:var(--ok-bg);color:var(--ok);border-left:4px solid var(--ok)}
+.feedback.err{background:var(--err-bg);color:var(--err);border-left:4px solid var(--err)}
+.nav-row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.btn{border:none;border-radius:var(--r-sm);padding:.7rem 1.25rem;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;transition:background .2s,opacity .2s;flex:1;text-align:center;min-width:90px}
+.btn:disabled{opacity:.45;cursor:default}
+.btn-p{background:var(--burg);color:#fff}
+.btn-p:hover:not(:disabled){background:var(--burg-dk)}
+.btn-g{background:var(--cream-dk);color:var(--ink)}
+.btn-g:hover:not(:disabled){background:#D8CEBC}
+.btn-o{background:none;border:1px solid var(--cream-dk);color:var(--muted);flex:0 0 auto}
+.btn-o:hover{background:var(--cream-dk)}
+.btn-star{background:none;border:1px solid var(--gold);color:var(--gold);flex:0 0 auto;padding:.6rem .9rem;font-size:.82rem}
+.btn-star.on{background:var(--gold);color:var(--burg-dk)}
+.btn-star:hover:not(.on){background:rgba(201,168,76,.1)}
+.btn-easy{background:none;border:1px solid var(--ok);color:var(--ok);flex:0 0 auto;padding:.6rem .9rem;font-size:.82rem}
+.btn-easy.on{background:var(--ok);color:#fff}
+.btn-easy:hover:not(.on){background:rgba(45,122,79,.1)}
+.btn-end{background:var(--gold);color:var(--burg-dk);font-weight:600}
+.btn-end:hover{background:#B89830}
+.rbody{flex:1;padding:1.5rem 1.25rem;max-width:680px;margin:0 auto;width:100%}
+.score-ring{width:130px;height:130px;border-radius:50%;background:#fff;border:5px solid var(--burg);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.75rem;box-shadow:0 4px 24px rgba(107,30,46,.12)}
+.score-n{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--burg);line-height:1}
+.score-lbl{font-size:.7rem;color:var(--muted);margin-top:.1rem}
+.r-head{text-align:center;margin-bottom:2rem}
+.r-head h2{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.35rem}
+.r-head p{color:var(--muted);font-size:.88rem}
+.wrong-hd{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:.9rem}
+.w-item{background:#fff;border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:.6rem;border-left:4px solid var(--err)}
+.w-q{font-family:'Playfair Display',serif;font-size:.98rem;margin-bottom:.5rem;line-height:1.4}
+.w-yours{font-size:.82rem;color:var(--err);margin-bottom:.2rem}
+.w-correct{font-size:.82rem;color:var(--ok);font-weight:500}
+.r-actions{display:flex;gap:.75rem;margin-top:2rem;flex-wrap:wrap}
+.r-actions .btn{flex:1;min-width:120px}
+.hist-section{margin-top:2rem}
+.hist-hd{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:.75rem}
+.hist-item{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--cream-dk);font-size:.82rem;color:var(--muted)}
+.hist-item:last-child{border-bottom:none}
+.hist-score{font-weight:500;color:var(--burg)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(30,5,10,.6);z-index:100;align-items:center;justify-content:center;padding:1.5rem}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:var(--r);padding:2rem 1.75rem;max-width:360px;width:100%;text-align:center}
+.modal h3{font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:.6rem;color:var(--ink)}
+.modal p{font-size:.88rem;color:var(--muted);line-height:1.55;margin-bottom:1.5rem}
+.modal-btns{display:flex;gap:.75rem}
+.modal-btns .btn{flex:1}
+@media(max-width:520px){
+  .mode-grid{grid-template-columns:1fr}
+  .nav-row .btn{min-width:60px;font-size:.78rem;padding:.55rem .6rem}
+  .btn-star,.btn-easy{padding:.5rem .65rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HOME ══ -->
+<div id="home" class="screen active">
+  <div class="h-eyebrow">WSET Level 2</div>
+  <h1 class="h-title">Fiszki<br>Egzaminacyjne</h1>
+  <p class="h-sub">Przygotowanie do egzaminu WSET2</p>
+  <div class="mode-grid">
+    <div class="m-card" onclick="startTest()">
+      <div class="m-icon">📝</div>
+      <h2>Test Mode</h2>
+      <p id="home-test-desc">50 losowych pytań z aktywnej puli. Wynik i błędy na końcu.</p>
+    </div>
+    <div class="m-card" onclick="openStudy()">
+      <div class="m-icon">📖</div>
+      <h2>Study Mode</h2>
+      <p>Przeglądaj pytania wg kategorii. Odpowiedź widoczna od razu.</p>
+    </div>
+  </div>
+  <div class="h-stats">
+    <div class="h-stat"><strong id="s-total">0</strong>pytań łącznie</div>
+    <div class="h-stat"><strong id="s-diff">0</strong>⭐ trudnych</div>
+    <div class="h-stat"><strong id="s-easy-count">0</strong>✓ łatwych</div>
+    <div class="h-stat"><strong id="s-tests">0</strong>testów</div>
+  </div>
+</div>
+
+<!-- ══ MODAL RESET ══ -->
+<div class="modal-overlay" id="reset-modal">
+  <div class="modal">
+    <h3>Zacząć od początku?</h3>
+    <p>Twój obecny postęp zostanie usunięty i otrzymasz nowy zestaw pytań.</p>
+    <div class="modal-btns">
+      <button class="btn btn-g" onclick="closeModal()">Anuluj</button>
+      <button class="btn btn-p" onclick="confirmReset()">Tak, resetuj</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TEST ══ -->
+<div id="test-screen" class="screen">
+  <div class="hdr">
+    <button class="btn-back" onclick="goHome()">← Powrót</button>
+    <div class="hdr-title">Test Mode</div>
+    <div class="hdr-badge" id="t-badge">1 / 50</div>
+    <button class="btn-back" onclick="openResetModal()" style="border-color:rgba(247,240,227,.2);color:rgba(247,240,227,.6)">↺ Resetuj</button>
+  </div>
+  <div class="qbody">
+    <div class="prog-wrap">
+      <div class="prog-meta">
+        <span id="t-prog-txt">Pytanie 1 z 50</span>
+        <span id="t-ans-count">0 odpowiedzi</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="t-prog-fill" style="width:2%"></div></div>
+    </div>
+    <div class="q-card">
+      <div class="q-cat" id="t-cat"></div>
+      <div class="q-text" id="t-q"></div>
+    </div>
+    <div class="ans-list" id="t-ans"></div>
+    <div class="nav-row">
+      <button class="btn btn-g btn-o" id="t-prev" onclick="tNav(-1)">← Poprzednie</button>
+      <button class="btn btn-p" id="t-next" onclick="tNav(1)">Następne →</button>
+      <button class="btn btn-end" id="t-submit" onclick="submitTest()" style="display:none">Zakończ ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STUDY ══ -->
+<div id="study-screen" class="screen">
+  <div class="hdr">
+    <button class="btn-back" onclick="goHome()">← Powrót</button>
+    <div class="hdr-title">Study Mode</div>
+    <div class="hdr-badge" id="s-badge">1 / 24</div>
+  </div>
+  <div class="cat-bar">
+    <div class="cat-label">Kategoria</div>
+    <div class="cat-pills" id="cat-pills"></div>
+  </div>
+  <div class="qbody">
+    <div class="prog-wrap">
+      <div class="prog-meta">
+        <span id="s-prog-txt">Pytanie 1</span>
+        <span id="s-total-txt">z 24</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="s-prog-fill" style="width:2%"></div></div>
+    </div>
+    <div class="q-card">
+      <div class="q-cat" id="s-cat"></div>
+      <div class="q-text" id="s-q"></div>
+    </div>
+    <div class="ans-list" id="s-ans"></div>
+    <div class="feedback" id="s-fb"></div>
+    <div class="nav-row">
+      <button class="btn btn-g btn-o" onclick="sNav(-1)">← Poprzednie</button>
+      <button class="btn btn-star" id="s-star" onclick="toggleStar()">⭐ Trudne</button>
+      <button class="btn btn-easy" id="s-easy" onclick="toggleEasy()">✓ Łatwe</button>
+      <button class="btn btn-p" onclick="sNav(1)">Następne →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESULTS ══ -->
+<div id="results-screen" class="screen">
+  <div class="hdr">
+    <button class="btn-back" onclick="goHome()">← Powrót</button>
+    <div class="hdr-title">Wyniki Testu</div>
+  </div>
+  <div class="rbody">
+    <div class="score-ring">
+      <div class="score-n" id="r-pct">–</div>
+      <div class="score-lbl">wynik</div>
+    </div>
+    <div class="r-head">
+      <h2 id="r-title"></h2>
+      <p id="r-sub"></p>
+    </div>
+    <div id="r-wrong-section">
+      <div class="wrong-hd">Błędne odpowiedzi</div>
+      <div id="r-wrong"></div>
+    </div>
+    <div class="hist-section">
+      <div class="hist-hd">Historia testów</div>
+      <div id="r-hist"></div>
+    </div>
+    <div class="r-actions">
+      <button class="btn btn-g" onclick="startFreshTest()">Nowy test</button>
+      <button class="btn btn-p" onclick="goHome()">Strona główna</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ DANE ══
+const CATS = {
+  food:       'Food Pairing',
+  storage:    'Storage & Service',
+  growing:    'Grape Growing',
+  winemaking: 'Winemaking',
+  grapes:     'Grape Varieties',
+  other:      'Other Styles'
+};
+
+
+const QS = [
+  // FOOD PAIRING
+// FOOD PAIRING — 20 questions (id: 31–50)
+  {id:31, cat:'food', q:'What is the primary purpose of food and wine pairing?',
+   a:['To ensure the wine is always more expensive than the food','To make food and wine together provide more pleasure than either would separately','To guarantee the wine overpowers the food','To select wines based solely on colour matching'], c:1},
+
+
+  {id:32, cat:'food', q:'Which two food components make wine taste "harder" (more drying, bitter, acidic and less fruity)?',
+   a:['Salt and acid','Fat and acid','Sweetness and umami','Salt and fat'], c:2},
+
+
+  {id:33, cat:'food', q:'Which two food components make wine taste "softer" (less drying, less acidic, sweeter and more fruity)?',
+   a:['Sweetness and umami','Fat and sugar','Salt and acid','Bitterness and fat'], c:2},
+
+
+  {id:34, cat:'food', q:'What effect does sweetness in food have on a dry wine?',
+   a:['It makes the wine seem sweeter and more fruity','It has no effect on the wine','It makes the wine seem less fruity and more acidic','It softens the tannins in the wine'], c:2},
+
+
+  {id:35, cat:'food', q:'When pairing wine with a sweet dish, what is the general rule?',
+   a:['Select a wine that is drier than the dish','Select a wine with higher acidity than the dish','Select a wine with a higher level of sweetness than the dish','Select the most full-bodied wine available'], c:2},
+
+
+  {id:36, cat:'food', q:'Which of the following are examples of foods with umami taste?',
+   a:['Fresh strawberries and cream','Cooked mushrooms, air-dried meats and aged cheeses','Citrus fruits and salad leaves','Boiled potatoes and white rice'], c:1},
+
+
+  {id:37, cat:'food', q:'What effect does umami in food have on wine?',
+   a:['It makes wine seem less acidic and more fruity','It makes wine seem sweeter and fuller','It makes wine seem more drying and bitter, and less sweet and fruity','It has no measurable effect on wine'], c:2},
+
+
+  {id:38, cat:'food', q:'What effect does salty food have on wine?',
+   a:['It makes wine seem more drying and bitter','It makes wine seem less drying and bitter, more fruity with more body','It makes wine seem more acidic and less fruity','It has no effect on the perception of wine'], c:1},
+
+
+  {id:39, cat:'food', q:'How can salt affect tannins in red wine?',
+   a:['Salt increases the perception of tannins','Salt has no effect on tannins','Salt can soften the tannin in red wines','Salt makes tannins taste more bitter'], c:2},
+
+
+  {id:40, cat:'food', q:'What effect does acidity in food have on wine?',
+   a:['It makes the wine seem more acidic and less fruity','It makes the wine seem less drying and bitter, more sweet and fruity','It overwhelms the flavour of the wine','It increases the perception of alcohol'], c:1},
+
+
+  {id:41, cat:'food', q:'Acidity in food can be beneficial for wine pairing when:',
+   a:['The wine has very low acidity','The wine has very high acidity, as food acid balances it and enhances fruitiness','The food is also very sweet','The wine is fortified'], c:1},
+
+
+  {id:42, cat:'food', q:'In which wines are the effects of chilli heat greatest?',
+   a:['Wines with high acidity','Wines with low alcohol','Wines with high alcohol','Wines with high residual sugar'], c:2},
+
+
+  {id:43, cat:'food', q:'What does alcohol do in the context of chilli heat?',
+   a:['Alcohol reduces the burning sensation of chilli','Alcohol has no interaction with chilli heat','Alcohol increases the burning sensation of chilli','Alcohol neutralises chilli compounds'], c:2},
+
+
+  {id:44, cat:'food', q:'What is the principle behind matching flavour intensity in food and wine pairing?',
+   a:['The wine should always be more intense than the food','The food should always overpower the wine','The food and wine flavour intensities should be matched so neither overpowers the other','Flavour intensity is irrelevant to successful pairing'], c:2},
+
+
+  {id:45, cat:'food', q:'What sensation does pairing acidic wine with fatty or oily food typically provide?',
+   a:['The wine tastes flat and lifeless','A pleasant sensation of the wine cutting through the fattiness and cleansing the palate','The food makes the wine taste sweeter','The fat removes the acidity from the wine'], c:1},
+
+
+  {id:46, cat:'food', q:'The combination of acidic wine with fatty or oily food is described as:',
+   a:['Universally unpleasant','Objectively perfect in all cases','Very subjective — some people find it very satisfying, others do not','Only suitable for sparkling wines'], c:2},
+
+
+  {id:47, cat:'food', q:'Generally speaking, which has more impact on the other in a food and wine pairing?',
+   a:['Wine has more impact on food','Food and wine impact each other equally','Food has more impact on wine','It depends entirely on the vintage'], c:2},
+
+
+  {id:48, cat:'food', q:'What happens when a highly flavoured dish is paired with a delicate wine?',
+   a:['The wine enhances the food flavours','The wine is overwhelmed by the food flavours','The food tastes less intense','Both food and wine flavours increase'], c:1},
+
+
+  {id:49, cat:'food', q:'What effect does fatty or oily food have on wine?',
+   a:['Wine seems more acidic','Wine seems more tannic','Wine seems less acidic','Wine seems more bitter'], c:2},
+
+
+  {id:50, cat:'food', q:'Why is it important to consider individual sensitivities when making food and wine pairing recommendations?',
+   a:['All people perceive taste identically so it is not important','Individual sensitivities mean that what seems a perfect pairing to one person may seem ordinary or unpleasant to another','Individual preferences only matter for professional sommeliers','Only sweetness perception varies between individuals'], c:1},
+
+
+{id:51, cat:'food', q:'Which foods are examples of those that can have a mouth-coating effect, impairing the sense of taste?',
+   a:['Oysters and lemon','Chocolate and thick creamy dishes','Salted nuts and olives','Grilled fish and vegetables'], c:1},
+
+
+  {id:52, cat:'food', q:'Why can umami be difficult to isolate as a taste in food?',
+   a:['Because umami is identical to sweetness','Because umami tends to be present with other tastes such as salt, which can balance its negative effects','Because umami only appears in very spicy foods','Because umami disappears when food is cooked'], c:1},
+
+
+  {id:53, cat:'food', q:'Which of the following is an example of a food with umami taste?',
+   a:['Fresh cream','Boiled rice','Miso','Citrus fruit'], c:2},
+
+
+  {id:54, cat:'food', q:'When a wine has low acidity, what happens if the food also has high acidity?',
+   a:['The wine seems more fruity and refreshing','The wine seems less fruity','The wine seems sweeter','There is no interaction between food acid and wine acidity'], c:1},
+
+
+  {id:55, cat:'food', q:'Why should food and wine pairings take individual preferences into account?',
+   a:['Because wine quality varies too much to make general rules','Because individual sensitivities and preferences mean the same pairing can seem perfect to one person and unpleasant to another','Because food always tastes better without wine','Because professional sommeliers always disagree on pairings'], c:1},
+
+
+  {id:56, cat:'food', q:'What does the toothpaste and orange juice example illustrate about food and wine pairing?',
+   a:['That citrus wines pair well with minty foods','That taste buds adapt after eating or drinking, altering the perception of what is consumed next','That sweet wines should never be paired with acidic foods','That oral hygiene has no impact on wine tasting'], c:1},
+
+
+  // STORAGE & SERVICE
+
+
+// STORAGE & SERVICE — 30 questions (id: 57–86)
+  {id:57, cat:'storage', q:'What is the primary goal of all traditions associated with the storage and service of wine?',
+   a:['To follow historical customs regardless of outcome','To ensure the wine is served in the best possible condition','To impress guests with elaborate rituals','To justify the high price of fine wines'], c:1},
+
+
+  {id:58, cat:'storage', q:'What can happen if a wine is stored incorrectly?',
+   a:['The wine will improve faster than expected','The wine can lose character and ultimately develop faults','The wine will become sweeter over time','Incorrect storage only affects the colour of the wine'], c:1},
+
+
+  {id:59, cat:'storage', q:'For long-term storage, at what type of temperature should wines be kept?',
+   a:['Warm and variable','Cool and constant','Cold and fluctuating','Hot and dry'], c:1},
+
+
+  {id:60, cat:'storage', q:'What effect can extremes of cold and heat, or significant temperature changes, have on wine?',
+   a:['They accelerate the ageing process beneficially','They have no effect on wine quality','They can damage the wine','They only affect sparkling wines'], c:2},
+
+
+  {id:61, cat:'storage', q:'Why should wines be kept away from strong sunshine and bright artificial light?',
+   a:['Light causes the wine to become sweeter','Light and the heat it generates can cause a wine to lose its expected fruit character','Light only affects the colour of the label','Light has no effect on wine stored in coloured bottles'], c:1},
+
+
+  {id:62, cat:'storage', q:'Why should wines sealed with a cork be stored on their side?',
+   a:['To make it easier to read the label','To ensure the cork remains in contact with the wine and stays moist, preventing oxidation','To allow sediment to collect at the bottom','To keep the wine at a cooler temperature'], c:1},
+
+
+  {id:63, cat:'storage', q:'What happens if a cork dries out during storage?',
+   a:['The wine becomes sweeter','It can let air into the bottle, causing the wine to oxidise and lose its fruit character','The cork becomes easier to remove','Nothing — a dry cork has no effect on the wine'], c:1},
+
+
+  {id:64, cat:'storage', q:'How should wines sealed with a screwcap be stored?',
+   a:['Always on their side, like corked wines','They cannot be stored long-term','They can be stored standing up','They must be kept in the dark only'], c:2},
+
+
+  {id:65, cat:'storage', q:'What is the recommended service temperature for sweet wines such as Sauternes?',
+   a:['Room temperature 15–18°C','Lightly chilled 10–13°C','Chilled 7–10°C','Well chilled 6–8°C'], c:3},
+
+
+  {id:66, cat:'storage', q:'What is the recommended service temperature for sparkling wines such as Champagne?',
+   a:['Room temperature 15–18°C','Well chilled 6–10°C','Lightly chilled 10–13°C','Chilled 7–10°C'], c:1},
+
+
+  {id:67, cat:'storage', q:'What is the recommended service temperature for light- and medium-bodied white wines and rosé such as Pinot Grigio?',
+   a:['Well chilled 6–8°C','Room temperature 15–18°C','Chilled 7–10°C','Lightly chilled 10–13°C'], c:2},
+
+
+  {id:68, cat:'storage', q:'What is the recommended service temperature for full-bodied white wines such as oaked Chardonnay?',
+   a:['Well chilled 6–8°C','Chilled 7–10°C','Lightly chilled 10–13°C','Room temperature 15–18°C'], c:2},
+
+
+  {id:69, cat:'storage', q:'What is the recommended service temperature for light-bodied red wines such as Beaujolais?',
+   a:['Well chilled 6–8°C','Room temperature or lightly chilled 13–18°C','Room temperature 15–18°C','Chilled 7–10°C'], c:1},
+
+
+  {id:70, cat:'storage', q:'What is the recommended service temperature for medium- and full-bodied red wines such as Shiraz?',
+   a:['Well chilled 6–8°C','Lightly chilled 10–13°C','Chilled 7–10°C','Room temperature 15–18°C'], c:3},
+
+
+  {id:71, cat:'storage', q:'Which wine style has the widest recommended service temperature range according to the WSET guidelines?',
+   a:['Sweet wines','Sparkling wines','Light-bodied red wines','Full-bodied white wines'], c:2},
+
+
+  {id:72, cat:'storage', q:'Should recommended service temperatures override a guest\'s personal preference?',
+   a:['Yes, always — the guidelines must be followed strictly','No — if someone prefers a different temperature, their preference should be respected','Only in professional restaurant settings','Yes, but only for red wines'], c:1},
+
+
+  {id:73, cat:'storage', q:'What design feature do the best wine glasses share in common?',
+   a:['A wide, flat rim for easy drinking','The bowl of the glass narrows at the rim, concentrating aromas','A very thick base for stability','A coloured glass to protect the wine from light'], c:1},
+
+
+  {id:74, cat:'storage', q:'How do red wine glasses typically compare to white wine glasses?',
+   a:['Red wine glasses are smaller than white wine glasses','Red wine glasses are the same size as white wine glasses','Red wine glasses are slightly larger than white wine glasses','Red wine glasses are always flute-shaped'], c:2},
+
+
+  {id:75, cat:'storage', q:'In which type of glass are sparkling wines typically served?',
+   a:['Large red wine glasses','Standard white wine glasses','Flutes or tulip-shaped glasses','Flat coupe glasses only'], c:2},
+
+
+  {id:76, cat:'storage', q:'What can happen if a wine glass is not completely clean before use?',
+   a:['The wine will taste sweeter','Dirt or a residue of detergent can spoil the wine','Only the appearance of the wine is affected','Nothing — small amounts of residue have no impact'], c:1},
+
+
+  {id:77, cat:'storage', q:'What should be checked when serving wine to ensure it is not faulty?',
+   a:['The vintage and producer name only','The appearance for haziness, any floating bits, and the aroma for faults such as wet cardboard or vinegar','Only the colour of the wine','Only the aroma of the wine'], c:1},
+
+
+  {id:78, cat:'storage', q:'What might haziness in a wine indicate?',
+   a:['The wine is very old and complex','The wine has been stored at the correct temperature','The wine may be faulty','The wine is naturally unfiltered and high quality'], c:2},
+
+
+  {id:79, cat:'storage', q:'Once a bottle of wine has been opened, what happens to it over time?',
+   a:['It improves as more oxygen is introduced','It slowly becomes stale as it reacts with the air','It remains fresh indefinitely if re-corked','It becomes sweeter as the alcohol evaporates'], c:1},
+
+
+  {id:80, cat:'storage', q:'How does a vacuum system help keep an opened wine fresh?',
+   a:['It adds inert gas to protect the wine','It chills the wine automatically','It relies on a pump to remove air from inside the bottle','It reseals the bottle with a new cork'], c:2},
+
+
+  {id:81, cat:'storage', q:'How do inert gas systems such as nitrogen and argon preserve an opened wine?',
+   a:['They add flavour compounds to the wine','They chill the wine to slow oxidation','They are pumped into the bottle to prevent the wine coming into contact with air','They remove the alcohol from the wine'], c:2},
+
+
+  {id:82, cat:'storage', q:'For an ice bucket to work efficiently when chilling wine, how should it be filled?',
+   a:['With ice only','With warm water and ice','With cold water as well as ice','With ice and salt only'], c:2},
+
+
+  {id:83, cat:'storage', q:'What is cork taint caused by?',
+   a:['Excessive heat during storage','The chemical TCA (Trichloroanisole), originating from contaminated cork','A failure of the bottle closure to seal properly','Storing the wine upright so the cork dries out'], c:1},
+
+
+  {id:84, cat:'storage', q:'What are the typical aromas associated with a cork-tainted wine?',
+   a:['Honey, caramel and coffee','Fresh red fruits and violets','Damp cardboard, with muted and less fresh fruit aromas','Vinegar and nail polish remover'], c:2},
+
+
+  {id:85, cat:'storage', q:'What are the typical characteristics of a wine affected by failure of closure (oxidation)?',
+   a:['Intense fresh fruit aromas and bright colour','Aromas of honey, caramel or coffee, browner colour, lack of freshness and fruitiness','Damp cardboard aromas and muted fruit','Aromas of chilli and pepper with high acidity'], c:1},
+
+
+  {id:86, cat:'storage', q:'What effect does heat damage have on a wine?',
+   a:['It causes the wine to develop complex tertiary aromas prematurely','It makes the wine appear browner with aromas of honey and caramel','The wine loses its freshness quickly and lacks the expected fruit character','It causes the wine to develop cork taint'], c:2},
+{id:87, cat:'storage', q:'Which wines need to be decanted?',
+   a:['All red wines regardless of age','Only white wines with sediment','Wines with a heavy deposit formed during the bottle ageing process','All wines before serving to improve aeration'], c:2},
+
+
+  {id:88, cat:'storage', q:'Why should the bottle be held in front of a light source when decanting?',
+   a:['To warm the wine to the correct serving temperature','To check the colour of the wine','So you can see when the deposit reaches the neck and stop pouring at that point','To sterilise the wine before serving'], c:2},
+
+
+  {id:89, cat:'storage', q:'Why does chilling a bottle of sparkling wine help when opening it?',
+   a:['Chilling makes the cork easier to remove with a corkscrew','Chilling reduces the pressure inside the bottle','Chilling improves the flavour before opening','Chilling makes the wire cage easier to untwist'], c:1},
+
+
+  {id:90, cat:'storage', q:'From the moment you loosen the wire cage on a sparkling wine, what must you do?',
+   a:['Immediately remove the cork as quickly as possible','Point the bottle upwards to release pressure safely','Keep the cork covered with your hand at all times','Place the bottle back in the ice bucket'], c:2},
+
+
+  {id:91, cat:'storage', q:'When opening a sparkling wine, what is the correct technique?',
+   a:['Turn the cork while holding the bottle still','Hold the cork firmly and turn the bottle, not the cork','Remove the cork as fast as possible for a dramatic pop','Always use a corkscrew to remove the cork'], c:1},
+
+
+  {id:92, cat:'storage', q:'What is the ideal result when opening a bottle of sparkling wine correctly?',
+   a:['A loud pop and foam overflowing from the bottle','The cork flies out with force','The pressure is released with a quiet "phut" and no loss of wine','The cork is removed in two pieces'], c:2},
+
+
+  {id:93, cat:'storage', q:'Why should you never heat a wine by placing it close to a radiator?',
+   a:['It is simply a matter of tradition with no practical reason','It can damage the flavours of the wine','It causes the cork to expand and become impossible to remove','It makes the wine too sweet'], c:1},
+
+
+  {id:94, cat:'storage', q:'What is the correct way to bring a red wine up to serving temperature if it is too cold?',
+   a:['Place it next to a radiator for 10 minutes','Heat it briefly in a microwave','Place it in the room where it will be served and allow the temperature to rise naturally','Warm the bottle under hot running water'], c:2},
+
+
+  {id:95, cat:'storage', q:'How does keeping an opened wine in the fridge with the cork help?',
+   a:['It stops oxidation completely and keeps the wine fresh indefinitely','It can help to keep the wine fresher for longer by slowing the reaction with air','It improves the flavour of the wine after opening','It has no practical benefit'], c:1},
+  // GRAPE GROWING
+  {id:11, cat:'growing',    q:'Czym jest terroir?',
+   a:['Technika cięcia winorośli','Całokształt czynników środowiskowych wpływających na winogrona','Rodzaj gleby wulkanicznej','Technika fermentacji'], c:1},
+  {id:12, cat:'growing',    q:'Kiedy zbiory odbywają się na półkuli południowej?',
+   a:['Wrzesień–Październik','Marzec–Kwiecień','Czerwiec–Lipiec','Grudzień–Styczeń'], c:1},
+  {id:13, cat:'growing',    q:'Czym zagraża wiosenny przymrozek winorośli?',
+   a:['Nadmiernym nawodnieniem','Zniszczeniem młodych pędów i ograniczeniem zbiorów','Przedwczesnym dojrzewaniem','Redukcją kwasowości w owocach'], c:1},
+  {id:14, cat:'growing',    q:'Który typ gleby kojarzony jest z Chablis?',
+   a:['Granit','Kimerydu (wapień z jurajskimi skamieniałościami)','Łupek','Piasek'], c:1},
+  {id:15, cat:'growing',    q:'Co to jest "zbiór ręczny" i dlaczego jest preferowany w premium winifikacji?',
+   a:['Szybszy i tańszy od maszynowego','Pozwala selekcjonować grona, minimalizuje uszkodzenia','Zwiększa wydajność zbioru','Obowiązkowy przy winach musujących'], c:1},
+
+
+  // WINEMAKING
+  {id:16, cat:'winemaking', q:'Co to jest fermentacja alkoholowa?',
+   a:['Dojrzewanie wina w beczce','Przemiana cukrów na alkohol i CO₂ przez drożdże','Dodanie tanin do moszczu','Filtrowanie przed butelkowaniem'], c:1},
+  {id:17, cat:'winemaking', q:'Jak różni się fermentacja w stali od fermentacji w dębie?',
+   a:['Stal nadaje waniliowe nuty','Dąb zachowuje świeżość, stal dodaje strukturę','Stal zachowuje świeże aromaty owocowe, dąb dodaje złożoność i strukturę','Nie ma różnicy smakowej'], c:2},
+  {id:18, cat:'winemaking', q:'Co to jest fermentacja jabłkowo-mlekowa (MLF)?',
+   a:['Fermentacja soków jabłkowych','Przemiana ostrej kwasowości jabłkowej na łagodniejszą mlekową','Dodanie mleka do wina','Metoda produkcji wina słodkiego'], c:1},
+  {id:19, cat:'winemaking', q:'Co oznacza maceracja przy produkcji wina czerwonego?',
+   a:['Chłodzenie moszczu','Kontakt soku z łupinami, pestkami i szypułkami','Filtrowanie przed butelkowaniem','Dodanie drożdży do moszczu'], c:1},
+  {id:20, cat:'winemaking', q:'Jaki jest cel siarkowanu (SO₂) w produkcji wina?',
+   a:['Zwiększenie zawartości alkoholu','Działanie przeciwutleniające i przeciwbakteryjne','Dodanie słodyczy','Przyspieszenie fermentacji'], c:1},
+
+
+  // GRAPE VARIETIES
+  {id:21, cat:'grapes',     q:'Który szczep dominuje w Bordeaux rouge na lewym brzegu?',
+   a:['Pinot Noir','Cabernet Sauvignon','Syrah','Grenache'], c:1},
+  {id:22, cat:'grapes',     q:'Czym charakteryzuje się aromat Sauvignon Blanc?',
+   a:['Wanilia i kokos','Agrest, trawa, cytrusy','Kwiat pomarańczy','Dym i pieprz'], c:1},
+  {id:23, cat:'grapes',     q:'W którym regionie produkuje się Barolo?',
+   a:['Bordeaux, Francja','Toskania, Włochy','Piemont, Włochy','Rioja, Hiszpania'], c:2},
+  {id:24, cat:'grapes',     q:'Który szczep jest podstawą Chablis?',
+   a:['Pinot Gris','Chardonnay','Aligoté','Viognier'], c:1},
+  {id:25, cat:'grapes',     q:'Pinot Noir znany jest z:',
+   a:['Intensywnego koloru i wysokich tanin','Delikatnego koloru, niskich tanin i elegancji','Silnego smaku śliwki i pieprzu','Słodkości i niskiej kwasowości'], c:1},
+
+
+  // OTHER STYLES
+  {id:26, cat:'other',      q:'Co oznacza "late harvest" (późny zbiór)?',
+   a:['Mniejsza zawartość alkoholu','Wyższy cukier resztkowy, koncentrat smaku','Brak tanin','Dłuższa maceracja'], c:1},
+  {id:27, cat:'other',      q:'Czym jest Port?',
+   a:['Wino musujące z Portugalii','Wzmacniane wino z doliny Douro w Portugalii','Lekkie wino różowe z Porto','Białe wino do aperitivo'], c:1},
+  {id:28, cat:'other',      q:'Méthode traditionnelle to metoda produkcji:',
+   a:['Win wzmacnianych','Win musujących z drugą fermentacją w butelce','Win słodkich botrytyzowanych','Win różowych metodą saignée'], c:1},
+  {id:29, cat:'other',      q:'Co to jest Sherry?',
+   a:['Słodkie wino musujące z Andaluzji','Wzmacniane wino z Jerez w Hiszpanii','Białe wino z Burgundii','Lekkie Prosecco ze Włoch'], c:1},
+  {id:30, cat:'other',      q:'Botrytis cinerea, użyta do produkcji Sauternes, to:',
+   a:['Szkodliwy grzyb niszczący zbiory','Szlachetna pleśń koncentrująca cukry i aromaty w gronach','Bakteria powodująca MLF','Rodzaj drożdży górnej fermentacji'], c:1},
+];
+
+
+// ══ STORAGE ══
+const store={
+  get diff(){return JSON.parse(localStorage.getItem('w2_diff')||'[]')},
+  set diff(v){localStorage.setItem('w2_diff',JSON.stringify(v))},
+  get easy(){return JSON.parse(localStorage.getItem('w2_easy')||'[]')},
+  set easy(v){localStorage.setItem('w2_easy',JSON.stringify(v))},
+  get tests(){return JSON.parse(localStorage.getItem('w2_tests')||'[]')},
+  pushTest(o){const t=this.tests;t.push(o);if(t.length>10)t.shift();localStorage.setItem('w2_tests',JSON.stringify(t))},
+  saveProgress(){localStorage.setItem('w2_progress',JSON.stringify({ids:tQs.map(q=>q.id),idx:tIdx,map:tMap}))},
+  get progress(){return JSON.parse(localStorage.getItem('w2_progress')||'null')},
+  clearProgress(){localStorage.removeItem('w2_progress')}
+};
+
+const L=['A','B','C','D'];
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function goHome(){updateHomeStats();show('home')}
+
+function updateHomeStats(){
+  const easy=store.easy;
+  const activePool=QS.filter(q=>!easy.includes(q.id));
+  document.getElementById('s-total').textContent=QS.length;
+  document.getElementById('s-diff').textContent=store.diff.length;
+  document.getElementById('s-easy-count').textContent=easy.length;
+  document.getElementById('s-tests').textContent=store.tests.length;
+  const p=store.progress;
+  const desc=document.getElementById('home-test-desc');
+  if(p&&p.ids&&p.ids.length){
+    const answered=Object.keys(p.map||{}).length;
+    desc.innerHTML=`<span style="color:var(--gold-lt)">▶ Kontynuuj test – pytanie ${(p.idx||0)+1}/${p.ids.length}, ${answered} odpowiedzi</span>`;
+  } else {
+    desc.innerHTML=`Losowe pytania z aktywnej puli <span style="color:var(--gold-lt)">(${activePool.length} dostępnych)</span>. Wynik i błędy na końcu.`;
+  }
+}
+
+// ══ MODAL ══
+function openResetModal(){document.getElementById('reset-modal').classList.add('open')}
+function closeModal(){document.getElementById('reset-modal').classList.remove('open')}
+function confirmReset(){closeModal();startFreshTest()}
+
+// ══ TEST MODE ══
+let tQs=[],tIdx=0,tMap={};
+
+function openTest(){
+  const saved=store.progress;
+  if(saved&&saved.ids&&saved.ids.length){
+    const idMap=Object.fromEntries(QS.map(q=>[q.id,q]));
+    tQs=saved.ids.map(id=>idMap[id]).filter(Boolean);
+    tIdx=saved.idx||0;
+    tMap=saved.map||{};
+  } else {startFreshTest();return;}
+  show('test-screen');renderT();
+}
+
+function startFreshTest(){
+  // Wyklucz pytania oznaczone jako łatwe
+  const easy=store.easy;
+  const activePool=QS.filter(q=>!easy.includes(q.id));
+  tQs=shuffle(activePool).slice(0,Math.min(50,activePool.length));
+  tIdx=0;tMap={};
+  store.saveProgress();
+  show('test-screen');renderT();
+}
+
+function startTest(){openTest()}
+
+function renderT(){
+  const q=tQs[tIdx],tot=tQs.length;
+  document.getElementById('t-badge').textContent=`${tIdx+1} / ${tot}`;
+  document.getElementById('t-prog-txt').textContent=`Pytanie ${tIdx+1} z ${tot}`;
+  document.getElementById('t-ans-count').textContent=`${Object.keys(tMap).length} odpowiedzi`;
+  document.getElementById('t-prog-fill').style.width=`${((tIdx+1)/tot)*100}%`;
+  document.getElementById('t-cat').textContent=CATS[q.cat];
+  document.getElementById('t-q').textContent=q.q;
+  const el=document.getElementById('t-ans');el.innerHTML='';
+  q.a.forEach((txt,i)=>{
+    const b=document.createElement('button');
+    b.className='ans-btn'+(tMap[tIdx]===i?' sel':'');
+    b.innerHTML=`<span class="aletter">${L[i]}</span>${txt}`;
+    b.onclick=()=>{tMap[tIdx]=i;store.saveProgress();renderT()};
+    el.appendChild(b);
+  });
+  const last=tIdx===tot-1;
+  document.getElementById('t-next').style.display=last?'none':'';
+  document.getElementById('t-submit').style.display=last?'':'none';
+  document.getElementById('t-prev').disabled=tIdx===0;
+}
+
+function tNav(d){tIdx=Math.max(0,Math.min(tQs.length-1,tIdx+d));store.saveProgress();renderT()}
+
+function submitTest(){
+  let ok=0;const wrong=[];
+  tQs.forEach((q,i)=>{
+    const ua=tMap[i];
+    if(ua===q.c){ok++}
+    else wrong.push({q:q.q,yours:ua!=null?q.a[ua]:'Brak odpowiedzi',correct:q.a[q.c]});
+  });
+  const tot=tQs.length,pct=Math.round((ok/tot)*100);
+  store.pushTest({date:new Date().toLocaleDateString('pl'),pct,ok,tot});
+  store.clearProgress();
+  showResults(pct,ok,tot,wrong);
+}
+
+// ══ RESULTS ══
+function showResults(pct,ok,tot,wrong){
+  document.getElementById('r-pct').textContent=`${pct}%`;
+  const title=pct>=75?'🎉 Egzamin zdany!':pct>=50?'Całkiem nieźle – ćwicz dalej':'Trzeba powtórzyć materiał';
+  document.getElementById('r-title').textContent=title;
+  document.getElementById('r-sub').textContent=`${ok} poprawnych / ${tot} pytań`;
+  const wl=document.getElementById('r-wrong');wl.innerHTML='';
+  if(wrong.length===0){
+    wl.innerHTML='<div style="text-align:center;color:var(--ok);padding:1rem;font-size:.9rem">Brak błędów! Gratulacje 🎉</div>';
+  } else {
+    wrong.forEach(w=>{
+      wl.innerHTML+=`<div class="w-item"><div class="w-q">${w.q}</div><div class="w-yours">✗ Twoja odpowiedź: ${w.yours}</div><div class="w-correct">✓ Poprawna: ${w.correct}</div></div>`;
+    });
+  }
+  const hl=document.getElementById('r-hist');hl.innerHTML='';
+  const tests=[...store.tests].reverse();
+  if(tests.length===0){
+    hl.innerHTML='<div style="color:var(--muted);font-size:.82rem">Brak historii.</div>';
+  } else {
+    tests.forEach(t=>{
+      hl.innerHTML+=`<div class="hist-item"><span>${t.date}</span><span>${t.ok}/${t.tot}<span class="hist-score" style="margin-left:.5rem">${t.pct}%</span></span></div>`;
+    });
+  }
+  show('results-screen');
+}
+
+// ══ STUDY MODE ══
+const CAT_OPTS=[
+  {k:'all',l:'Wszystkie'},
+  {k:'difficult',l:'⭐ Trudne'},
+  {k:'easy',l:'✓ Łatwe'},
+  {k:'food',l:'Food Pairing'},
+  {k:'storage',l:'Storage & Service'},
+  {k:'growing',l:'Grape Growing'},
+  {k:'winemaking',l:'Winemaking'},
+  {k:'grapes',l:'Grape Varieties'},
+  {k:'other',l:'Other Styles'},
+];
+
+let sFilter='all',sQs=[],sIdx=0,sAnswered={};
+
+function buildPills(){
+  const c=document.getElementById('cat-pills');c.innerHTML='';
+  CAT_OPTS.forEach(o=>{
+    const p=document.createElement('button');
+    p.className='pill'+(sFilter===o.k?' on':'');
+    p.textContent=o.l;
+    p.onclick=()=>{sFilter=o.k;sAnswered={};buildPills();loadStudy()};
+    c.appendChild(p);
+  });
+}
+
+function loadStudy(){
+  const diff=store.diff,easy=store.easy;
+  let pool;
+  if(sFilter==='easy'){
+    pool=QS.filter(q=>easy.includes(q.id));
+  } else if(sFilter==='difficult'){
+    pool=QS.filter(q=>diff.includes(q.id));
+  } else if(sFilter==='all'){
+    pool=QS.filter(q=>!easy.includes(q.id));
+  } else {
+    pool=QS.filter(q=>q.cat===sFilter&&!easy.includes(q.id));
+  }
+  sQs=shuffle(pool);sIdx=0;renderS();
+}
+
+function openStudy(){sFilter='all';sAnswered={};buildPills();loadStudy();show('study-screen')}
+
+function renderS(){
+  const starBtn=document.getElementById('s-star');
+  const easyBtn=document.getElementById('s-easy');
+  if(!sQs.length){
+    document.getElementById('s-q').textContent='Brak pytań w tej kategorii.';
+    document.getElementById('s-ans').innerHTML='';
+    document.getElementById('s-fb').className='feedback';
+    starBtn.textContent='⭐ Trudne';starBtn.classList.remove('on');
+    easyBtn.textContent='✓ Łatwe';easyBtn.classList.remove('on');
+    return;
+  }
+  const q=sQs[sIdx],tot=sQs.length;
+  const diff=store.diff,easy=store.easy;
+  const isDiff=diff.includes(q.id),isEasy=easy.includes(q.id);
+
+  document.getElementById('s-badge').textContent=`${sIdx+1} / ${tot}`;
+  document.getElementById('s-prog-txt').textContent=`Pytanie ${sIdx+1}`;
+  document.getElementById('s-total-txt').textContent=`z ${tot}`;
+  document.getElementById('s-prog-fill').style.width=`${((sIdx+1)/tot)*100}%`;
+  document.getElementById('s-cat').textContent=CATS[q.cat];
+  document.getElementById('s-q').textContent=q.q;
+
+  starBtn.textContent=isDiff?'⭐ Oznaczone':'⭐ Trudne';
+  starBtn.classList.toggle('on',isDiff);
+  easyBtn.textContent=isEasy?'✓ Opanowane':'✓ Łatwe';
+  easyBtn.classList.toggle('on',isEasy);
+
+  const fb=document.getElementById('s-fb');
+  fb.className='feedback';
+  const alr=sAnswered[q.id];
+  const al=document.getElementById('s-ans');al.innerHTML='';
+  q.a.forEach((txt,i)=>{
+    const b=document.createElement('button');
+    b.className='ans-btn';
+    b.innerHTML=`<span class="aletter">${L[i]}</span>${txt}`;
+    if(alr!=null){
+      b.disabled=true;
+      if(i===q.c)b.classList.add('ok');
+      else if(i===alr)b.classList.add('err');
+    } else {
+      b.onclick=()=>{sAnswered[q.id]=i;renderS()};
+    }
+    al.appendChild(b);
+  });
+  if(alr!=null){
+    const ok2=alr===q.c;
+    fb.className='feedback show '+(ok2?'ok':'err');
+    fb.textContent=ok2?'✓ Poprawnie!':'✗ Błąd. Poprawna odpowiedź: '+q.a[q.c];
+  }
+}
+
+function sNav(d){sIdx=Math.max(0,Math.min(sQs.length-1,sIdx+d));renderS()}
+
+function toggleStar(){
+  if(!sQs.length)return;
+  const id=sQs[sIdx].id,d=store.diff;
+  const i=d.indexOf(id);
+  if(i===-1){
+    d.push(id);
+    // usuń z łatwych jeśli było
+    const e=store.easy,ei=e.indexOf(id);
+    if(ei!==-1){e.splice(ei,1);store.easy=e;}
+  } else {d.splice(i,1);}
+  store.diff=d;renderS();
+}
+
+function toggleEasy(){
+  if(!sQs.length)return;
+  const id=sQs[sIdx].id,e=store.easy;
+  const i=e.indexOf(id);
+  if(i===-1){
+    e.push(id);
+    // usuń z trudnych jeśli było
+    const d=store.diff,di=d.indexOf(id);
+    if(di!==-1){d.splice(di,1);store.diff=d;}
+  } else {e.splice(i,1);}
+  store.easy=e;renderS();
+}
+
+updateHomeStats();
+</script>
+</body>
+</html>
