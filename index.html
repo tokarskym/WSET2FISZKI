@@ -376,7 +376,6 @@ const QS = [
    a:['That citrus wines pair well with minty foods','That taste buds adapt after eating or drinking, altering the perception of what is consumed next','That sweet wines should never be paired with acidic foods','That oral hygiene has no impact on wine tasting'], c:1},
 
 
-  // STORAGE & SERVICE
 
 
 // STORAGE & SERVICE — 30 questions (id: 57–86)
@@ -533,30 +532,456 @@ const QS = [
   {id:95, cat:'storage', q:'How does keeping an opened wine in the fridge with the cork help?',
    a:['It stops oxidation completely and keeps the wine fresh indefinitely','It can help to keep the wine fresher for longer by slowing the reaction with air','It improves the flavour of the wine after opening','It has no practical benefit'], c:1},
   // GRAPE GROWING
-  {id:11, cat:'growing',    q:'Czym jest terroir?',
-   a:['Technika cięcia winorośli','Całokształt czynników środowiskowych wpływających na winogrona','Rodzaj gleby wulkanicznej','Technika fermentacji'], c:1},
-  {id:12, cat:'growing',    q:'Kiedy zbiory odbywają się na półkuli południowej?',
-   a:['Wrzesień–Październik','Marzec–Kwiecień','Czerwiec–Lipiec','Grudzień–Styczeń'], c:1},
-  {id:13, cat:'growing',    q:'Czym zagraża wiosenny przymrozek winorośli?',
-   a:['Nadmiernym nawodnieniem','Zniszczeniem młodych pędów i ograniczeniem zbiorów','Przedwczesnym dojrzewaniem','Redukcją kwasowości w owocach'], c:1},
-  {id:14, cat:'growing',    q:'Który typ gleby kojarzony jest z Chablis?',
-   a:['Granit','Kimerydu (wapień z jurajskimi skamieniałościami)','Łupek','Piasek'], c:1},
-  {id:15, cat:'growing',    q:'Co to jest "zbiór ręczny" i dlaczego jest preferowany w premium winifikacji?',
-   a:['Szybszy i tańszy od maszynowego','Pozwala selekcjonować grona, minimalizuje uszkodzenia','Zwiększa wydajność zbioru','Obowiązkowy przy winach musujących'], c:1},
 
+{id:96,cat:'growing',q:'How long can a vine typically live?',
+   a:['Around 10 years','Around 20 years','60 years or more','No more than 30 years'],c:2},
 
+  {id:97,cat:'growing',q:'When does the annual growing season of a vine begin?',
+   a:['Winter','Autumn','Summer','Spring'],c:3},
+
+  {id:98,cat:'growing',q:'What happens to a vine during the winter months?',
+   a:['It produces its highest sugar levels','It flowers and sets fruit','It is dormant and does not grow','It drops its grapes'],c:2},
+
+  {id:99,cat:'growing',q:'Which species of vine is used to make the vast majority of wines?',
+   a:['A North American species','A South American species','An African species','A European species'],c:3},
+
+  {id:100,cat:'growing',q:'What are the five things a vine needs to grow and thrive?',
+   a:['Rain, soil, sunlight, fertiliser and pruning','Warmth, sunlight, carbon dioxide, water and nutrients','Heat, irrigation, nitrogen, oxygen and minerals','Sunlight, rainfall, wind, humidity and soil'],c:1},
+
+  {id:101,cat:'growing',q:'What is photosynthesis in the context of vine growing?',
+   a:['The process by which vines absorb nutrients from the soil','The process by which sunlight allows the vine to combine CO₂ and water to produce sugars','The process by which grapes develop colour during ripening','The process by which vines drop their leaves in autumn'],c:1},
+
+  {id:102,cat:'growing',q:'What does the pulp of a grape mainly contain?',
+   a:['Tannins and colour','Water, sugar, acids and flavours','Seeds and bitter oils','Flavours and tannins only'],c:1},
+
+  {id:103,cat:'growing',q:'What do the skins of black grapes contain that is not found in significant levels in white grape skins?',
+   a:['Sugar and acid','Water and flavours','Colour and tannins in much higher levels','Carbon dioxide and nutrients'],c:2},
+
+  {id:104,cat:'growing',q:'What can happen if seeds and stems are handled roughly during winemaking?',
+   a:['They add sweetness to the wine','They can make the wine taste very bitter due to their high tannin levels','They give the wine a deeper colour','They increase the alcohol level of the wine'],c:1},
+
+  {id:105,cat:'growing',q:'What is the correct order of grape formation and ripening?',
+   a:['Fruit set, flowering, véraison, ripening','Véraison, flowering, fruit set, ripening','Flowering, fruit set, véraison, ripening','Ripening, véraison, fruit set, flowering'],c:2},
+
+  {id:106,cat:'growing',q:'How do vines pollinate their flowers?',
+   a:['They rely on insects such as bees to pollinate them','They are pollinated by the wind only','They are self-pollinating and do not need to attract insects','They require manual pollination by vineyard workers'],c:2},
+
+  {id:107,cat:'growing',q:'What are newly formed grapes like immediately after fruit set?',
+   a:['Large, soft, sweet and colourful','Small, hard, green and unpleasant to taste','Golden yellow or deep purple depending on variety','Fully flavoured but still high in acid'],c:1},
+
+  {id:108,cat:'growing',q:'What happens to grapes during véraison?',
+   a:['Grapes are harvested and pressed','Grapes start to lose their green colour — white grapes become golden, black grapes become red then purple','Grapes develop their maximum sugar levels','Grapes begin to shrivel and concentrate their flavours'],c:1},
+
+  {id:109,cat:'growing',q:'During ripening, what happens to the acidity and sugar levels in grapes?',
+   a:['Acidity increases and sugar decreases','Both acidity and sugar increase','Acidity drops and sugar rises','Both acidity and sugar remain constant'],c:2},
+
+  {id:110,cat:'growing',q:'How do the aromas of white grapes change as ripeness increases?',
+   a:['From dried fruit to fresh fruit','From tropical fruit to green fruit','From green fruit to stone fruit and tropical fruit','From cooked fruit to fresh fruit'],c:2},
+
+  {id:111,cat:'growing',q:'Why is it important that tannins in black grapes are ripe at harvest?',
+   a:['Unripe tannins make the wine too alcoholic','Unripe tannins can taste bitter','Unripe tannins reduce the colour of the wine','Unripe tannins prevent fermentation'],c:1},
+
+  {id:112,cat:'growing',q:'What happens to grapes during extra ripening if left on the vine long enough?',
+   a:['They lose all their sugar and become acidic','They start to turn into raisins as water evaporates, concentrating acids, sugars and flavours','They develop fungal disease and must be discarded','They become green again and lose their varietal character'],c:1},
+
+  {id:113,cat:'growing',q:'What are the ideal vineyard conditions for botrytis/noble rot to be beneficial rather than destructive?',
+   a:['Hot dry days followed by cold dry nights','Damp misty mornings followed by warm dry afternoons','Constant rain and cool temperatures throughout the day','Frost in the morning followed by sunshine in the afternoon'],c:1},
+
+  {id:114,cat:'growing',q:'How does botrytis/noble rot concentrate the sugars, acids and flavours in a grape?',
+   a:['It adds sugar directly to the pulp of the grape','It makes tiny holes in the skin, causing water inside the grape to evaporate','It freezes the water in the grape overnight','It causes the grape to produce extra sugars through photosynthesis'],c:1},
+
+  {id:115,cat:'growing',q:'How are ice wines produced?',
+   a:['Grapes are frozen in a winery freezer before pressing','Healthy grapes are left on the vine into winter, picked while frozen, and pressed before thawing — separating ice crystals from concentrated liquid','Grapes are harvested at night when temperatures are lowest','Botrytis-affected grapes are freeze-dried to concentrate their sugars'],c:1},
+
+{id:116,cat:'growing',q:'Why do vines produce fruit (grapes)?',
+   a:['To provide sugar for the winemaking process','To attract animals that eat the fruit and spread its seeds','To store energy reserves for the winter dormancy period','To protect the vine from fungal diseases'],c:1},
+
+  {id:117,cat:'growing',q:'What colour is the pulp of both white and black grapes?',
+   a:['White grapes have pale pulp, black grapes have dark pulp','Black grapes always have red pulp','With only tiny exceptions, the pulp of both white and black grapes has the same pale colour','The pulp colour depends on the variety and region'],c:2},
+
+  {id:118,cat:'growing',q:'What gives red wines their colour?',
+   a:['Pigments in the pulp of black grapes','The seeds and stems during maceration','The skins of black grapes','The colour of the grape juice before fermentation'],c:2},
+
+  {id:119,cat:'growing',q:'What weather conditions are needed for extra ripening to continue safely on the vine?',
+   a:['Cool and wet to preserve freshness','Dry to avoid fungal disease and warm enough for ripening to continue','Foggy mornings and warm afternoons','Frost at night and sunshine during the day'],c:1},
+
+  {id:120,cat:'growing',q:'What is the first condition required for botrytis to be beneficial rather than destructive?',
+   a:['The grapes must be unripe and high in acid','The fungus must grow on ripe grapes','The vineyard must have sandy soil','The temperature must drop below freezing at night'],c:1},
+
+  {id:121,cat:'growing',q:'What are the characteristics of ice wines?',
+   a:['Dry with high acidity and fresh green fruit aromas','Light-bodied and sparkling with low alcohol','Sweet with concentrated and pure varietal characteristics','Medium-sweet with low acidity and cooked fruit flavours'],c:2}, 
+
+   {id:122,cat:'growing',q:'What is the difference between climate and weather?',
+   a:['They are the same thing','Climate is the day-to-day conditions; weather is the long-term average','Climate describes the long-term average of temperature, sunlight and rainfall; weather describes what actually happens day-to-day','Climate only refers to temperature; weather includes rainfall'],c:2},
+
+  {id:123,cat:'growing',q:'When does the growing season run in the northern hemisphere?',
+   a:['October to April','January to July','April to October','June to December'],c:2},
+
+  {id:124,cat:'growing',q:'What is the average growing season temperature for a cool climate region?',
+   a:['18.5°C (65°F) to 21°C (70°F)','16.5°C (62°F) to 18.5°C (65°F)','16.5°C (62°F) or below','Above 21°C (70°F)'],c:2},
+
+  {id:125,cat:'growing',q:'What is the average growing season temperature for a moderate climate region?',
+   a:['16.5°C (62°F) or below','16.5°C (62°F) to 18.5°C (65°F)','18.5°C (65°F) to 21°C (70°F)','Above 21°C (70°F)'],c:1},
+
+  {id:126,cat:'growing',q:'What is the average growing season temperature for a warm climate region?',
+   a:['16.5°C (62°F) or below','16.5°C (62°F) to 18.5°C (65°F)','18.5°C (65°F) to 21°C (70°F)','Above 21°C (70°F)'],c:2},
+
+  {id:127,cat:'growing',q:'What is the most important climatic factor that influences a wine region\'s climate?',
+   a:['Altitude','Soil type','Latitude','Proximity to rivers'],c:2},
+
+  {id:128,cat:'growing',q:'Between which latitudes are most vineyards located?',
+   a:['10° and 30° north or south of the equator','20° and 40° north or south of the equator','30° and 50° north or south of the equator','40° and 60° north or south of the equator'],c:2},
+
+  {id:129,cat:'growing',q:'What effect does altitude have on vineyard temperature?',
+   a:['Temperatures increase with altitude','Temperatures are unaffected by altitude','Temperatures drop with altitude — a higher vineyard is cooler than one at the same latitude but lower altitude','Altitude only affects rainfall, not temperature'],c:2},
+
+  {id:130,cat:'growing',q:'How can seas moderate the climate of nearby wine regions?',
+   a:['Seas always make nearby regions warmer','Seas always make nearby regions cooler','Seas have a moderating influence — warm currents can warm cooler regions and cold currents can cool warmer regions','Seas only affect rainfall levels, not temperature'],c:2},
+
+  {id:131,cat:'growing',q:'How do rivers benefit vineyards in cooler regions?',
+   a:['Rivers cool the vineyards, extending the growing season','Rivers provide warmth in autumn, protect against frost, extend ripening and reflect sunlight to help grapes ripen','Rivers increase rainfall levels, helping the vine through drought','Rivers block cold winds from reaching the vineyard'],c:1},
+
+  {id:132,cat:'growing',q:'What effect can clouds have on a vineyard?',
+   a:['Clouds warm the vineyard by trapping heat','Clouds block sunlight, slowing photosynthesis and causing grapes to take longer to ripen','Clouds increase temperature by reflecting heat back to the ground','Clouds have no significant effect on grape growing'],c:1},
+
+  {id:133,cat:'growing',q:'Why is fog an important moderating factor in coastal regions of California and Chile?',
+   a:['Fog provides extra moisture to the vines during dry periods','Fog forms at ground level and cools down the vineyard','Fog protects the vines from spring frosts','Fog increases sunlight exposure by reflecting light onto the vines'],c:1},
+
+  {id:134,cat:'growing',q:'What role do autumn morning mists near rivers play in viticulture?',
+   a:['They cool the grapes before harvest to preserve acidity','They are essential for the development of botrytis/noble rot','They protect grapes from heat damage during ripening','They increase sugar levels in the grapes'],c:1},
+
+  {id:135,cat:'growing',q:'How can mountains benefit nearby vineyards?',
+   a:['Mountains always block sunshine from reaching vineyards','Mountains increase rainfall by forcing clouds over the region','Mountains act as a barrier sheltering vineyards from clouds, rain and cold winds, resulting in sunny summers and dry autumns','Mountains cool the vineyards significantly, extending the growing season'],c:2},
+
+  {id:136,cat:'growing',q:'How does slope and aspect affect grape ripening?',
+   a:['All slopes produce the same level of ripeness regardless of direction','Slopes facing away from the equator produce riper grapes','A slope facing the equator receives more heat and light, producing riper grapes than flat land or slopes facing away from the equator','Steep slopes are always too hot for quality grape growing'],c:2},
+
+  {id:137,cat:'growing',q:'How can stony soils benefit grape ripening?',
+   a:['Stones provide extra nutrients to the vine through the roots','Stones retain moisture, keeping the vine hydrated during dry periods','Stones absorb heat during the day and make the vineyard warmer, helping with grape ripening','Stones prevent weeds from growing around the vines'],c:2},
+
+  {id:138,cat:'growing',q:'What are the typical problems of a cool vintage?',
+   a:['Grapes develop cooked-fruit aromas and are damaged by sunburn','Acid levels are too high, sugar levels too low, and grapes may struggle to develop their signature aromas','Grapes shrivel on the vine and develop raisin-like flavours','Fungal diseases spread rapidly due to excessive heat'],c:1},
+
+  {id:139,cat:'growing',q:'What can happen to grapes in an excessively hot vintage?',
+   a:['Grapes struggle to develop sugar and have very high acidity','Grapes develop uncharacteristic dried-fruit aromas and can even be damaged by sunburn','Grapes produce their freshest and most vibrant fruit character','Grapes benefit from the extra warmth and always produce higher quality wine'],c:1},
+
+  {id:140,cat:'growing',q:'What causes drought in vineyards and what is its main risk?',
+   a:['Drought is caused by too much sun; the main risk is sunburn to the grapes','Drought is caused by prolonged below-average rainfall and above-average temperatures; in the worst cases the vine may die','Drought is caused by frost; the main risk is damage to new shoots','Drought is caused by excessive irrigation; the main risk is diluted flavours'],c:1},
+
+  {id:141,cat:'growing',q:'What problem can heavy rainfall close to harvest cause?',
+   a:['It causes the grapes to shrivel and develop dried-fruit flavours','It cools the grapes too quickly, preventing ripening','Excessive moisture can cause grapes to swell, diluting their flavours','It causes the grapes to develop botrytis noble rot'],c:2},
+
+  {id:142,cat:'growing',q:'What risk does hail pose to a vineyard?',
+   a:['Hail cools the grapes rapidly, reducing sugar levels','Hail can cause significant damage and heavy hail storms have the potential to destroy the entire annual crop','Hail only affects the leaves of the vine, not the grapes','Hail increases moisture levels, spreading fungal disease'],c:1},
+
+  {id:143,cat:'growing',q:'Why is spring frost particularly dangerous for vines?',
+   a:['Spring frost prevents flowering and permanently damages the root system','Spring frost can damage and kill the vine\'s new growth, reducing the number of grapes that can be grown that year','Spring frost causes the grapes to freeze on the vine and develop off-flavours','Spring frost only affects older vines with weaker root systems'],c:1},
+
+  {id:144,cat:'growing',q:'Why is training and pruning necessary?',
+   a:['To increase the number of grape varieties that can grow in a vineyard','To ensure a healthy and commercially viable crop can be harvested every year','To prevent fungal diseases from spreading between vines','To reduce the need for irrigation in dry regions'],c:1},
+
+  {id:145,cat:'growing',q:'When are vines typically pruned and why?',
+   a:['In summer, to redirect energy into the growing grapes','In spring, to encourage new shoot growth','In winter while dormant, to ensure individual vines retain their required shape','In autumn after harvest, to prepare for the following season'],c:2},
+
+  {id:146,cat:'growing',q:'What are fungicides, insecticides and herbicides used for in the vineyard?',
+   a:['Fungicides kill insects, insecticides kill fungi, herbicides kill weeds','Fungicides kill fungi, insecticides kill insects, herbicides keep weeds under control','Fungicides and insecticides both kill fungi; herbicides kill insects','All three are used to protect against fungal diseases only'],c:1},
+
+  {id:147,cat:'growing',q:'What does it mean for a vineyard to be certified organic?',
+   a:['The grapes are grown without the use of any sprays whatsoever','The grapes are grown without the use of most chemicals, although some sprays are still permitted to control the worst fungal diseases','The grapes are grown using only natural fertilisers but chemical sprays are permitted','The grapes are grown without irrigation or pruning'],c:1},
+
+  {id:148,cat:'growing',q:'What is yield in grape growing?',
+   a:['The total weight of the entire harvest across a country','The measure of the amount of fruit produced per unit of area','The sugar level achieved by the grapes at harvest','The number of grape varieties grown in a single vineyard'],c:1},
+
+  {id:149,cat:'growing',q:'What are the consequences of excessively high yields?',
+   a:['The grapes will be too concentrated and tannic','The grapes could have diluted flavours and lower levels of sugar','The grapes will ripen too quickly and develop cooked-fruit aromas','High yields always produce better quality wine due to greater selection'],c:1},
+
+  {id:150,cat:'growing',q:'What are the characteristics of grapes harvested earlier in the ripening process?',
+   a:['Higher sugar, lower acid and riper flavours','Lower sugar, higher acid and less-ripe flavours','Higher sugar and higher acid with tropical fruit aromas','Lower sugar and lower acid with dried-fruit flavours'],c:1},
+
+  {id:151,cat:'growing',q:'Is hand harvesting fundamentally better for wine quality than machine harvesting?',
+   a:['Yes, hand harvesting always produces better quality wine','No, neither is fundamentally better — the choice depends on the style of wine, though machine harvesters cannot be used on steep slopes','Yes, but only for red wine production','No, machine harvesting is always superior as it is faster and more consistent'],c:1},
+{id:152,cat:'growing',q:'What impact is climate change having on grape growing?',
+   a:['Climate change is having no measurable effect on grape growing','Climate change is causing a sustained increase in temperatures, greater variability and more extreme events such as droughts and floods, significantly impacting grape growing','Climate change is only affecting vineyards in the southern hemisphere','Climate change is making all wine regions cooler and wetter'],c:1},
+
+  {id:153,cat:'growing',q:'How can cold air from mountains affect warmer vineyards?',
+   a:['Cold mountain air warms vineyards by creating a temperature inversion','Cold air from mountains can move down to lower altitudes at night, cooling warmer vineyards where heat can build up during the day','Cold mountain air only affects vineyards during the winter months','Cold mountain air increases humidity and promotes fungal disease'],c:1},
+
+  {id:154,cat:'growing',q:'Which country\'s Cape wine region is cooled by cold ocean currents?',
+   a:['Australia','Chile','Argentina','South Africa'],c:3},
+
+  {id:155,cat:'growing',q:'Which wine-growing region benefits from the warming influence of warm ocean currents?',
+   a:['Coastal California','Northern Europe','Southern Australia','Cape region of South Africa'],c:1},
+
+  {id:156,cat:'growing',q:'In some wine regions, what is set in law regarding yield?',
+   a:['The minimum yield that must be achieved to produce commercial wine','The maximum yield allowed, to protect wine quality','The exact yield required for each grape variety','Yield is never regulated by law in any wine region'],c:1},
+
+  {id:157,cat:'growing',q:'What is the problem if too few grapes are grown in a vineyard?',
+   a:['The grapes will have diluted flavours and low sugar','The wine will be too alcoholic','The crop will be too small to be commercially viable','The grapes will ripen too quickly and lose their acidity'],c:2}, 
+{id:158,cat:'growing',q:'Why do older vines typically produce higher quality wines?',
+   a:['Older vines produce more grapes with higher sugar levels','Older vines produce smaller numbers of grapes which can have more concentrated and complex aromas','Older vines are more resistant to fungal disease','Older vines produce grapes with lower acidity, making the wine softer'],c:1},
+
+  {id:159,cat:'growing',q:'What is the French term for old vines sometimes seen on wine labels?',
+   a:['Grand Cru','Vieilles Vignes','Vendanges Tardives','Appellation Contrôlée'],c:1},
+
+  {id:160,cat:'growing',q:'Is "Old Vine" a legally defined term?',
+   a:['Yes, vines must be at least 25 years old to use the term','Yes, the EU regulates the minimum age for old vine labelling','No, it is not a legally defined concept and there can be disagreement over its use','Yes, but only in France and Germany'],c:2},
+
+  {id:161,cat:'growing',q:'What does the vintage date on a wine label refer to?',
+   a:['The year the wine was bottled','The year the wine was released for sale','The year in which the grapes were harvested','The year the winery was established'],c:2},
+
+  {id:162,cat:'growing',q:'Why is the vintage date useful when buying wines from prestigious regions?',
+   a:['It tells the consumer exactly how the wine will taste','Weather varies year to year, so the vintage can indicate whether a wine is different in style from what might be expected and if it is worth the retail price','It is only useful for sparkling wines','The vintage date is irrelevant for most wine purchasing decisions'],c:1},
+
+  {id:163,cat:'growing',q:'Why is a 2022 wine from Australia half a year older than a 2022 wine from California?',
+   a:['Australian wines mature faster due to the warmer climate','The growing seasons happen at different times — the southern hemisphere harvests around March/April, the northern hemisphere around September/October','Australian wineries bottle their wines earlier in the year','This is simply a labelling convention with no practical difference'],c:1},
+
+  {id:164,cat:'growing',q:'What does the labelling term "Late Harvest" indicate?',
+   a:['The grapes were picked early to preserve high acidity','The grapes were not harvested at the normal time but left on the vine and picked much later, resulting in riper flavours and higher sugar levels','The wine has been aged for an extended period in oak barrels','The grapes were harvested at night to preserve freshness'],c:1},
+
+  {id:165,cat:'growing',q:'What range of sweetness levels can Late Harvest wines be?',
+   a:['They are always sweet','They are always dry','They can be dry, off-dry, medium or sweet','They are always medium-sweet'],c:2},
+
+  {id:166,cat:'growing',q:'What does a "Botrytis/Noble Rot" labelling term indicate on a wine?',
+   a:['The grapes were affected by a harmful fungus that reduced yield','The grapes were affected by noble rot, resulting in very highly concentrated levels of sugar and acid — nearly always used to make sweet wines','The grapes were frozen on the vine to concentrate their sugars','The grapes were harvested late and dried on straw mats'],c:1},
+
+  {id:167,cat:'growing',q:'What does the labelling term "Icewine" or "Eiswein" indicate?',
+   a:['The wine was chilled before bottling to improve clarity','The grapes were left to freeze on the vine prior to harvesting, resulting in grape juice highly concentrated in sugar and acid','The wine is stored in ice caves to mature slowly','The wine is made from grapes grown in very cold mountain vineyards'],c:1},
+
+  {id:168,cat:'growing',q:'What is a Geographical Indication (GI)?',
+   a:['A quality rating system used only in France','A legally defined vineyard area that regularly appears on wine labels','A grape variety classification system used worldwide','A certification that a wine has been produced organically'],c:1},
+
+  {id:169,cat:'growing',q:'Why do Geographical Indications appear on wine labels?',
+   a:['Because the law requires every wine to state its GI','Because the area where grapes are grown can have an influence on the style of the wine','Because GIs guarantee a minimum quality standard for all wines','Because GIs identify the grape variety used to make the wine'],c:1},
+
+  {id:170,cat:'growing',q:'What is the key difference between GIs inside and outside the European Union?',
+   a:['GIs outside the EU are always higher quality than EU GIs','Inside the EU, GIs come with extra regulations stating what grapes may be grown and how wines should be made; outside the EU there are minimal restrictions','Outside the EU, GIs have stricter regulations than EU GIs','There is no difference — all GIs worldwide operate the same way'],c:1},
+
+  {id:171,cat:'growing',q:'What are the two categories of GI used within the European Union?',
+   a:['AOC and IGP','PDO and PGI','DOC and DOCG','Qualitätswein and Prädikatswein'],c:1},
+
+  {id:172,cat:'growing',q:'How do PDOs and PGIs differ in terms of area and regulations?',
+   a:['PDOs cover large areas with flexible regulations; PGIs cover small areas with strict regulations','PDOs and PGIs cover the same size areas but have different quality requirements','PDOs typically cover small areas with tightly defined regulations; PGIs cover wider areas with less strict regulations','PDOs are only used in France; PGIs are used in the rest of Europe'],c:2},
+
+  {id:173,cat:'growing',q:'What are the French PDO labelling terms?',
+   a:['DOC and DOCG','Qualitätswein and Prädikatswein','Appellation d\'origine protégée (AOP) or Appellation d\'origine contrôlée (AOC)','Denominación de Origen (DO) and DOCa'],c:2},
+
+  {id:174,cat:'growing',q:'What is the French PGI labelling term?',
+   a:['Indication géographique protégée (IGP)','Indicazione Geografica Tipica (IGT)','Vino de la Tierra','Landwein'],c:0},
+
+  {id:175,cat:'growing',q:'What are the Italian PDO labelling terms?',
+   a:['AOC and AOP','DO and DOCa','Qualitätswein and Prädikatswein','DOC (Denominazione di Origine Controllata) and DOCG (Denominazione di Origine Controllata e Garantita)'],c:3},
+
+  {id:176,cat:'growing',q:'What is the Italian PGI labelling term?',
+   a:['Landwein','Vino de la Tierra','Indicazione Geografica Tipica (IGT)','Indication géographique protégée (IGP)'],c:2},
+
+  {id:177,cat:'growing',q:'What are the Spanish PDO labelling terms?',
+   a:['DOC and DOCG','Denominación de Origen (DO) and Denominación de Origen Calificada (DOCa)','Qualitätswein and Prädikatswein','AOC and AOP'],c:1},
+
+  {id:178,cat:'growing',q:'What are the German PDO labelling terms?',
+   a:['DOC and DOCG','DO and DOCa','AOC and AOP','Qualitätswein and Prädikatswein'],c:3},
+
+  {id:179,cat:'growing',q:'What does "Appellation d\'origine contrôlée" on a wine label indicate?',
+   a:['The wine is a PGI wine from France','The wine is a PDO wine from France','The wine is an organic wine from France','The wine is a late harvest wine from France'],c:1},
+
+  {id:180,cat:'growing',q:'Why does the grape variety not necessarily appear on the label of PDO wines in the EU, such as Chablis?',
+   a:['EU law prohibits grape variety labelling on any wine','The grape variety is considered a trade secret by EU producers','EU PDO regulations specify what grapes must be used, so the GI itself indicates the grape — in Chablis it must be Chardonnay','EU PDO wines are always blends of multiple varieties'],c:2},
+
+  {id:181,cat:'growing',q:'Why do wines from outside the EU, such as those from South Eastern Australia, commonly state the grape variety on the label?',
+   a:['Non-EU law requires all wines to be varietally labelled','Outside the EU there are minimal restrictions, so producers use the grape variety to help consumers predict the style of wine','Non-EU wines have no GI system so the grape variety is the only quality indicator','Grape variety labelling is compulsory in Australia and the Americas'],c:1},
+
+  {id:182,cat:'growing',q:'What does "Vino de la Tierra" indicate on a Spanish wine label?',
+   a:['A Spanish PDO wine with tightly defined regulations','A Spanish PGI wine','A Spanish wine with no geographical indication','A Spanish organic wine'],c:1},
+   {id:183,cat:'growing',q:'How large or small can a Geographical Indication (GI) be?',
+   a:['GIs must cover at least an entire region — single vineyards cannot be GIs','GIs can range from very large areas covering an entire country down to a single vineyard','GIs always cover exactly one administrative region','GIs outside the EU can only cover entire countries'],c:1},
+
+  {id:184,cat:'growing',q:'Does every wine in the world come from a Geographical Indication?',
+   a:['Yes, every wine must state a GI on its label','No, not every wine comes from a GI, though in some cases a statement of origin is legally required','Yes, but only wines sold internationally must have a GI','No, GIs are optional everywhere in the world including the EU'],c:1},
+
+  {id:185,cat:'growing',q:'What is the German PGI labelling term?',
+   a:['Qualitätswein','Prädikatswein','Landwein','Indicazione Geografica Tipica'],c:2},
+
+  {id:186,cat:'growing',q:'What range of wine styles and prices can PGI wines represent?',
+   a:['PGI wines are always inexpensive and high-volume','PGI wines are always premium and low-volume','PGI wines range from high-volume inexpensive acceptable-quality wines to low-volume outstanding wines that sell at a premium price','PGI wines are always medium quality and medium price'],c:2},
+
+  {id:187,cat:'growing',q:'What does the term "Organic" on a wine label indicate about how the grapes were grown?',
+   a:['The grapes were grown without any human intervention whatsoever','The grapes were grown without the use of most chemicals','The grapes were grown using only natural yeasts for fermentation','The grapes were grown without irrigation or pruning'],c:1},
+
+  {id:188,cat:'growing',q:'What is South Eastern Australia an example of on a wine label?',
+   a:['A PDO wine region with tightly defined regulations','A GI outside the EU where grape growers face minimal restrictions and wines are commonly varietally labelled','A premium single-vineyard GI from Australia','A PGI equivalent region with strict winemaking regulations'],c:1},
   // WINEMAKING
-  {id:16, cat:'winemaking', q:'Co to jest fermentacja alkoholowa?',
-   a:['Dojrzewanie wina w beczce','Przemiana cukrów na alkohol i CO₂ przez drożdże','Dodanie tanin do moszczu','Filtrowanie przed butelkowaniem'], c:1},
-  {id:17, cat:'winemaking', q:'Jak różni się fermentacja w stali od fermentacji w dębie?',
-   a:['Stal nadaje waniliowe nuty','Dąb zachowuje świeżość, stal dodaje strukturę','Stal zachowuje świeże aromaty owocowe, dąb dodaje złożoność i strukturę','Nie ma różnicy smakowej'], c:2},
-  {id:18, cat:'winemaking', q:'Co to jest fermentacja jabłkowo-mlekowa (MLF)?',
-   a:['Fermentacja soków jabłkowych','Przemiana ostrej kwasowości jabłkowej na łagodniejszą mlekową','Dodanie mleka do wina','Metoda produkcji wina słodkiego'], c:1},
-  {id:19, cat:'winemaking', q:'Co oznacza maceracja przy produkcji wina czerwonego?',
-   a:['Chłodzenie moszczu','Kontakt soku z łupinami, pestkami i szypułkami','Filtrowanie przed butelkowaniem','Dodanie drożdży do moszczu'], c:1},
-  {id:20, cat:'winemaking', q:'Jaki jest cel siarkowanu (SO₂) w produkcji wina?',
-   a:['Zwiększenie zawartości alkoholu','Działanie przeciwutleniające i przeciwbakteryjne','Dodanie słodyczy','Przyspieszenie fermentacji'], c:1},
 
+  {id:189,cat:'winemaking',q:'What is the fundamental definition of winemaking?',
+   a:['The process of growing grapes in carefully managed vineyards','The process that changes grape juice into wine','The process of storing and maturing wine in oak barrels','The process of blending different grape varieties together'],c:1},
+
+  {id:190,cat:'winemaking',q:'What does crushing do in the winemaking process?',
+   a:['It extracts as much liquid as possible from the grapes','It splits the grape skins to release some of the grape juice','It removes the seeds and stems from the grapes','It starts the alcoholic fermentation process'],c:1},
+
+  {id:191,cat:'winemaking',q:'What does pressing do and when can it happen?',
+   a:['Pressing only happens before fermentation in all wine styles','Pressing splits the skins and can only happen after fermentation','Crushed grapes are squeezed to extract as much liquid as possible — it can happen either before or after fermentation depending on the wine style','Pressing removes colour and tannins from the grape skins'],c:2},
+
+  {id:192,cat:'winemaking',q:'What is alcoholic fermentation?',
+   a:['The process of storing wine in oak barrels to develop flavour','The process used to create alcohol — yeast feed on sugars in grape juice and produce alcohol, CO₂ and heat','The process of adding sugar to grape juice before bottling','The process of pressing grapes to extract juice'],c:1},
+
+  {id:193,cat:'winemaking',q:'What are the three by-products produced by yeast during alcoholic fermentation?',
+   a:['Alcohol, tannins and colour','Alcohol, carbon dioxide and heat','Sugar, acid and alcohol','Alcohol, glycerol and sulphur dioxide'],c:1},
+
+  {id:194,cat:'winemaking',q:'When does alcoholic fermentation typically stop naturally?',
+   a:['After exactly 14 days regardless of conditions','When the temperature drops below 10°C','When the yeast have consumed all of the sugar in the grape juice, resulting in a dry wine','When the winemaker decides to stop it by chilling the wine'],c:2},
+
+  {id:195,cat:'winemaking',q:'What is the typical alcohol level range for most dry wines?',
+   a:['5% to 9% abv','8% to 11% abv','11.5% to 16% abv','18% to 22% abv'],c:2},
+
+  {id:196,cat:'winemaking',q:'What determines the level of alcohol in a dry wine?',
+   a:['The length of time the wine is aged in oak','The temperature at which fermentation takes place','How much sugar there is in the grapes','The grape variety used'],c:2},
+
+  {id:197,cat:'winemaking',q:'What happens to wine during storage or maturation after alcoholic fermentation?',
+   a:['The wine is immediately bottled and sent to market','The newly made wine is stored for a period of time prior to bottling during which flavours can develop','The wine is blended with grape juice to increase sweetness','The wine is filtered to remove all yeast and sediment'],c:1},
+
+  {id:198,cat:'winemaking',q:'What happens to a wine\'s flavours during extended maturation?',
+   a:['Flavours remain exactly the same as when first made','Flavours develop from primary to tertiary and structural components such as tannins may become more integrated','The wine loses all its fruit character and becomes oxidised','Only the colour changes — flavours are unaffected by maturation'],c:1},
+
+  {id:199,cat:'winemaking',q:'What is still the most popular form of packaging for wine?',
+   a:['Bag-in-box','Plastic bottles','Tetra Pak bricks','Glass bottles'],c:3},
+
+  {id:200,cat:'winemaking',q:'What is the correct order of steps for making dry red wine?',
+   a:['Crushing, pressing, alcoholic fermentation, draining, storage, packaging','Crushing, alcoholic fermentation, draining, pressing, storage or maturation, packaging','Pressing, crushing, alcoholic fermentation, draining, packaging','Alcoholic fermentation, crushing, pressing, draining, storage, packaging'],c:1},
+
+  {id:201,cat:'winemaking',q:'Why must the skins be included during red wine fermentation?',
+   a:['To add sweetness to the wine','To extract colour and tannins from the grape skins','To prevent the wine from oxidising during fermentation','To increase the alcohol level of the wine'],c:1},
+
+  {id:202,cat:'winemaking',q:'What is "the cap" in red winemaking?',
+   a:['A device used to seal the fermentation vessel','The thick layer of grape skins that float to the top of the fermenting juice','The foam that forms on top of the wine during fermentation','The layer of tartrate crystals that forms in the wine'],c:1},
+
+  {id:203,cat:'winemaking',q:'Why is the cap a problem in red winemaking?',
+   a:['It increases the temperature too much and kills the yeast','If left undisturbed, it is not possible to extract much colour and tannin from it','It causes the wine to oxidise during fermentation','It blocks the escape of carbon dioxide gas'],c:1},
+
+  {id:204,cat:'winemaking',q:'What is "punching down" in red winemaking?',
+   a:['Pumping liquid from the bottom of the vessel up and over the cap','Using a plunger to push the cap down into the fermenting liquid','Pressing the skins after fermentation is complete','Filtering the wine to remove sediment'],c:1},
+
+  {id:205,cat:'winemaking',q:'What is "pumping over" in red winemaking?',
+   a:['Using a plunger to push the cap down into the liquid','Transferring the wine from one vessel to another','Liquid from the bottom of the fermentation vessel is pumped up through a hose and sprayed over the cap','Pumping carbon dioxide into the vessel to protect the wine'],c:2},
+
+  {id:206,cat:'winemaking',q:'What is the correct order of steps for making dry white wine?',
+   a:['Crushing, alcoholic fermentation, pressing, storage, packaging','Crushing, pressing, alcoholic fermentation, storage or maturation, packaging','Pressing, alcoholic fermentation, crushing, storage, packaging','Alcoholic fermentation, crushing, pressing, packaging'],c:1},
+
+  {id:207,cat:'winemaking',q:'Why are white wines pressed before fermentation, unlike red wines?',
+   a:['White wine fermentation cannot take place with the skins present','To remove colour and tannins before fermentation so the wine stays pale and fresh','White grapes are too delicate to ferment with the skins','White wines need higher sugar levels which pressing achieves'],c:1},
+
+  {id:208,cat:'winemaking',q:'Can black grapes be used to make white wine?',
+   a:['Never — black grapes can only make red wine','Yes, because the colour is only in the skins — if pressed very gently the juice can be used to make white wine','Only if the skins are boiled to remove their colour first','Yes, but only in warm climates where the skins are thinner'],c:1},
+
+  {id:209,cat:'winemaking',q:'What are the two most common methods for making rosé wine?',
+   a:['Blending and extended maceration','Short maceration and blending','Punching down and pumping over','Pressing and filtering'],c:1},
+
+  {id:210,cat:'winemaking',q:'How does the short maceration method produce rosé wine?',
+   a:['Red and white wines are blended together after fermentation','Black grapes are fermented — the wine is drained from the skins after only a few hours, then fermentation continues at white winemaking temperatures','Black grapes are pressed very gently to extract just a little colour','White grapes are fermented with a small addition of red grape skins'],c:1},
+
+  {id:211,cat:'winemaking',q:'Where is the blending method for rosé wine generally not permitted?',
+   a:['In Australia and New Zealand','In the USA and Argentina','In many parts of Europe','In South Africa and Chile'],c:2},
+
+  {id:212,cat:'winemaking',q:'What is residual sugar in wine?',
+   a:['Sugar added to the wine just before bottling','The sugar that is left in a wine after fermentation','The natural sugar found in grape juice before fermentation','Sugar from oak barrels that transfers to the wine during maturation'],c:1},
+
+  {id:213,cat:'winemaking',q:'What are the four techniques that can be used to make sweet wines?',
+   a:['Extra ripening, botrytis, freezing and blending','Using concentrated grape sugars, removing the yeast, killing the yeast, and adding sweetness to a dry wine','Fortification, late harvest, drying and blending','Oak maturation, lees contact, blending and late harvest'],c:1},
+
+  {id:214,cat:'winemaking',q:'Why does fermentation stop with residual sugar remaining when using extra-ripe, botrytis-affected or frozen grapes?',
+   a:['The winemaker adds sulphur dioxide to stop fermentation early','The grape juice has such high concentrated sugar levels that the yeast cannot eat all of it','The cold temperature kills the yeast before fermentation is complete','The high acid levels in these grapes prevent the yeast from working'],c:1},
+
+  {id:215,cat:'winemaking',q:'What is an example of a sweet wine made using concentrated grape sugars?',
+   a:['White Zinfandel from California','Port from Portugal','Tokaji Aszú from Hungary','Champagne from France'],c:2},
+
+  {id:216,cat:'winemaking',q:'How does the "removing the yeast" technique produce sweet wine?',
+   a:['The wine is chilled until the yeast sinks to the bottom','Extremely sophisticated filters with small enough holes remove the yeast from the fermenting grape juice','Sulphur dioxide is added to kill the yeast at the desired sweetness level','The wine is fortified with alcohol to stop yeast activity'],c:1},
+
+  {id:217,cat:'winemaking',q:'What is an example of a wine made using the "removing the yeast" technique?',
+   a:['Tokaji Aszú from Hungary','Port from Portugal','White Zinfandel from California','Sauternes from France'],c:2},
+
+  {id:218,cat:'winemaking',q:'How does the "killing the yeast" technique produce sweet wine, and what is this process called?',
+   a:['Chilling the wine to below 0°C to freeze and kill the yeast — called cryoextraction','Adding alcohol to the fermenting juice raising it to 15–20% abv, killing the yeast before all sugars are consumed — called fortification','Adding sulphur dioxide to the fermenting juice — called sulphitation','Filtering out the yeast using fine filters — called microfiltration'],c:1},
+
+  {id:219,cat:'winemaking',q:'What is an example of a wine made using the fortification technique to kill the yeast?',
+   a:['White Zinfandel from California','Tokaji Aszú from Hungary','Sauternes from France','Port from Portugal'],c:3},
+
+   {id:220,cat:'winemaking',q:'Why might a winemaker add sugar to grape juice before fermentation?',a:['To make the wine sweeter','To increase the final alcohol level','To reduce the acidity','To add oak flavours'],c:1},
+
+{id:221,cat:'winemaking',q:'In which climate condition might a winemaker need to add acid during winemaking?',a:['Cool climate','Moderate climate','Warm climate','Mountain climate'],c:2},
+
+{id:222,cat:'winemaking',q:'What problem can occur with wines made from grapes grown in cool climates or cool vintages?',a:['Too much tannin','Low alcohol and lacking body','Too much residual sugar','Excessive oak flavour'],c:1},
+
+{id:223,cat:'winemaking',q:'What can a winemaker do if the level of acid in grapes from a cool climate is too high?',a:['Add more sugar','Add more yeast','Neutralise some of the acid','Increase fermentation temperature'],c:2},
+
+{id:224,cat:'winemaking',q:'At what temperature range are red wines typically fermented?',a:['5°C to 15°C','12°C to 22°C','20°C to 32°C','35°C to 45°C'],c:2},
+
+{id:225,cat:'winemaking',q:'Why are red wines fermented at higher temperatures than white wines?',a:['To preserve fruity aromas','To extract colour and tannins from the grape skins','To prevent malolactic conversion','To speed up the clarification process'],c:1},
+
+{id:226,cat:'winemaking',q:'At what temperature range are white wines typically fermented?',a:['5°C to 10°C','12°C to 22°C','20°C to 32°C','25°C to 35°C'],c:1},
+
+{id:227,cat:'winemaking',q:'What effect can fermenting white wine at the lower end of the temperature range produce?',a:['More tannin extraction','Deeper colour','Notable fruity aromas','Higher alcohol'],c:2},
+
+{id:228,cat:'winemaking',q:'How is a rosé wine typically fermented after being drained off the skins?',a:['At red wine fermentation temperatures','At higher temperatures than red wine','At temperatures similar to white wine fermentation','At room temperature without temperature control'],c:2},
+
+{id:229,cat:'winemaking',q:'What are the two main categories of winery vessels?',a:['New oak and old oak','Small and large vessels','Inert material vessels and oak vessels','Concrete and stainless steel'],c:2},
+
+{id:230,cat:'winemaking',q:'What is a key property of stainless steel and concrete vessels?',a:['They add vanilla flavours to the wine','They are inert and do not add any flavour to the wine','They allow oxygen to interact with the wine','They are only used for storage, not fermentation'],c:1},
+
+{id:231,cat:'winemaking',q:'Why would a winemaker choose stainless steel over oak for fermentation?',a:['To add spice and vanilla flavours','To preserve the natural fruit flavours of the wine','To increase the tannin levels','To promote malolactic conversion'],c:1},
+
+{id:232,cat:'winemaking',q:'What are the two reasons a winemaker might use oak barrels?',a:['To add flavours and to allow oxygen interaction during maturation','To reduce acidity and increase sugar','To filter the wine and add colour','To speed up fermentation and increase alcohol'],c:0},
+
+{id:233,cat:'winemaking',q:'What is "toasting" in the context of oak barrel production?',a:['Heating the barrel staves to bend and shape them','Burning the inside of the barrel to sterilise it','Adding caramel flavour from the outside','The process of sealing the barrel with wax'],c:0},
+
+{id:234,cat:'winemaking',q:'Which flavours can a new oak barrel add to a wine?',a:['Mushroom, leather and dried fruit','Lemon, lime and green apple','Vanilla, coconut, charred wood and spice','Butter, bread and biscuit'],c:2},
+
+{id:235,cat:'winemaking',q:'What happens to the flavour a barrel can give after it has been used two or three times?',a:['It becomes stronger','It changes to red fruit flavours','It has very little flavour left to give','It starts adding bitter notes'],c:2},
+
+{id:236,cat:'winemaking',q:'Why do changes from oak maturation occur more quickly in smaller barrels?',a:['Small barrels have thicker walls','More of the wine\'s surface area is in contact with the barrel','Small barrels are made from more intensely toasted oak','Small barrels are always made from new oak'],c:1},
+
+{id:237,cat:'winemaking',q:'What flavours can develop in a wine as a result of oxygen interaction during oak barrel maturation?',a:['Tropical fruit and floral notes','Green pepper and grass','Caramel, dried fruit, and nut','Lemon zest and grapefruit'],c:2},
+
+{id:238,cat:'winemaking',q:'What is a cheaper alternative to oak barrels for adding oak flavours to wine?',a:['Concrete eggs','Stainless steel with oak lining','Oak staves or oak chips','Terracotta amphorae'],c:2},
+
+{id:239,cat:'winemaking',q:'When does malolactic conversion take place?',a:['During grape harvesting','During alcoholic fermentation','After alcoholic fermentation has finished','During bottle ageing'],c:2},
+
+{id:240,cat:'winemaking',q:'What microorganism carries out malolactic conversion?',a:['Yeast','Bacteria','Mould','Wild fungi'],c:1},
+
+{id:241,cat:'winemaking',q:'What are the two main effects of malolactic conversion on a wine?',a:['Increased alcohol and more colour','Reduced acidity and potential buttery flavours','More tannin and deeper colour','Increased sweetness and body'],c:1},
+
+{id:242,cat:'winemaking',q:'For which white grape variety is it common to prevent malolactic conversion in order to preserve acidity?',a:['Chardonnay','Viognier','Riesling','Pinot Gris'],c:2},
+
+{id:243,cat:'winemaking',q:'What are "lees" in winemaking?',a:['The grape skins left after pressing','Dead yeast cells that fall to the bottom of the vessel after fermentation','Tartrate crystals that form during cold stabilisation','Sediment from unfined red wine'],c:1},
+
+{id:244,cat:'winemaking',q:'What flavours can contact with lees add to a white wine?',a:['Vanilla and spice','Tropical fruit and flowers','Biscuit and bread','Dried fruit and nut'],c:2},
+
+{id:245,cat:'winemaking',q:'What are two reasons a winemaker might blend different wines?',a:['To reduce costs and increase volume','To maintain consistency and add complexity','To lower alcohol and reduce tannin','To increase acidity and remove sweetness'],c:1},
+
+{id:246,cat:'winemaking',q:'Why do most customers expect their wines to be perfectly clear?',a:['Clear wines have more flavour','Clarity is a legal requirement in most countries','It is a general consumer expectation of wine quality','Clear wines have a longer shelf life'],c:2},
+
+{id:247,cat:'winemaking',q:'Why might some winemakers choose not to filter their wine?',a:['Filtration is too expensive','They believe filtration can take something away from the wine\'s character','Filtration adds unwanted flavours','Unfiltered wines sell at a higher price'],c:1},
+
+{id:248,cat:'winemaking',q:'Which wines are most capable of improving over several years or decades in bottle?',a:['Light, low-alcohol wines with low acidity','Wines with high acidity, high tannins (for reds) or high residual sugar (for sweet wines)','Heavily filtered wines stored in warm conditions','Young, fresh white wines with no oak contact'],c:1},
+
+{id:249,cat:'winemaking',q:'How does the colour of a red wine change as it matures in bottle?',a:['From pale pink to deep ruby','From ruby to garnet to tawny','From garnet to purple to black','From brown to amber to gold'],c:1},
+
+{id:250,cat:'winemaking',q:'What happens to the temperature during alcoholic fermentation?',a:['Temperature drops significantly','Fermentation creates heat','Temperature remains stable','Temperature fluctuates unpredictably'],c:1},
+
+{id:251,cat:'winemaking',q:'What technology do modern winemakers use to control fermentation temperature?',a:['Only natural cellar cooling','Equipment that can chill or warm the fermentation','Open-top vessels exposed to air','Dry ice added directly to the must'],c:1},
+
+{id:252,cat:'winemaking',q:'In what context is a rosé wine fermented at white wine temperatures?',a:['When made by blending red and white wine','When made by short maceration and then drained off the skins','When made from very ripe red grapes','When no skin contact has occurred at all'],c:1},
+
+{id:253,cat:'winemaking',q:'What happens to most wines once they are in the bottle?',a:['They improve significantly over time','Their fruit flavours intensify','Their fruit flavours fade and vegetal notes develop','They become sweeter over time'],c:2},
+
+{id:254,cat:'winemaking',q:'Which combination of characteristics allows a wine to improve in bottle over many years?',a:['Low alcohol, low acidity, light body','High acidity and (for reds) high tannins or (for sweet wines) high residual sugar','High alcohol and heavy oak influence','Deep colour and high extraction'],c:1},
+
+{id:255,cat:'winemaking',q:'What tertiary aromas can develop in aged white wines?',a:['Blackcurrant, plum and cherry','Vanilla, coconut and charred wood','Dried apricot, honey, nut and spice','Fig, prune and wet leaves'],c:2},
+
+{id:256,cat:'winemaking',q:'What tertiary aromas can develop in aged red wines?',a:['Lemon, lime and green apple','Dried apricot, honey and nut','Fig, prune, meat and wet leaves','Vanilla, coconut and biscuit'],c:2},
+
+{id:257,cat:'winemaking',q:'How does the colour intensity of a red wine typically change as it matures in bottle?',a:['It becomes deeper and more vibrant','It becomes paler','It shifts from red to blue','It remains unchanged'],c:1},
+
+{id:258,cat:'winemaking',q:'What happens to the tannins in a red wine as it matures in bottle?',a:['They increase and become more grippy','They disappear completely','They become softer and smoother','They convert into residual sugar'],c:2},
+
+{id:259,cat:'winemaking',q:'What should be done with a mature red wine that has formed a large amount of deposit in the bottle?',a:['It should be returned to the winery','It should be filtered before sale','It should normally be decanted before serving','It should be shaken to dissolve the deposit'],c:2},
 
   // GRAPE VARIETIES
   {id:21, cat:'grapes',     q:'Który szczep dominuje w Bordeaux rouge na lewym brzegu?',
