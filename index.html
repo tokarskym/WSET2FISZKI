@@ -1,0 +1,1849 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Słońce Quiz Win</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Figtree:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: żółte tło z promieniami, karta pytania na środku, pod nią panel z wyjaśnieniem, na dole przyklejony pasek postępu z RESET */
+:root{
+  --plum:#5F1E3B;
+  --plum-deep:#47142B;
+  --sun:#F8C932;
+  --sun-soft:#FBDB6E;
+  --rust:#8A3C2C;
+  --paper:#FFF8E1;
+  --ink:#3B1224;
+  --ink-soft:#6E4A55;
+  --ok:#2E6A3C;
+  --ok-bg:#E3F0DA;
+  --bad:#A8261F;
+  --bad-bg:#FBE1D9;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --mono:"DM Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --barH:74px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--sun);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;margin:0;min-height:100vh}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--plum);outline-offset:3px}
+
+.stage{position:relative;overflow:hidden;min-height:100vh;
+  padding-block:28px calc(var(--barH) + 40px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.rays{position:absolute;inset:0;pointer-events:none;
+  background:repeating-conic-gradient(from 0deg at 50% 12%,var(--rust) 0deg .45deg,transparent .45deg 9deg);
+  -webkit-mask:linear-gradient(#000 0%,rgba(0,0,0,.5) 40%,transparent 80%);mask:linear-gradient(#000 0%,rgba(0,0,0,.5) 40%,transparent 80%);opacity:.7}
+.wrap{position:relative;max-width:720px;margin:0 auto;display:grid;gap:18px}
+
+/* Przełącznik trybu */
+.modes{justify-self:center;display:flex;gap:4px;padding:4px;background:var(--plum);border-radius:999px;flex-wrap:wrap;justify-content:center}
+.mode{background:transparent;border:0;color:var(--paper);font-family:var(--mono);font-size:12px;letter-spacing:.12em;
+  text-transform:uppercase;padding:8px 14px;border-radius:999px}
+.mode:hover{color:var(--sun)}
+.mode[aria-pressed="true"]{background:var(--sun);color:var(--plum)}
+.mode .n{font-weight:500;margin-left:4px}
+
+.mode:disabled{opacity:.4;cursor:default}
+.mode:disabled:hover{color:var(--paper)}
+.h2{font-family:var(--display);font-weight:700;font-size:20px;margin:0;color:var(--ink)}
+.resume{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding-block:18px}
+.resume div{display:grid;gap:2px;min-width:0}
+.resume small,.choice small{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust)}
+.resume b{font-family:var(--display);font-weight:700;font-size:17px;color:var(--plum)}
+.resume span{color:var(--ink-soft);font-size:14px}
+.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:640px){.choices{grid-template-columns:1fr}}
+.choice{display:grid;gap:6px;align-content:start;text-align:left;text-decoration:none;color:var(--ink);background:#fff;
+  border:2px solid rgba(138,60,44,.35);border-radius:16px;padding:16px;transition:transform .12s,border-color .12s;min-width:0}
+.choice:hover:not(:disabled){border-color:var(--rust);transform:translateY(-2px)}
+.choice:focus-visible{outline:3px solid var(--plum);outline-offset:3px}
+.choice b{font-family:var(--display);font-weight:700;font-size:17px;color:var(--plum);line-height:1.2}
+.choice span{font-size:14px;color:var(--ink-soft)}
+.choice:disabled{opacity:.5;cursor:default}
+#start-all{background:var(--plum);border-color:var(--plum)}
+#start-all b{color:var(--sun)} #start-all small{color:var(--sun-soft)} #start-all span{color:var(--paper)}
+.hint-line{margin:14px 0 0;font-size:14px;color:var(--ink-soft)}
+#wybor{scroll-margin-top:16px}
+.pick-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.pick-tools{display:flex;gap:8px;flex-wrap:wrap}
+.pick-group{margin-top:16px}
+.pg-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:2px dotted rgba(138,60,44,.35);padding-bottom:6px;margin-bottom:8px}
+.pg-head h3{margin:0;font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--rust)}
+.link-btn{background:none;border:0;padding:0;font-size:13px;color:var(--plum);text-decoration:underline}
+.pick-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.pick-list li{display:flex;align-items:center;gap:8px}
+.pick{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border:2px solid rgba(138,60,44,.2);border-radius:12px;cursor:pointer}
+.pick:has(input:checked){border-color:var(--plum);background:#FFF1C2}
+.pick input{flex:none;width:20px;height:20px;accent-color:var(--plum);margin:0}
+.pk-txt{display:grid;min-width:0}
+.pk-txt b{font-weight:600;line-height:1.3}
+.pk-txt small{font-size:13px;color:var(--ink-soft);overflow-wrap:anywhere}
+.only{flex:none;background:transparent;border:2px solid rgba(95,30,59,.35);color:var(--plum);border-radius:999px;padding:7px 11px;font-size:13px;font-weight:600}
+.only:hover{border-color:var(--plum);background:rgba(95,30,59,.06)}
+.pick-go{position:sticky;bottom:calc(var(--barH) + env(safe-area-inset-bottom,0px) + 10px);margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  background:var(--paper);border:2px solid var(--rust);border-radius:14px;padding:10px 12px}
+#pick-sum{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.card{background:var(--paper);border:3px solid var(--rust);border-radius:22px;padding:26px clamp(18px,4vw,34px);box-shadow:0 10px 0 var(--rust)}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.chip{background:var(--plum);color:var(--sun);padding:4px 10px;border-radius:999px}
+.q{font-family:var(--display);font-weight:700;font-size:clamp(21px,3.6vw,30px);line-height:1.25;margin:16px 0 22px;text-wrap:balance}
+
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opts.long{grid-template-columns:1fr}
+@media (max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;align-items:flex-start;gap:12px;text-align:left;background:#fff;border:2px solid rgba(138,60,44,.35);
+  border-radius:14px;padding:13px 14px;font-size:16px;font-weight:500;line-height:1.4;transition:transform .12s,border-color .12s;min-width:0}
+.opts.long .opt{font-weight:400}
+.opt:hover:not(:disabled){border-color:var(--rust);transform:translateY(-2px)}
+.opt .k{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:12px;
+  background:var(--sun);color:var(--plum);border:1.5px solid var(--rust);margin-top:-1px}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-bg);border-color:var(--ok)}
+.opt.right .k{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt.wrong .k{background:var(--bad);color:#fff;border-color:var(--bad)}
+.opt.dim{opacity:.5}
+.wait{margin:16px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-soft);text-transform:uppercase}
+
+/* Panel z wyjaśnieniem */
+.fb{border-radius:22px;overflow:hidden;border:3px solid var(--rust);background:var(--paper);box-shadow:0 10px 0 var(--rust);animation:rise .28s ease-out}
+@keyframes rise{from{transform:translateY(10px)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.fb{animation:none}.opt,.fill{transition:none!important}}
+.fb-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px clamp(18px,4vw,30px);color:#fff}
+.fb.ok .fb-head{background:var(--ok)}
+.fb.no .fb-head{background:var(--bad)}
+.fb-head strong{font-family:var(--display);font-weight:700;font-size:18px}
+.fb-body{padding:20px clamp(18px,4vw,30px) 22px;display:grid;gap:16px}
+.answer-line{margin:0;font-weight:600}
+.answer-line small{display:block;font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust)}
+.info{margin:0;max-width:64ch}
+.wine-top{display:flex;align-items:baseline;gap:6px 10px;flex-wrap:wrap;margin:-26px calc(-1*clamp(18px,4vw,34px)) 18px;
+  padding:12px clamp(18px,4vw,34px);background:var(--plum);color:var(--sun);border-radius:19px 19px 0 0}
+.wine-top small{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper);opacity:.75}
+.wine-top b{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em}
+.wine-top span{font-family:var(--mono);font-size:12px;color:var(--paper)}
+.wine-card{display:grid;gap:16px;padding:18px;background:#fff;border:2px solid rgba(138,60,44,.25);border-radius:16px}
+.wc-head{border-bottom:2px dotted rgba(138,60,44,.35);padding-bottom:12px}
+.wine-name{margin:0;font-family:var(--display);font-weight:700;font-size:17px;color:var(--plum);line-height:1.3;text-wrap:balance}
+.wine-by{margin:4px 0 0;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--ink-soft)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 20px;margin:0}
+.facts dd{font-weight:500!important;line-height:1.4}
+.stories{display:grid;gap:12px}
+.story{border-left:4px solid var(--sun);padding:2px 0 2px 12px}
+.story h3{margin:0 0 2px;font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust)}
+.story p{margin:0;max-width:64ch}
+.facts div{min-width:0}
+.facts dt{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust)}
+.facts dd{margin:2px 0 0;font-weight:600}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.q-actions{margin-top:18px}
+.q-actions:empty{display:none}
+.btn{border:2px solid var(--plum);border-radius:999px;padding:10px 18px;font-weight:600;background:transparent;color:var(--plum)}
+.btn:hover{background:rgba(95,30,59,.08)}
+.btn.primary{background:var(--plum);color:var(--sun)}
+.btn.primary:hover{background:var(--plum-deep)}
+.btn.on{background:var(--sun);border-color:var(--rust);color:var(--ink)}
+.small{font-size:14px;padding:7px 14px}
+
+.big{font-family:var(--display);font-weight:800;font-size:clamp(48px,10vw,80px);line-height:1;color:var(--plum);margin:14px 0 6px;font-variant-numeric:tabular-nums}
+.lead{font-size:17px;margin:0 0 18px;max-width:55ch}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.list li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;background:#fff;border:2px solid rgba(138,60,44,.25);border-radius:14px}
+.list li > div{min-width:0}
+.list small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--rust)}
+.empty{padding:18px;border:2px dashed rgba(138,60,44,.4);border-radius:14px;color:var(--ink-soft);margin:0}
+
+/* Dolny pasek */
+.bottom{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--plum);color:var(--paper);
+  box-shadow:0 -4px 14px rgba(59,18,36,.25);padding-bottom:env(safe-area-inset-bottom,0px)}
+.bottom-in{max-width:720px;margin:0 auto;min-height:var(--barH);display:flex;align-items:center;gap:16px;
+  padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.track-box{flex:1;min-width:0;display:grid;gap:7px}
+.track-meta{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.track-meta b{color:var(--sun);font-weight:500}
+.track{height:10px;border-radius:999px;background:rgba(255,248,225,.18);overflow:hidden;display:flex}
+.fill{height:100%;transition:width .3s}
+.fill.ok{background:var(--sun)}
+.fill.no{background:#E8836B}
+.reset{flex:none;background:transparent;border:2px solid var(--sun);color:var(--sun);border-radius:999px;padding:9px 16px;
+  font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.16em}
+.reset:hover{background:var(--sun);color:var(--plum)}
+.confirm{flex:none;display:flex;gap:8px;align-items:center;font-size:14px}
+.confirm .reset{padding:7px 12px;font-size:12px}
+.confirm .reset.ghost{border-color:rgba(255,248,225,.5);color:var(--paper)}
+@media (max-width:480px){.confirm span{display:none}}
+</style>
+
+<main class="stage">
+  <div class="rays" aria-hidden="true"></div>
+  <div class="wrap">
+    <nav class="modes" aria-label="Widok">
+      <button class="mode" id="m-home" data-view="home" aria-pressed="true">Start</button>
+      <button class="mode" id="m-quiz" data-view="quiz" aria-pressed="false">Quiz</button>
+      <button class="mode" id="m-list" data-view="list" aria-pressed="false">Trudne <span class="n" id="hard-count">0</span></button>
+    </nav>
+    <div id="app" style="display:grid;gap:18px"></div>
+  </div>
+</main>
+
+<footer class="bottom">
+  <div class="bottom-in">
+    <div class="track-box">
+      <div class="track-meta"><span id="pos">Pytanie 1 / 1</span><span>Dobrze <b id="score">0</b></span></div>
+      <div class="track" role="progressbar" id="track" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <i class="fill ok" id="fill-ok" style="width:0"></i><i class="fill no" id="fill-no" style="width:0"></i>
+      </div>
+    </div>
+    <div id="reset-zone"></div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   BAZA PYTAŃ
+   id      – unikalny skrót
+   q       – treść pytania (może kończyć się „…” albo „to:”)
+   correct – poprawna odpowiedź
+   wrong   – lista błędnych odpowiedzi (1–3)
+   info    – wyjaśnienie pokazywane po odpowiedzi
+   tag     – kategoria widoczna na karcie
+   wine    – (opcjonalnie) id wina z WINES; nazwa wina pokaże się na górze pytania
+   hideWine – true, gdy pytanie to opis wina (nazwa zdradziłaby odpowiedź)
+   Kolejność odpowiedzi losuje się sama.
+   ========================================================= */
+
+/* ---------- KARTA WIN ----------
+   Pola wina (wszystkie opcjonalne poza id i name):
+   name, producer, size, grape, region, color, nose, palate, oak, style
+   story – lista akapitów {title, text} do opowiedzenia gościowi
+   ---------------------------------------------------------------- */
+const WINES = [
+  {id:"schmitt-ba", name:"Schmitt Söhne Riesling Beerenauslese", size:"0,5 l",
+   grape:"Riesling", region:"Rheinhessen, Niemcy", style:"Słodkie, pełne",
+   nose:"Mocno intensywny, egzotyczny: owoce tropikalne i miód",
+   story:[
+     {title:"Beerenauslese", text:"Wino słodkie, produkowane z wyselekcjonowanych, bardzo dojrzałych winogron, często dotkniętych szlachetną pleśnią, która koncentruje ich naturalne cukry."},
+     {title:"Rheinhessen", text:"Największy i najstarszy region winiarski Niemiec. Klimat ciepły i suchy, winnice na południowo-zachodnich stokach, gleba z niebieskiego łupka."},
+     {title:"Południowo-zachodnie stoki", text:"Na półkuli północnej dają dobre nasłonecznienie, mniejsze ryzyko przymrozków, dobry drenaż i dłuższy okres dojrzewania winogron."}
+   ]},
+  {id:"balbo-malbec", name:"Balbo Reserva Malbec", producer:"Familia Falasco", size:"0,75 l",
+   grape:"Malbec", region:"Mendoza, Argentyna",
+   color:"Ciemny rubin z fioletowymi przebłyskami",
+   nose:"Intensywny i owocowy: maliny, śliwka, czereśnia, jagody. Najważniejsza jest śliwka",
+   palate:"Pełne, gładkie taniny, długi finisz",
+   oak:"12 miesięcy: głębia, złożoność, posmak kawy, wanilii i czekolady",
+   story:[
+     {title:"Mendoza", text:"Największy i najważniejszy region winiarski Argentyny, około 70% krajowej produkcji wina. Leży u podnóża Andów: suchy, słoneczny klimat, duże amplitudy temperatur i wysoko położone winnice. Uprawę w niemal pustynnym środowisku umożliwia nawadnianie wodą z topniejącego śniegu w Andach."},
+     {title:"Valle de Uco", text:"Prestiżowy podregion Mendozy z winnicami na wysokości 900–1600 m n.p.m., dużymi amplitudami temperatur i suchym klimatem. Daje wina o intensywnym aromacie, wyraźnej kwasowości, eleganckiej strukturze i dużym potencjale starzenia."}
+   ]},
+  {id:"rebel-ridge-cab", name:"Rebel Ridge Cabernet Sauvignon", producer:"Rebel Ridge Wines", size:"0,75 l",
+   grape:"Cabernet Sauvignon + 15% Petite Sirah", region:"Kalifornia, USA",
+   alcohol:"14,5%, czyli dużo jak na wino",
+   taste:"Ciemne czerwone owoce, nuty mielonych przypraw, drzewa sandałowego i kakao",
+   palate:"Pełna budowa; średnie taniny, drobne i gładkie, bez szorstkości i ściągania; średnia kwasowość",
+   oak:"6 miesięcy",
+   story:[
+     {title:"Petite Sirah", text:"Wzmacnia strukturę, kolor i intensywność wina. Jest go tylko 15%, żeby nie zdominował typowego charakteru Cabernet Sauvignon."},
+     {title:"Skąd nazwa", text:"Rebel Ridge zawdzięcza nazwę górskiemu grzbietowi, na którym trzej wizjonerzy postanowili przeciwstawić się dyktatowi wielkich koncernów i zrewolucjonizować rynek wina."},
+     {title:"Winiarz", text:"Główny winiarz ma włoskie korzenie w Valpolicelli. Wykorzystał kalifornijskie terroir, by stworzyć wino zrywające ze sztywnymi normami."}
+   ]},
+  {id:"in-situ-blend", name:"In Situ Signature Wines Full Bodied Blend", producer:"Viña San Esteban", size:"0,75 l",
+   grape:"Cabernet Sauvignon, Petit Verdot, Carménère", region:"Dolina Aconcagua, Chile · zbocza Paidahuén · DO Valle de Aconcagua",
+   alcohol:"14,5%",
+   nose:"Czerwona porzeczka, dojrzałe wiśnie, czarny pieprz i mineralny akcent mokrego kamienia",
+   palate:"Pełne, o gładkiej konsystencji, z długim finiszem; średnia kwasowość i średnie taniny",
+   oak:"12 miesięcy w dębie francuskim (zaokrągla taniny) + 6 miesięcy dojrzewania w butelce",
+   story:[
+     {title:"Skąd mineralność", text:"Z kamienistych gleb na zboczach Paidahuén."},
+     {title:"Dolina Aconcagua", text:"Ważny region winiarski Chile, na północ od Santiago, między Andami a wybrzeżem Pacyfiku. Suchy, ciepły klimat śródziemnomorski; chłodne wiatry oceaniczne w zachodniej części pomagają zachować świeżość win."},
+     {title:"Paidahuén – do zapamiętania", text:"Winnice sięgają ok. 940 m n.p.m. Ciepłe dni i chłodne noce dają dojrzałe taniny przy zachowaniu aromatyczności. To przykład chilijskiego wina wysokogórskiego: skoncentrowany owoc, struktura i taniny, ale też świeżość. Czerwone wina z tego obszaru wyróżniają się koncentracją owocu, wyraźną strukturą tanin i mineralnym charakterem."}
+   ]},
+  {id:"boland-pinotage", name:"Boland Cellar Ahintof Coffee Pinotage", producer:"Boland Cellar", 
+   grape:"Pinotage (krzyżówka Pinot Noir i Cinsault)", region:"Paarl, RPA",
+   alcohol:"ok. 14%", style:"Skoncentrowane, z kremowym wykończeniem",
+   nose:"Ciemne śliwki, dojrzałe i ciemne owoce, kawa, mokka, cedr i nuty francuskiego dębu",
+   oak:"3 miesiące",
+   story:[
+     {title:"Boland Cellar", text:"Producent z regionu Paarl w RPA, znany m.in. z Chenin Blanc i Pinotage."},
+     {title:"Pinotage", text:"Krzyżówka Pinot Noir i Cinsault, szczep charakterystyczny dla RPA i jeden z najbardziej charakterystycznych w Paarl."},
+     {title:"Paarl", text:"Ciepły obszar winiarski, sprzyjający dojrzewaniu czerwonych odmian."},
+     {title:"Ciekawostka: kawa i mokka", text:"Mogą wynikać zarówno z dojrzewania w dębie, jak i ze specyficznego profilu aromatycznego szczepu oraz technik winifikacji. W tym winie podkreślają styl, w którym ważną rolę odgrywa dąb."}
+   ]},
+  {id:"guigal-cdp", name:"E. Guigal Saintes Pierres de Nalys Châteauneuf-du-Pape Rouge", producer:"E. Guigal",
+   grape:"Głównie Grenache, Syrah i Mourvèdre, z dodatkiem m.in. Cinsault, Counoise i Muscardin",
+   region:"Dolina Rodanu Południowego, Francja · AOC Châteauneuf-du-Pape",
+   style:"Czerwone, wytrawne, pełne, bogate i skoncentrowane", alcohol:"14,5%",
+   nose:"Maliny, wiśnie, śliwki, przyprawy i delikatne nuty dębowe",
+   palate:"Pełne; taniny średnie do wysokich, ale gładkie; kwasowość zazwyczaj średnia; finisz długi i elegancki",
+   oak:"18 miesięcy w dużych beczkach dębowych", serve:"16–18°C",
+   story:[
+     {title:"Producent", text:"E. Guigal nabył posiadłość Château de Nalys w 2017 r."},
+     {title:"Rola szczepów", text:"Grenache: dojrzałe czerwone owoce, alkohol, pełnia i miękkość. Syrah: kolor, przyprawy, ciemniejsze owoce i struktura. Mourvèdre: taniny, głębia i potencjał dojrzewania."},
+     {title:"Galets roulés", text:"Duże, zaokrąglone otoczaki rzeczne, charakterystyczne dla części winnic apelacji. Magazynują ciepło i pomagają dojrzewać winogronom."},
+     {title:"Châteauneuf-du-Pape", text:"Południowy Rodan, apelacja znana z kupażowanych win czerwonych, często opartych na Grenache. Tradycyjnie mówi się o 13 dopuszczonych odmianach."}
+   ]},
+  {id:"beauchene-cdr", name:"Château Beauchêne Le Terroir Côtes du Rhône", producer:"Château Beauchêne",
+   grape:"Grenache, Syrah, Mourvèdre (klasyczny kupaż GSM)", region:"Dolina Rodanu Południowego, Francja · AOC Côtes du Rhône",
+   style:"Czerwone, wytrawne, owocowe, korzenne", alcohol:"14%",
+   nose:"Dojrzałe czerwone i czarne owoce: czarna wiśnia, jeżyna, czarna porzeczka; lukrecja, runo leśne, wanilia i pieprz",
+   palate:"Body średnie (+) do pełnego; taniny średnie, dojrzałe i miękkie; kwasowość średnia",
+   oak:"6–12 miesięcy, częściowo w beczkach z francuskiego dębu (wanilia i przyprawy, bez dominowania nad owocem)",
+   story:[
+     {title:"Nie Châteauneuf-du-Pape", text:"Pochodzi z okolic Châteauneuf-du-Pape, ale ma apelację Côtes du Rhône. Côtes du Rhône to szersza apelacja; Châteauneuf-du-Pape jest bardziej prestiżowa, ściślej określona i ma własne wymagania. Wina z CdP są często bardziej skoncentrowane i złożone."},
+     {title:"Gleby i krzewy", text:"Otoczaki rzeczne i czerwona glina sprzyjają dojrzewaniu winogron. Stare krzewy, w wieku ok. 30–100 lat, mogą dawać większą koncentrację owocu."},
+     {title:"GSM", text:"Grenache: owocowość i alkohol. Syrah: kolor i przyprawy. Mourvèdre: struktura i taniny."},
+     {title:"Południowy Rodan", text:"Ciepły klimat, dojrzałe owoce i często wyższy alkohol."}
+   ]},
+  {id:"villebois-pn", name:"Villebois Pinot Noir", producer:"Villebois",
+   grape:"100% Pinot Noir", region:"Dolina Loary, Francja · Vin de France",
+   style:"Czerwone, wytrawne, spokojne", alcohol:"13%",
+   nose:"Wiśnia, malina, czerwone owoce, zioła i delikatna wanilia",
+   palate:"Body lekkie do średniego; kwasowość średnia (+), odświeżająca; taniny niskie do średnich, delikatne; finisz krótki, świeży i owocowy",
+   serve:"16–18°C",
+   story:[
+     {title:"Pinot Noir", text:"Odmiana o cienkiej skórce: zwykle jaśniejsza barwa, delikatniejsze taniny i wyraźne aromaty czerwonych owoców."},
+     {title:"Dolina Loary", text:"Znana przede wszystkim z win białych, ale produkuje też czerwone, m.in. z Pinot Noir i Cabernet Franc."},
+     {title:"Vin de France", text:"Kategoria ogólnokrajowa, a nie apelacja AOC. Nie oznacza automatycznie niższej jakości."}
+   ]},
+  {id:"gargotte-cab", name:"La Petite Gargotte Cabernet Sauvignon", 
+   grape:"Cabernet Sauvignon", region:"Langwedocja, południe Francji",
+   style:"Czerwone, według opisu półwytrawne", alcohol:"13,5%",
+   nose:"Czarna porzeczka, jeżyna, konfitura śliwkowa, pieprz, goździki, wanilia, czekolada i kawa",
+   palate:"Body średnie (opis wspomina też o pełni); kwasowość średnia; taniny średnie, miękkie i harmonijne; finisz długi, kawowy",
+   serve:"16–18°C",
+   story:[
+     {title:"W jednym zdaniu", text:"Francuski Cabernet Sauvignon z południa kraju, o aromatach czarnej porzeczki i jeżyn, z miękkimi taninami oraz kawowo-czekoladowym akcentem."},
+     {title:"Cabernet Sauvignon", text:"Gruba skórka, dużo barwników i tanin. Typowe aromaty to czarna porzeczka, cedr i ciemne owoce."},
+     {title:"Langwedocja", text:"Ciepły, śródziemnomorski region, sprzyjający dojrzewaniu winogron i uzyskiwaniu dojrzałego owocu."},
+     {title:"Pays d’Oc IGP", text:"Szerokie oznaczenie geograficzne z Langwedocji i Roussillon, często stosowane dla win odmianowych, takich jak Cabernet Sauvignon."},
+     {title:"Kawa, czekolada, wanilia", text:"Mogą wynikać z dojrzewania w dębie lub z technik winifikacji, ale opis wina nie potwierdza użycia beczki."}
+   ]},
+  {id:"sammarco-arche", name:"Sammarco Arche Primitivo di Manduria DOP", producer:"Le Vigne di Sammarco",
+   grape:"Primitivo", region:"Apulia (Puglia), południe Włoch · DOP Primitivo di Manduria",
+   style:"Czerwone, wytrawne, spokojne; mocna, skoncentrowana struktura", alcohol:"15%",
+   color:"Skoncentrowany, rubinowy",
+   nose:"Czarna wiśnia, fiołek, tytoń fajkowy, skóra, lukrecja, czekolada i kawa",
+   taste:"Czekolada, wanilia, słodkie przyprawy i słodkie owoce leśne",
+   palate:"Jedwabiste, aksamitne taniny; finisz długi i harmonijny",
+   oak:"Co najmniej 12 miesięcy w beczce",
+   story:[
+     {title:"Do zapamiętania", text:"Czerwone, wytrawne Primitivo z Apulii, o wysokim alkoholu (15%), intensywnych aromatach ciemnych owoców, kawy i lukrecji oraz aksamitnych taninach."},
+     {title:"Manduria", text:"Miejscowość w Apulii, w prowincji Taranto, centrum apelacji Primitivo di Manduria. Obszar produkcji obejmuje określone tereny prowincji Taranto i Brindisi. Wino tej apelacji musi zawierać co najmniej 85% Primitivo."},
+     {title:"Primitivo", text:"Czerwony szczep, którego nazwa nawiązuje do wczesnego dojrzewania gron. Kojarzony z Apulią; daje wina o intensywnej barwie, dojrzałych aromatach owocowych i często wysokim alkoholu."},
+     {title:"Ciekawostka", text:"Primitivo i kalifornijski Zinfandel to ta sama odmiana, choć wina mogą różnić się stylem w zależności od miejsca uprawy i sposobu produkcji."}
+   ]},
+  {id:"rocca-antica", name:"Rocca Antica Di Camillo Primitivo Puglia",
+   grape:"100% Primitivo", region:"Apulia (Puglia), południowo-wschodnie Włochy",
+   style:"Czerwone, wytrawne, spokojne; owocowe, gładkie, harmonijne, przystępne", alcohol:"13,5%",
+   color:"Głęboki, rubinowy",
+   nose:"Śliwka, wiśnia, czereśnia i delikatne przyprawy korzenne",
+   palate:"Taniny miękkie; kwasowość umiarkowana; finisz średniej długości, owocowy, z nutą przypraw i delikatną goryczką",
+   story:[
+     {title:"Do zapamiętania", text:"Apulijskie Primitivo o zawartości alkoholu 13,5%, owocowym profilu i miękkich taninach."},
+     {title:"A Sammarco Arche?", text:"Rocca Antica to lżejszy, bezpośredni, owocowy styl z szerszym oznaczeniem Puglia. Sammarco Arche to styl bardziej skoncentrowany: apelacja DOP Primitivo di Manduria, 15% alkoholu, min. 12 miesięcy w beczce, długi finisz."}
+   ]},
+  {id:"pojo-imperium", name:"Tenute del Pojo Imperium Riserva Montepulciano d’Abruzzo DOC", producer:"Di Camillo Vini",
+   grape:"Montepulciano", region:"Abruzja, Włochy · Montepulciano d’Abruzzo DOC (Riserva)",
+   style:"Czerwone, wytrawne, spokojne", alcohol:"14,5%",
+   color:"Głęboki, rubinowy",
+   nose:"Dojrzałe owoce leśne, słodkie śliwki, przyprawy korzenne i dym",
+   taste:"Dżem malinowy i kakao",
+   palate:"Pełne; taniny gładkie; struktura głęboka, wzbogacona dojrzewaniem w dębie",
+   oak:"12–18 miesięcy w dębowych beczkach", serve:"16–18°C",
+   story:[
+     {title:"Winnice", text:"Krzewy mają średnio 20–30 lat."},
+     {title:"Abruzja", text:"Region we wschodniej części środkowych Włoch, nad Morzem Adriatyckim. Winiarstwo korzysta z wpływu morza i pobliskich Apeninów. Kojarzy się przede wszystkim z czerwonym Montepulciano i białym Trebbiano d’Abruzzo."},
+     {title:"Montepulciano", text:"Czerwona odmiana, szczególnie ważna w Abruzji: intensywna barwa, ciemne owoce, śliwki i wyraźna, przy dobrym dojrzewaniu gładka struktura tanin."},
+     {title:"Nie pomyl", text:"Montepulciano d’Abruzzo to apelacja i wino, Montepulciano to szczep. Vino Nobile di Montepulciano z Toskanii powstaje głównie z Sangiovese."},
+     {title:"Riserva", text:"Kategoria z wymaganiami dotyczącymi dojrzewania. To wino dojrzewa 12–18 miesięcy w dębie."}
+   ]},
+  {id:"morzano-chianti", name:"Tenuta di Morzano Chianti Il Quarto Riserva DOCG", producer:"Tenuta di Morzano",
+   grape:"Sangiovese i Merlot", region:"Toskania, Włochy · Chianti DOCG, Riserva",
+   style:"Czerwone, wytrawne, spokojne", alcohol:"13,5%",
+   color:"Intensywny rubinowy",
+   nose:"Kwiaty, wiśnie, śliwki, porzeczki i przyprawy; do tego wanilia, cynamon, dąb, kakao i lukrecja",
+   palate:"Body średnie; kwasowość średnia; taniny miękkie i harmonijne; finisz długi i elegancki",
+   oak:"Co najmniej 12 miesięcy we francuskich beczkach, potem 8 miesięcy w butelce", serve:"16–18°C",
+   story:[
+     {title:"W jednym zdaniu", text:"Toskańskie czerwone wino z Sangiovese i Merlot, o średnim body, wiśniowo-śliwkowym profilu, miękkich taninach i dojrzewaniu w dębie oraz butelce."},
+     {title:"Chianti", text:"Apelacja w Toskanii, znana z czerwonych win opartych na Sangiovese: wiśnia, czerwone owoce, zioła i charakterystyczna kwasowość."},
+     {title:"Chianti Classico", text:"Historyczny obszar między Florencją a Sieną, z którego wywodzi się pierwotne Chianti. To odrębna apelacja DOCG, a nie wyższa kategoria ani podregion Chianti. Symbol: czarny kogut, Gallo Nero."},
+     {title:"Riserva", text:"Wino spełniające dodatkowe wymagania dotyczące dojrzewania. Zwykle dłuższe starzenie i bardziej rozwinięty profil, ale nie gwarantuje automatycznie lepszej jakości."},
+     {title:"DOCG", text:"Denominazione di Origine Controllata e Garantita: włoskie oznaczenie kontrolowanego i gwarantowanego pochodzenia, z przepisami o obszarze, odmianach i metodach. To kategoria pochodzenia, nie szczep ani styl."}
+   ]},
+  {id:"begali-ripasso", name:"Begali Valpolicella Ripasso Classico Superiore DOC", producer:"Begali",
+   grape:"Corvina, Rondinella, Molinara", region:"Veneto, okolice Werony, Włochy · DOC Valpolicella Classico",
+   style:"Czerwone, wytrawne, spokojne", alcohol:"14,5%",
+   color:"Ciemnoczerwony z fioletowymi odcieniami",
+   nose:"Owoce leśne (jeżyny, borówki, maliny), dym, tytoń i skóra",
+   taste:"Jeżyny, wiśnie w czekoladzie, wanilia i cynamon",
+   palate:"Średnio pełne, miękkie i delikatne; przyjemna kwasowość; gładkie taniny",
+   making:"Ripasso: ponowna fermentacja na drożdżach i skórkach z Amarone",
+   oak:"12 miesięcy w dębowych beczkach", serve:"16–18°C",
+   story:[
+     {title:"Ripasso", text:"Wino przechodzi ponowną fermentację na drożdżach i skórkach z Amarone. Dzięki temu zyskuje większą intensywność i bogatszy charakter."},
+     {title:"Do zapamiętania", text:"Włochy, Veneto, Valpolicella Classico; Corvina, Rondinella, Molinara; wytrawne czerwone; 14,5%; 12 miesięcy w dębie."}
+   ]},
+  {id:"lodali-barbaresco", name:"Lodali Barbaresco Rocche dei 7 Fratelli DOCG", producer:"Lodali",
+   grape:"Nebbiolo", region:"Piemont, Włochy · DOCG Barbaresco",
+   style:"Czerwone, wytrawne, spokojne", alcohol:"14,5%",
+   color:"Głęboki rubinowy z jasnymi refleksami",
+   nose:"Intensywny i złożony, kwiatowo-owocowy",
+   taste:"Harmonijny, bogaty i długotrwały",
+   palate:"Dobrze zrównoważona kwasowość i taniny",
+   making:"Delikatne tłoczenie winogron",
+   oak:"Minimum 18 miesięcy w beczkach z dębu slawońskiego, potem 6 miesięcy w butelce", serve:"16–18°C",
+   story:[
+     {title:"Do zapamiętania", text:"Włochy, Piemont, Barbaresco DOCG; Nebbiolo; czerwone wytrawne; 14,5%; 18 miesięcy w dębie + 6 miesięcy w butelce."}
+   ]},
+  {id:"nebbiolo-alba", name:"Nebbiolo d’Alba DOC",
+   grape:"100% Nebbiolo", region:"Piemont, Włochy · Nebbiolo d’Alba DOC · gmina Pocapaglia",
+   style:"Czerwone", color:"Jasny, rubinowoczerwony z granatowymi refleksami",
+   nose:"Delikatne nuty kwiatowe; aromat subtelny i trwały",
+   taste:"Pełny, okrągły, długi i harmonijny",
+   making:"Ręczny zbiór do skrzynek, delikatne tłoczenie",
+   oak:"Bez beczki: dojrzewanie w betonowych kadziach, potem 3 miesiące w butelce", serve:"14–16°C",
+   story:[
+     {title:"Pocapaglia", text:"Gmina, z której pochodzą winogrona do tego wina. Zbiór jest ręczny, do skrzynek."},
+     {title:"Beton zamiast dębu", text:"Wino dojrzewa w betonowych kadziach, a potem 3 miesiące w butelce. Podawaj chłodniej niż inne czerwone: 14–16°C."}
+   ]},
+  {id:"balzi-passito", name:"I Balzi Barbera Passito Piemonte DOC", 
+   grape:"100% Barbera", region:"Piemont, Włochy · DOC Piemonte",
+   style:"Czerwone, półwytrawne, spokojne", alcohol:"14%",
+   nose:"Owoce leśne i pestkowe, fiołki, wanilia, słodkie przyprawy",
+   taste:"Skoncentrowany, aksamitny, z owocowymi nutami wiśni i porzeczki oraz delikatną słodyczą",
+   palate:"Finisz długi, ciepły, lekko pikantny",
+   making:"Passito: winogrona podsuszane po zbiorach, co koncentruje cukry i aromaty",
+   oak:"Dojrzewa w beczkach (czas nieokreślony): aksamitna struktura i nuty wanilii", serve:"16–18°C",
+   story:[
+     {title:"Passito", text:"Metoda wykorzystująca podsuszane winogrona. Utrata części wody koncentruje cukry i aromaty. Takie wina często są słodkie, ale sama nazwa nie przesądza o słodyczy. To wino jest półwytrawne."},
+     {title:"Do czego polecić", text:"Mięsa w sosach, dziczyzna, dojrzewające sery i desery czekoladowe. Można je też pić samodzielnie."}
+   ]},
+  {id:"reinosa-reserva", name:"Marqués de Reinosa Reserva DOCa Rioja", 
+   grape:"Tempranillo, Garnacha", region:"Rioja, Hiszpania · DOCa Rioja",
+   style:"Czerwone, wytrawne, spokojne", alcohol:"14%",
+   color:"Głęboki rubinowy",
+   nose:"Nuty balsamiczne, korzenne, kakao, minerały, drewno, truskawki i jeżyny",
+   taste:"Wytrawny, pełny",
+   palate:"Dobrze zintegrowane taniny; finisz długi, owocowy",
+   oak:"Minimum 36 miesięcy w beczkach z dębu amerykańskiego i francuskiego: złożony i intensywny charakter", serve:"16–18°C",
+   story:[
+     {title:"DOCa Rioja", text:"DOCa to Denominación de Origen Calificada: kwalifikowana, kontrolowana apelacja pochodzenia. Potwierdza, że wino pochodzi z określonego regionu i spełnia wymagania produkcji i jakości. Rioja ma ten status."},
+     {title:"Reserva w Rioja", text:"Czerwona Reserva: łącznie min. 3 lata dojrzewania, w tym min. 12 miesięcy w dębie i min. 6 miesięcy w butelce. To wino spędza aż 36 miesięcy w beczce, czyli więcej niż wymagane minimum."},
+     {title:"Crianza / Reserva / Gran Reserva", text:"Crianza: min. 12 mies. w dębie, 2 lata łącznie. Reserva: min. 12 mies. w dębie, 3 lata łącznie. Gran Reserva: min. 24 mies. w dębie, 5 lat łącznie."}
+   ]},
+  {id:"borsao-zarihs", name:"Borsao Zarihs", producer:"Bodegas Borsao",
+   grape:"Syrah", region:"Aragonia, Hiszpania · DO Campo de Borja",
+   style:"Czerwone, wytrawne, spokojne", alcohol:"15%",
+   color:"Ciemnofioletowy z rubinowymi refleksami",
+   nose:"Jeżyny, dym, czekolada, wanilia, cedr, lukrecja i przyprawy",
+   taste:"Pełny i miękki, z dobrze zintegrowanymi taninami i kwasowością",
+   palate:"Finisz długi, owocowy: ciemne jagody, suszone śliwki, pieprz i espresso",
+   oak:"14 miesięcy w nowych beczkach z dębu amerykańskiego", serve:"16–18°C",
+   story:[
+     {title:"Winnice", text:"U podnóża Moncayo, na wysokości 350–600 m n.p.m. Gleby piaszczyste, żwirowe i wapienne."},
+     {title:"Wiatr Cierzo", text:"Silny wiatr z północnego zachodu, wiejący ponad 200 dni w roku. Odświeża winogrona i ogranicza choroby oraz przegrzewanie."},
+     {title:"Skojarzenia", text:"Wiatr Cierzo, Moncayo, jeżyny, dym, czekolada, pieprz i kawa espresso."}
+   ]},
+  {id:"turnau-pn", name:"Winnica Turnau Pinot Noir 2022", producer:"Winnica Turnau",
+   grape:"Pinot Noir", region:"Polska",
+   style:"Czerwone, wytrawne; elegancki, finezyjny, soczysty i owocowy",
+   nose:"Truskawka, żurawina, delikatny dym z beczki",
+   taste:"Wiśnia, czerwona porzeczka, czekolada i czarny pieprz",
+   palate:"Subtelne taniny; wyraźna kwasowość, która nadaje świeżość i harmonię",
+   oak:"30 miesięcy w dębowych beczkach",
+   story:[
+     {title:"Nagroda", text:"Zwycięzca konkursu Polskie Korki w kategorii polskich win czerwonych."},
+     {title:"Turnau czy Villebois?", text:"Oba to Pinot Noir. Villebois: lekkość, świeżość, wiśnia, malina i zioła. Turnau: truskawka, żurawina, dym, czekolada, pieprz i 30 miesięcy w dębie."}
+   ]},
+  {id:"borsao-delincuente", name:"Borsao Delincuente Tinto", producer:"Bodegas Borsao",
+   grape:"Tempranillo", region:"Aragonia, Hiszpania",
+   style:"Czerwone, wytrawne, spokojne", alcohol:"13%",
+   color:"Jasny czereśniowoczerwony z fioletowymi refleksami",
+   nose:"Dojrzałe czerwone owoce leśne i delikatne, pikantne nuty przyprawowe",
+   taste:"Gładki, owocowy i dobrze zbalansowany",
+   palate:"Taniny miękkie i delikatne; finisz długi i przyjemny", serve:"16–18°C",
+   story:[
+     {title:"Region", text:"Winnice u stóp pasma Moncayo. Klimat kontynentalny z silnymi wpływami śródziemnomorskimi."},
+     {title:"Wiatr Cierzo", text:"Zimny i suchy wiatr, który chroni uprawy przed wilgocią."}
+   ]},
+  {id:"dom-diogo-rose", name:"Dom Diogo Padeiro Rosé", producer:"Dom Diogo",
+   grape:"100% Padeiro (rzadka odmiana)", region:"Vinho Verde, Portugalia · DOC Vinho Verde",
+   style:"Różowe, wytrawne, spokojne", alcohol:"12%",
+   color:"Ciemnoróżowy z łososiowymi refleksami",
+   nose:"Truskawki, czerwona porzeczka, nuty kwiatowe i ziołowe",
+   taste:"Żywy, owocowy, z wyrazistymi czerwonymi owocami i dobrą strukturą",
+   palate:"Żywa kwasowość; finisz długi, orzeźwiający, soczysty i świeży", serve:"10–12°C",
+   story:[
+     {title:"Vinho Verde DOC", text:"Region w północno-zachodniej Portugalii i kontrolowana nazwa pochodzenia (Denominação de Origem Controlada): wino musi pochodzić z wyznaczonego regionu i spełniać określone zasady produkcji."},
+     {title:"Uwaga", text:"Vinho Verde nie oznacza po prostu „zielonego wina”. Wina z tego regionu mogą być białe, różowe lub czerwone."},
+     {title:"Skojarzenia", text:"Rzadka odmiana Padeiro, ciemnoróżowa barwa, truskawki, czerwona porzeczka, kwiaty i zioła, żywa kwasowość."}
+   ]},
+  {id:"catullio-prosecco", name:"Ca’Tullio Prosecco Spumante DOC Extra Dry", producer:"Ca’Tullio",
+   grape:"Glera", region:"Friuli, Włochy · DOC Prosecco",
+   style:"Białe, musujące, Extra Dry", alcohol:"11%",
+   color:"Jasnożółty; bąbelki drobne, kremowe",
+   nose:"Owocowy i mineralny: skórka brzoskwini, słodkie owoce",
+   taste:"Żółta śliwka, cytrusy, delikatna wanilia",
+   palate:"Dobrze zbalansowane: wyraźna mineralność i kwasowość kontrastują z owocową słodyczą; finisz trwały i orzeźwiający",
+   serve:"6–8°C",
+   story:[
+     {title:"Extra Dry to nie „bardzo wytrawne”", text:"W winach musujących Extra Dry (12–17 g/l cukru) jest słodsze niż Brut (do 12 g/l). Kolejność od najbardziej wytrawnego: Brut Nature → Extra Brut → Brut → Extra Dry → Dry → Demi-Sec → Doux."},
+     {title:"Skala cukru", text:"Brut Nature 0–3 g/l · Extra Brut 0–6 · Brut 0–12 · Extra Dry 12–17 · Dry/Sec 17–32 · Demi-Sec 32–50 · Doux ponad 50 g/l. To kategorie prawne, nie dokładny pomiar w każdej butelce."},
+     {title:"Friuli", text:"Obszar winiarski w północno-wschodnich Włoszech (Friuli-Wenecja Julijska), blisko Słowenii i Austrii, znany szczególnie z win białych. Friuli to region, Prosecco DOC to apelacja, Glera to szczep."}
+   ]},
+  {id:"jackowiak-brut", name:"Jackowiak-Rondeau Cuvée Tradition Brut", producer:"Champagne Jackowiak-Rondeau",
+   grape:"Pinot Meunier 55%, Pinot Noir 30%, Chardonnay 15%", region:"Szampania, Francja · AOC Champagne · Pargny-lès-Reims",
+   style:"Białe, wytrawne, musujące, Brut · rocznik 2021", alcohol:"12%",
+   color:"Jasnozłoty; bąbelki delikatne, utrzymujące się przez średni czas",
+   nose:"Cytrusy, jabłka, świeże morele i delikatne nuty chlebowe",
+   taste:"Soczysty, z wytrawnym, cytrusowym finiszem",
+   palate:"Kwasowość według opisu niska",
+   pairing:"Jako aperitif",
+   story:[
+     {title:"Polsko-francuska historia", text:"Winnicę założył w 1946 r. Władysław Jackowiak z żoną z domu Rondeau, w Pargny-lès-Reims. Na początku rodzina miała 0,6 ha winnicy Premier Cru. Dziś firmą zarządza trzecie pokolenie, winnicę prowadzi David Jackowiak. Na etykiecie jest polski orzeł w koronie."},
+     {title:"Brut", text:"Kategoria wytrawności wina musującego: maksymalnie 12 g cukru na litr. Brut jest bardziej wytrawny niż Extra Dry (12–17 g/l)."},
+     {title:"Szampania", text:"Jeden z najbardziej wysuniętych na północ regionów winiarskich Francji. Klimat chłodny, przymrozki zagrażają winnicom. Gleby to głównie porowate wapienie, które dobrze zatrzymują wodę. Premier Cru to oznaczenie z klasyfikacji jakościowej pochodzenia w Szampanii."}
+   ]},
+  {id:"charbielin-c", name:"Dom Charbielin C Charmat Brut", producer:"Dom Charbielin",
+   grape:"Seyval Blanc", region:"Charbielin, woj. opolskie, Polska",
+   style:"Białe, wytrawne, musujące", alcohol:"11,5%",
+   color:"Jasnosłomkowy; bąbelki drobne i trwałe",
+   nose:"Zielone jabłko, dojrzałe cytrusy, biała brzoskwinia, delikatna nuta drożdżowa",
+   taste:"Lekkie, rześkie, wyraźnie wytrawne, z żywą kwasowością i owocową świeżością",
+   palate:"Finisz czysty i odświeżający",
+   making:"Metoda Charmat (ciśnieniowa)", serve:"6–8°C",
+   story:[
+     {title:"Do zapamiętania", text:"Polska + Seyval Blanc + metoda Charmat + 11,5% + 6–8°C. Zielone jabłko, cytrusy, biała brzoskwinia i rześki, wytrawny smak."}
+   ]},
+  {id:"bliskowice-canva", name:"Dom Bliskowice Canva", producer:"Dom Bliskowice",
+   grape:"Regent 71%, Cabernet Cortis 29%", region:"Polska · parcele „Zawadzka” i „Dudzińska”",
+   style:"Czerwone, wytrawne; wyraziste, dymno-owocowe",
+   color:"Intensywny, głęboki",
+   nose:"Przydymiona papryka, dojrzała czarna porzeczka, przypalone i wędzone śliwki",
+   taste:"Papryka charakterystyczna dla caberneta, kandyzowane czarne jagody, wapienna cierpkość",
+   oak:"Według opisu: 20 miesięcy w stali, 20 miesięcy w 5-letnich beczkach z dębu francuskiego, potem 20 miesięcy w stali",
+   pairing:"Steki, duszona wołowina, kaczka w sosie śliwkowym, dziczyzna, jagnięcina, grillowane mięsa, pieczony bakłażan z pomidorami i serem, dojrzewające i pleśniowe sery",
+   story:[
+     {title:"Winnica", text:"Krzewy 11-letnie, parcele „Zawadzka” i „Dudzińska”. Podłoże wapienne z cienką warstwą humusu."},
+     {title:"Podanie", text:"Wino niefiltrowane, zalecana dekantacja. Przechowywać maksymalnie w 15–17°C."}
+   ]},
+  {id:"godyla-cuvee-a", name:"Winnica Godyla Cuvée A 2024", producer:"Pałacowa Winnica Godyla",
+   grape:"100% Cabernet Cortis", region:"Pawłowice, Opolszczyzna, Polska",
+   style:"Czerwone, wytrawne; owocowe, łagodne",
+   nose:"Dojrzałe jeżyny, czarna porzeczka, delikatne nuty dębowe",
+   taste:"Gładki, miękki, zaokrąglony i harmonijny",
+   oak:"12 miesięcy w dębowych beczkach (subtelny wpływ)",
+   pairing:"Czerwone mięsa i pieczenie, dania z grilla, potrawy z intensywnymi sosami",
+   story:[
+     {title:"Winnica", text:"Założona w 2015 r. na południowym zboczu Pawłowickiej Góry. Gleba ciężka, gliniasta."},
+     {title:"W jednym zdaniu", text:"Polskie czerwone wino o miękkim, owocowym charakterze i subtelnym wpływie dębu."}
+   ]},
+  {id:"godyla-rose", name:"Winnica Godyla Rosé 2025", producer:"Winnica Godyla",
+   grape:"Rondo", region:"Pawłowice, Opolszczyzna, Polska",
+   style:"Różowe, półwytrawne",
+   color:"Intensywnie różowy",
+   nose:"Świeże truskawki, poziomki, maliny; landrynkowy bukiet",
+   taste:"Lekkie, harmonijne, orzeźwiające; świeża kwasowość z delikatną słodyczą",
+   palate:"Finisz długi, soczysty i owocowy",
+   pairing:"Lekkie sałatki i owoce morza, desery ze świeżymi owocami, grillowane warzywa, aperitif",
+   serve:"8–10°C, mocno schłodzone",
+   story:[
+     {title:"Do zapamiętania", text:"Polska, Rondo, różowe półwytrawne, rocznik 2025, 8–10°C. Truskawki, poziomki i maliny, zrównoważona kwasowość i delikatna słodycz."}
+   ]}
+];
+
+const QUESTIONS = [
+  /* ===== Schmitt Söhne Riesling Beerenauslese ===== */
+  {id:"schmitt-ba-co-to", wine:"schmitt-ba", tag:"Styl", q:"Co to jest Beerenauslese?",
+   correct:"Słodkie wino z wyselekcjonowanych, bardzo dojrzałych winogron, często dotkniętych szlachetną pleśnią, która koncentruje naturalne cukry",
+   wrong:["Wytrawne wino z winogron zebranych w zwykłym terminie, z najlepszych parcel winnicy",
+          "Wino z winogron zamrożonych na krzewie i tłoczonych, gdy są jeszcze zamarznięte",
+          "Wino musujące, w którym druga fermentacja odbywa się w butelce"],
+   info:"Beerenauslese to wino słodkie, produkowane z wyselekcjonowanych, bardzo dojrzałych winogron. Często są one dotknięte szlachetną pleśnią, która koncentruje ich naturalne cukry."},
+  {id:"schmitt-ba-region", wine:"schmitt-ba", tag:"Region", q:"Z jakiego regionu pochodzi to wino?",
+   correct:"Rheinhessen", wrong:["Mozela","Rheingau","Pfalz"],
+   info:"Rheinhessen to największy i najstarszy region winiarski Niemiec, o ciepłym i suchym klimacie."},
+  {id:"schmitt-ba-rheinhessen", wine:"schmitt-ba", tag:"Region", q:"Rheinhessen to…",
+   correct:"Największy i najstarszy region winiarski Niemiec, o ciepłym i suchym klimacie",
+   wrong:["Najmniejszy region winiarski Niemiec, chłodny i deszczowy",
+          "Region winiarski w Austrii, o chłodnym, wilgotnym klimacie",
+          "Najmłodszy region winiarski Niemiec, położony nad Morzem Północnym"],
+   info:"Rheinhessen to największy i najstarszy region winiarski Niemiec. Klimat jest ciepły i suchy, winnice leżą na południowo-zachodnich stokach, a gleba to niebieski łupek."},
+  {id:"schmitt-ba-stoki", wine:"schmitt-ba", tag:"Winnica", q:"Dlaczego południowo-zachodnie stoki są korzystne dla winorośli na półkuli północnej?",
+   correct:"Dają dobre nasłonecznienie, mniejsze ryzyko przymrozków, dobry drenaż i dłuższy okres dojrzewania",
+   wrong:["Chronią winogrona przed słońcem, dzięki czemu zachowują wysoką kwasowość",
+          "Zatrzymują wodę w glebie, więc winorośl nie potrzebuje deszczu",
+          "Są zacienione po południu, co spowalnia dojrzewanie i obniża cukier"],
+   info:"Południowo-zachodnie stoki zapewniają dobre nasłonecznienie i odpowiednie warunki dojrzewania winogron: mniejsze ryzyko przymrozków, dobry drenaż i dłuższy okres dojrzewania."},
+  {id:"schmitt-ba-aromat", wine:"schmitt-ba", tag:"Aromat", q:"Jak opiszesz gościowi aromat i ciało tego wina?",
+   correct:"Mocno intensywny, egzotyczny aromat owoców tropikalnych i miodu; wino pełne",
+   wrong:["Delikatny aromat zielonego jabłka i cytryny; wino lekkie i rześkie",
+          "Aromat czerwonych owoców, wanilii i beczki; wino średnie",
+          "Aromat agrestu, skoszonej trawy i krzemienia; wino lekkie"],
+   info:"Aromat jest mocno intensywny i egzotyczny: owoce tropikalne i miód. Wino jest pełne."},
+  {id:"schmitt-ba-styl", wine:"schmitt-ba", tag:"Styl", q:"To wino jest…",
+   correct:"Słodkie", wrong:["Wytrawne","Półwytrawne","Musujące"],
+   info:"Beerenauslese to wino słodkie: bardzo dojrzałe winogrona, często ze szlachetną pleśnią, mają skoncentrowane naturalne cukry."},
+
+  /* ===== Balbo Reserva Malbec ===== */
+  {id:"balbo-region", wine:"balbo-malbec", tag:"Region", q:"Z jakiego regionu pochodzi to wino?",
+   correct:"Mendoza, Argentyna", wrong:["Salta, Argentyna","Patagonia, Argentyna","Valle Central, Chile"],
+   info:"Mendoza to największy i najważniejszy region winiarski Argentyny, położony u podnóża Andów."},
+  {id:"balbo-beczka", wine:"balbo-malbec", tag:"Beczka", q:"Ile to wino dojrzewa w beczce i co mu to daje?",
+   correct:"12 miesięcy: głębię, złożoność oraz posmak kawy, wanilii i czekolady",
+   wrong:["6 miesięcy: świeżość i rześką kwasowość",
+          "24 miesiące: nuty skóry, tytoniu i suszonych owoców",
+          "Nie dojrzewa w beczce, tylko w stali, żeby zachować czysty owoc"],
+   info:"Wino spędza 12 miesięcy w beczce. Beczka nadaje mu głębię i złożoność, a także posmak kawy, wanilii i czekolady."},
+  {id:"balbo-kolor", wine:"balbo-malbec", tag:"Kolor", q:"Jaki kolor ma to wino?",
+   correct:"Ciemny rubin z fioletowymi przebłyskami",
+   wrong:["Jasny rubin z ceglastym brzegiem","Granat z brązowymi refleksami","Jasna wiśnia, prawie przezroczysta"],
+   info:"Malbec ma kolor ciemnego rubinu z fioletowymi przebłyskami."},
+  {id:"balbo-aromat", wine:"balbo-malbec", tag:"Aromat", q:"Który aromat jest najważniejszy w tym Malbecu?",
+   correct:"Śliwka", wrong:["Czarna porzeczka","Truskawka","Zielona papryka"],
+   info:"Zapach jest intensywny i owocowy: maliny, śliwka, czereśnia, jagody. Najważniejsza w Malbecu jest jednak śliwka."},
+  {id:"balbo-owoce", wine:"balbo-malbec", tag:"Aromat", q:"Jak opiszesz gościowi zapach tego wina?",
+   correct:"Intensywny i owocowy: maliny, śliwka, czereśnia, jagody",
+   wrong:["Delikatny i kwiatowy: róża, fiołek, skórka cytryny",
+          "Ziołowy i ziemisty: tymianek, grzyby, runo leśne",
+          "Cytrusowy i mineralny: limonka, zielone jabłko, krzemień"],
+   info:"Zapach jest intensywny i owocowy: maliny, śliwka, czereśnia, jagody, z najważniejszą śliwką. Beczka dokłada kawę, wanilię i czekoladę."},
+  {id:"balbo-usta", wine:"balbo-malbec", tag:"W ustach", q:"Jak opiszesz gościowi to wino w ustach?",
+   correct:"Pełne, z gładkimi taninami i długim finiszem",
+   wrong:["Lekkie, z wysoką kwasowością i krótkim finiszem",
+          "Średnie, z szorstkimi, ściągającymi taninami",
+          "Pełne, ale z ostrymi taninami i krótkim finiszem"],
+   info:"Wino jest pełne, z gładkimi taninami i długim finiszem. Długi finisz to ważna rzecz, o której warto powiedzieć gościowi."},
+  {id:"balbo-mendoza", wine:"balbo-malbec", tag:"Region", q:"Mendoza to…",
+   correct:"Największy i najważniejszy region winiarski Argentyny, ok. 70% krajowej produkcji, u podnóża Andów",
+   wrong:["Chłodny, nadmorski region winiarski w Chile, pod wpływem Pacyfiku",
+          "Mały region na południu Argentyny, ok. 5% krajowej produkcji",
+          "Deszczowy region na wschodzie Argentyny, nad Atlantykiem"],
+   info:"Mendoza odpowiada za około 70% produkcji wina w Argentynie. Leży u podnóża Andów i ma suchy, słoneczny klimat, duże amplitudy temperatur oraz wysoko położone winnice."},
+  {id:"balbo-woda", wine:"balbo-malbec", tag:"Region", q:"Co umożliwia uprawę winorośli w niemal pustynnej Mendozie?",
+   correct:"Nawadnianie wodą z topniejącego śniegu w Andach",
+   wrong:["Obfite opady deszczu latem","Mgły napływające znad Pacyfiku","Wysoki poziom wód gruntowych z pobliskich jezior"],
+   info:"Kluczowe znaczenie ma nawadnianie wodą z topniejącego śniegu w Andach. Dzięki temu winorośl rośnie w niemal pustynnym środowisku."},
+  {id:"balbo-klimat", wine:"balbo-malbec", tag:"Region", q:"Jaki klimat ma Mendoza?",
+   correct:"Suchy i słoneczny, z dużymi amplitudami temperatur",
+   wrong:["Wilgotny i deszczowy, z małymi różnicami temperatur","Chłodny i mglisty, pod wpływem oceanu","Tropikalny, z porą deszczową"],
+   info:"Mendoza ma suchy, słoneczny klimat, duże amplitudy temperatur i wysoko położone winnice."},
+  {id:"balbo-uco", wine:"balbo-malbec", tag:"Region", q:"Valle de Uco to…",
+   correct:"Prestiżowy podregion Mendozy z winnicami na 900–1600 m n.p.m., dużymi amplitudami temperatur i suchym klimatem",
+   wrong:["Nizinny podregion Mendozy z winnicami poniżej 300 m n.p.m. i wilgotnym klimatem",
+          "Region winiarski w Chile, słynący z Carménère",
+          "Najcieplejszy podregion Mendozy, gdzie powstają głównie wina słodkie"],
+   info:"Valle de Uco to prestiżowy podregion Mendozy. Winnice leżą na 900–1600 m n.p.m., klimat jest suchy, a amplitudy temperatur duże. Powstają tam wina o intensywnym aromacie, wyraźnej kwasowości, eleganckiej strukturze i dużym potencjale starzenia."},
+
+  /* ===== Rebel Ridge Cabernet Sauvignon ===== */
+  {id:"rr-region", wine:"rebel-ridge-cab", tag:"Region", q:"Skąd pochodzi to wino?",
+   correct:"Kalifornia, USA", wrong:["Oregon, USA","Stan Waszyngton, USA","Australia Południowa"],
+   info:"Rebel Ridge to wino z Kalifornii. Winiarz wykorzystał kalifornijskie terroir, by stworzyć wino zrywające ze sztywnymi normami."},
+  {id:"rr-szczepy", wine:"rebel-ridge-cab", tag:"Szczep", q:"Z jakich szczepów powstaje to wino?",
+   correct:"Cabernet Sauvignon i 15% Petite Sirah",
+   wrong:["Cabernet Sauvignon i 15% Merlot","100% Cabernet Sauvignon","Cabernet Sauvignon i 15% Zinfandel"],
+   info:"To Cabernet Sauvignon z dodatkiem 15% Petite Sirah."},
+  {id:"rr-petite-sirah", wine:"rebel-ridge-cab", tag:"Szczep", q:"Po co w tym winie jest 15% Petite Sirah?",
+   correct:"Wzmacnia strukturę, kolor i intensywność; tylko 15%, żeby nie zdominować charakteru Cabernet",
+   wrong:["Łagodzi taniny i dodaje winu słodyczy",
+          "Podnosi kwasowość i dodaje świeżości",
+          "Obniża zawartość alkoholu"],
+   info:"Petite Sirah wzmacnia strukturę, kolor i intensywność wina. Jest go tylko 15%, aby nie zdominować typowego charakteru Cabernet Sauvignon."},
+  {id:"rr-beczka", wine:"rebel-ridge-cab", tag:"Beczka", q:"Ile to wino dojrzewa w beczce?",
+   correct:"6 miesięcy", wrong:["12 miesięcy","18 miesięcy","Nie dojrzewa w beczce"],
+   info:"Rebel Ridge Cabernet Sauvignon spędza w beczce 6 miesięcy."},
+  {id:"rr-alkohol", wine:"rebel-ridge-cab", tag:"Alkohol", q:"Ile alkoholu ma to wino?",
+   correct:"14,5%, czyli dużo jak na wino", wrong:["12%, czyli mało jak na czerwone","13%, czyli przeciętnie","11%, jak lekkie wina"],
+   info:"Wino ma 14,5% alkoholu, czyli dużo jak na wino."},
+  {id:"rr-smak", wine:"rebel-ridge-cab", tag:"Smak", q:"Jak opiszesz gościowi smak tego wina?",
+   correct:"Pełna budowa, ciemne czerwone owoce, nuty mielonych przypraw, drzewa sandałowego i kakao",
+   wrong:["Lekka budowa, truskawka, malina i nuty kwiatowe",
+          "Średnia budowa, zielona papryka, mięta i grafit",
+          "Pełna budowa, suszone figi, rodzynki i miód"],
+   info:"To wino o pełnej budowie, o smaku ciemnych czerwonych owoców, z nutami mielonych przypraw, drzewa sandałowego i kakao."},
+  {id:"rr-taniny", wine:"rebel-ridge-cab", tag:"W ustach", q:"Jakie taniny i kwasowość ma to wino?",
+   correct:"Średnie taniny, drobne i gładkie, bez szorstkości; średnia kwasowość",
+   wrong:["Wysokie, szorstkie, mocno ściągające taniny; wysoka kwasowość",
+          "Niskie taniny, prawie niewyczuwalne; niska kwasowość",
+          "Średnie, ale ziarniste i ściągające taniny; wysoka kwasowość"],
+   info:"Taniny są średnie, ale drobne i gładkie, bez szorstkości i agresywnego ściągania w ustach. Kwasowość średnia."},
+  {id:"rr-nazwa", wine:"rebel-ridge-cab", tag:"Historia", q:"Skąd wzięła się nazwa Rebel Ridge?",
+   correct:"Od górskiego grzbietu, na którym trzej wizjonerzy postanowili przeciwstawić się wielkim koncernom",
+   wrong:["Od nazwiska rodziny, która założyła winnicę",
+          "Od pobliskiej rzeki, nad którą leżą winnice",
+          "Od historycznej bitwy stoczonej w tej okolicy"],
+   info:"Rebel Ridge zawdzięcza nazwę górskiemu grzbietowi, na którym trzej wizjonerzy postanowili przeciwstawić się dyktatowi wielkich koncernów i zrewolucjonizować rynek wina."},
+  {id:"rr-winiarz", wine:"rebel-ridge-cab", tag:"Historia", q:"Skąd pochodzą korzenie głównego winiarza Rebel Ridge?",
+   correct:"Z Valpolicelli we Włoszech", wrong:["Z Bordeaux we Francji","Z Rioja w Hiszpanii","Z Mozeli w Niemczech"],
+   info:"Główny winiarz czerpie z włoskich korzeni w Valpolicelli. Wykorzystał kalifornijskie terroir, by stworzyć wino zrywające ze sztywnymi normami."},
+
+  /* ===== In Situ Signature Wines Full Bodied Blend ===== */
+  {id:"is-region", wine:"in-situ-blend", tag:"Region", q:"Skąd pochodzi to wino?",
+   correct:"Chile, dolina Aconcagua, zbocza Paidahuén",
+   wrong:["Argentyna, Mendoza, Valle de Uco","Chile, dolina Maipo","Chile, dolina Colchagua"],
+   info:"In Situ pochodzi z doliny Aconcagua w Chile (DO Valle de Aconcagua), z winnic na zboczach Paidahuén."},
+  {id:"is-szczepy", wine:"in-situ-blend", tag:"Szczep", q:"Z jakich szczepów powstaje ten blend?",
+   correct:"Cabernet Sauvignon, Petit Verdot, Carménère",
+   wrong:["Cabernet Sauvignon, Merlot, Malbec","Syrah, Grenache, Mourvèdre","Carménère, Pinot Noir, Merlot"],
+   info:"Blend łączy Cabernet Sauvignon, Petit Verdot i Carménère."},
+  {id:"is-beczka", wine:"in-situ-blend", tag:"Beczka", q:"Jak dojrzewa to wino?",
+   correct:"12 miesięcy w dębie francuskim, potem dodatkowo 6 miesięcy w butelce",
+   wrong:["6 miesięcy w dębie amerykańskim, bez leżakowania w butelce",
+          "12 miesięcy w stali, potem 12 miesięcy w butelce",
+          "24 miesiące w dębie francuskim, bez leżakowania w butelce"],
+   info:"Wino dojrzewa 12 miesięcy w beczce z dębu francuskiego, co zaokrągla taniny, a potem dodatkowo 6 miesięcy w butelce."},
+  {id:"is-dab", wine:"in-situ-blend", tag:"Beczka", q:"Co daje temu winu dąb francuski?",
+   correct:"Zaokrągla taniny", wrong:["Podnosi kwasowość","Dodaje słodyczy","Obniża alkohol"],
+   info:"12 miesięcy w dębie francuskim zaokrągla taniny."},
+  {id:"is-aromat", wine:"in-situ-blend", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Czerwona porzeczka, dojrzałe wiśnie, czarny pieprz i mineralny akcent mokrego kamienia",
+   wrong:["Śliwka, fiołek, kawa i wanilia",
+          "Owoce tropikalne, miód i morela",
+          "Truskawka, runo leśne i grzyby"],
+   info:"W aromacie są czerwona porzeczka, dojrzałe wiśnie i czarny pieprz, a do tego mineralny akcent: czuć trochę mokrego kamienia."},
+  {id:"is-mineralnosc", wine:"in-situ-blend", tag:"Aromat", q:"Skąd w tym winie mineralny akcent mokrego kamienia?",
+   correct:"Z kamienistych gleb", wrong:["Z dojrzewania w dębie francuskim","Z dodatku Petit Verdot","Z długiego leżakowania w butelce"],
+   info:"Mineralność bierze się z kamienistych gleb na zboczach Paidahuén."},
+  {id:"is-usta", wine:"in-situ-blend", tag:"W ustach", q:"Jak opiszesz gościowi to wino w ustach?",
+   correct:"Pełne, gładka konsystencja, długi finisz; średnia kwasowość i średnie taniny",
+   wrong:["Lekkie, rześkie, krótki finisz; wysoka kwasowość i niskie taniny",
+          "Pełne, szorstkie taniny, krótki finisz; niska kwasowość",
+          "Średnie, słodkawe, krótki finisz; niska kwasowość"],
+   info:"Wino jest pełne, o gładkiej konsystencji i z długim finiszem. Kwasowość i taniny są średnie."},
+  {id:"is-aconcagua", wine:"in-situ-blend", tag:"Region", q:"Dolina Aconcagua to…",
+   correct:"Ważny region Chile na północ od Santiago, między Andami a Pacyfikiem, o suchym, ciepłym klimacie śródziemnomorskim",
+   wrong:["Chłodny region na południu Chile, z obfitymi deszczami",
+          "Region w Argentynie u podnóża Andów, ok. 70% produkcji kraju",
+          "Nadmorski region na południe od Santiago, słynący z win białych"],
+   info:"Dolina Aconcagua leży na północ od Santiago, między Andami a wybrzeżem Pacyfiku. Klimat jest suchy, ciepły i śródziemnomorski, a chłodne wiatry oceaniczne w zachodniej części pomagają zachować świeżość win."},
+  {id:"is-wiatry", wine:"in-situ-blend", tag:"Region", q:"Co w dolinie Aconcagua pomaga zachować świeżość win?",
+   correct:"Chłodne wiatry oceaniczne w zachodniej części doliny",
+   wrong:["Obfite opady deszczu przez cały rok","Gęste lasy osłaniające winnice","Nawadnianie wodą z jezior"],
+   info:"Region ma suchy, ciepły klimat, ale chłodne wiatry od Pacyfiku w zachodniej części sprzyjają zachowaniu świeżości."},
+  {id:"is-paidahuen", wine:"in-situ-blend", tag:"Winnica", q:"Co wyróżnia winnice na zboczach Paidahuén?",
+   correct:"Ok. 940 m n.p.m.; ciepłe dni i chłodne noce dają dojrzałe taniny przy zachowaniu aromatyczności",
+   wrong:["Leżą na poziomie morza, a stały upał daje bardzo słodkie wina",
+          "Ok. 2500 m n.p.m.; ciągłe przymrozki dają lekkie, kwasowe wina",
+          "Leżą w dolinie rzeki, na żyznych, gliniastych glebach"],
+   info:"Winnice sięgają ok. 940 m n.p.m. Ciepłe dni i chłodne noce pomagają uzyskać dojrzałe taniny przy zachowaniu aromatyczności. To przykład chilijskiego wina wysokogórskiego: skoncentrowany owoc, struktura i taniny, a do tego świeżość."},
+
+  /* ===== Które to wino? (nazwa ukryta, odpowiedzi to wina z karty) ===== */
+  {id:"id-schmitt", wine:"schmitt-ba", ident:true, tag:"Które wino?",
+   q:"Słodkie, pełne wino z Rheinhessen, z egzotycznym aromatem owoców tropikalnych i miodu. Które to wino?",
+   info:"To Schmitt Söhne Riesling Beerenauslese."},
+  {id:"id-balbo", wine:"balbo-malbec", ident:true, tag:"Które wino?",
+   q:"Argentyna, 12 miesięcy w beczce, ciemny rubin z fioletowymi przebłyskami, dominuje śliwka, długi finisz. Które to wino?",
+   info:"To Balbo Reserva Malbec od Familia Falasco."},
+  {id:"id-rebel", wine:"rebel-ridge-cab", ident:true, tag:"Które wino?",
+   q:"Kalifornia, 6 miesięcy w beczce, 15% Petite Sirah, nuty drzewa sandałowego i kakao. Które to wino?",
+   info:"To Rebel Ridge Cabernet Sauvignon."},
+  {id:"id-insitu", wine:"in-situ-blend", ident:true, tag:"Które wino?",
+   q:"Chile, zbocza Paidahuén, blend z Petit Verdot i Carménère, mineralny akcent mokrego kamienia. Które to wino?",
+   info:"To In Situ Signature Wines Full Bodied Blend od Viña San Esteban."},
+
+  /* ===== Boland Cellar Ahintof Coffee Pinotage ===== */
+  {id:"bol-region", wine:"boland-pinotage", tag:"Region", q:"Skąd pochodzi to wino?",
+   correct:"Paarl, RPA", wrong:["Stellenbosch, RPA","Mendoza, Argentyna","Barossa Valley, Australia"],
+   info:"Boland Cellar to producent z regionu Paarl w Republice Południowej Afryki."},
+  {id:"bol-pinotage", wine:"boland-pinotage", tag:"Szczep", q:"Pinotage to…",
+   correct:"Krzyżówka Pinot Noir i Cinsault, charakterystyczna dla RPA",
+   wrong:["Krzyżówka Cabernet Sauvignon i Merlot, typowa dla Bordeaux",
+          "Lokalna nazwa Syrah używana w RPA",
+          "Krzyżówka Pinot Noir i Gamay, typowa dla Burgundii"],
+   info:"Pinotage to krzyżówka Pinot Noir i Cinsault, charakterystyczna dla RPA. W Paarl jest jednym z najbardziej charakterystycznych szczepów."},
+  {id:"bol-aromat", wine:"boland-pinotage", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Ciemne śliwki i dojrzałe owoce z nutami kawy, mokki, cedru i francuskiego dębu",
+   wrong:["Truskawka, malina, zioła i nuty kwiatowe",
+          "Czerwona porzeczka, czarny pieprz i mokry kamień",
+          "Owoce tropikalne, miód i morela"],
+   info:"Wino łączy aromaty ciemnych śliwek i dojrzałych owoców z nutami kawy, mokki, cedru oraz francuskiego dębu."},
+  {id:"bol-kawa", wine:"boland-pinotage", tag:"Ciekawostka", q:"Skąd w Pinotage biorą się nuty kawy i mokki?",
+   correct:"Z dojrzewania w dębie, ale też ze specyficznego profilu szczepu i technik winifikacji",
+   wrong:["Z dodatku ziaren kawy podczas fermentacji",
+          "Wyłącznie z gleby, na której rosną winogrona",
+          "Z bardzo długiego leżakowania w butelce"],
+   info:"Nuty kawy i mokki mogą wynikać zarówno z dojrzewania w dębie, jak i ze specyficznego profilu aromatycznego szczepu oraz technik winifikacji. W tym winie podkreślają styl, w którym ważną rolę odgrywa dąb."},
+  {id:"bol-paarl", wine:"boland-pinotage", tag:"Region", q:"Jaki jest Paarl jako region winiarski?",
+   correct:"Ciepły, sprzyjający dojrzewaniu czerwonych odmian",
+   wrong:["Chłodny i deszczowy, najlepszy dla lekkich win białych","Wysokogórski, z bardzo chłodnymi nocami przez cały rok","Nadmorski i mglisty, znany głównie z win musujących"],
+   info:"Paarl to ciepły obszar winiarski, sprzyjający dojrzewaniu czerwonych odmian."},
+  {id:"bol-beczka", wine:"boland-pinotage", tag:"Beczka", q:"Ile to wino dojrzewa w beczce?",
+   correct:"3 miesiące", wrong:["12 miesięcy","18 miesięcy","Nie dojrzewa w beczce"],
+   info:"Wino dojrzewa w beczce 3 miesiące. Ma ok. 14% alkoholu."},
+  {id:"bol-styl", wine:"boland-pinotage", tag:"Styl", q:"Jak opiszesz gościowi styl tego wina?",
+   correct:"Skoncentrowane, z kremowym wykończeniem",
+   wrong:["Lekkie, rześkie, z krótkim finiszem","Słodkie, z nutą miodu","Lekko musujące i owocowe"],
+   info:"To wino skoncentrowane, z kremowym wykończeniem."},
+  {id:"bol-producent", wine:"boland-pinotage", tag:"Producent", q:"Z jakich odmian znany jest Boland Cellar?",
+   correct:"M.in. z Chenin Blanc i Pinotage", wrong:["Z Malbec i Torrontés","Z Riesling i Silvaner","Z Tempranillo i Garnacha"],
+   info:"Boland Cellar z Paarl jest znany m.in. z odmian Chenin Blanc i Pinotage."},
+
+  /* ===== E. Guigal Châteauneuf-du-Pape ===== */
+  {id:"cdp-region", wine:"guigal-cdp", tag:"Region", q:"Skąd pochodzi to wino?",
+   correct:"Dolina Rodanu Południowego, Francja", wrong:["Dolina Rodanu Północnego, Francja","Bordeaux, Francja","Burgundia, Francja"],
+   info:"To AOC Châteauneuf-du-Pape w południowym Rodanie, apelacja znana z kupażowanych win czerwonych, często opartych na Grenache."},
+  {id:"cdp-szczepy", wine:"guigal-cdp", tag:"Szczep", q:"Na jakich szczepach opiera się to wino?",
+   correct:"Głównie Grenache, Syrah i Mourvèdre, z dodatkiem m.in. Cinsault, Counoise i Muscardin",
+   wrong:["Cabernet Sauvignon, Merlot i Cabernet Franc","100% Syrah","Pinot Noir i Gamay"],
+   info:"Przede wszystkim Grenache, Syrah i Mourvèdre, z dodatkiem m.in. Cinsault, Counoise i Muscardin."},
+  {id:"cdp-role", wine:"guigal-cdp", tag:"Szczep", q:"Co do kupażu wnosi Mourvèdre?",
+   correct:"Taniny, głębię i potencjał dojrzewania",
+   wrong:["Dojrzałe czerwone owoce, alkohol i miękkość","Kolor, przyprawy i ciemniejsze owoce","Kwasowość i aromaty cytrusowe"],
+   info:"Grenache daje dojrzałe czerwone owoce, alkohol, pełnię i miękkość. Syrah daje kolor, przyprawy, ciemniejsze owoce i strukturę. Mourvèdre daje taniny, głębię i potencjał dojrzewania."},
+  {id:"cdp-grenache", wine:"guigal-cdp", tag:"Szczep", q:"Co do kupażu wnosi Grenache?",
+   correct:"Dojrzałe czerwone owoce, alkohol, pełnię i miękkość",
+   wrong:["Taniny, głębię i potencjał dojrzewania","Kolor, przyprawy i strukturę","Mineralność i wysoką kwasowość"],
+   info:"Grenache: dojrzałe czerwone owoce, alkohol, pełnia i miękkość. Syrah: kolor, przyprawy, ciemniejsze owoce i struktura. Mourvèdre: taniny, głębia i potencjał dojrzewania."},
+  {id:"cdp-galets", wine:"guigal-cdp", tag:"Terroir", q:"Galets roulés to…",
+   correct:"Duże, zaokrąglone otoczaki rzeczne, które magazynują ciepło i pomagają dojrzewać winogronom",
+   wrong:["Tradycyjne duże beczki używane w Rodanie","Metoda ręcznego zbioru najdojrzalszych gron","Wiatr wiejący doliną Rodanu"],
+   info:"Galets roulés to duże, zaokrąglone otoczaki charakterystyczne dla części winnic apelacji. Magazynują ciepło i pomagają dojrzewać winogronom."},
+  {id:"cdp-beczka", wine:"guigal-cdp", tag:"Beczka", q:"Jak dojrzewa to wino?",
+   correct:"18 miesięcy w dużych beczkach dębowych", wrong:["6 miesięcy w małych, nowych barrique","12 miesięcy w stali","3 miesiące w dębie amerykańskim"],
+   info:"Wino dojrzewa 18 miesięcy w dużych beczkach dębowych."},
+  {id:"cdp-profil", wine:"guigal-cdp", tag:"W ustach", q:"Jak opiszesz gościowi to wino w ustach?",
+   correct:"Pełne, taniny średnie do wysokich, ale gładkie; kwasowość średnia; finisz długi i elegancki",
+   wrong:["Lekkie, niskie taniny, wysoka kwasowość, krótki finisz",
+          "Średnie, szorstkie taniny, krótki finisz",
+          "Pełne i słodkie, z niskimi taninami"],
+   info:"Wino jest pełne, bogate i skoncentrowane. Taniny średnie do wysokich, ale gładkie, kwasowość zazwyczaj średnia, finisz długi i elegancki."},
+  {id:"cdp-aromat", wine:"guigal-cdp", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Maliny, wiśnie, śliwki, przyprawy i delikatne nuty dębowe",
+   wrong:["Agrest, cytryna i krzemień","Owoce tropikalne i miód","Zielona papryka, mięta i grafit"],
+   info:"Aromaty: maliny, wiśnie, śliwki, przyprawy i delikatne nuty dębowe."},
+  {id:"cdp-guigal", wine:"guigal-cdp", tag:"Producent", q:"Kiedy E. Guigal nabył posiadłość Château de Nalys?",
+   correct:"W 2017 r.", wrong:["W 1987 r.","W 2005 r.","W 2021 r."],
+   info:"E. Guigal nabył posiadłość Château de Nalys w 2017 r."},
+  {id:"cdp-13", wine:"guigal-cdp", tag:"Apelacja", q:"Ile odmian tradycyjnie mówi się, że jest dopuszczonych w Châteauneuf-du-Pape?",
+   correct:"13", wrong:["3","7","21"],
+   info:"Tradycyjnie mówi się o 13 odmianach dopuszczonych w apelacji. Po uwzględnieniu osobno odmian barwnych i ich wariantów przepisy są bardziej szczegółowe."},
+
+  /* ===== Château Beauchêne Côtes du Rhône ===== */
+  {id:"bea-region", wine:"beauchene-cdr", tag:"Apelacja", q:"Jaką apelację ma to wino?",
+   correct:"AOC Côtes du Rhône", wrong:["AOC Châteauneuf-du-Pape","AOC Côte-Rôtie","Vin de France"],
+   info:"Wino pochodzi z okolic Châteauneuf-du-Pape, ale ma apelację Côtes du Rhône, a nie Châteauneuf-du-Pape."},
+  {id:"bea-vs-cdp", wine:"beauchene-cdr", tag:"Apelacja", q:"Czym to wino różni się od Châteauneuf-du-Pape?",
+   correct:"Côtes du Rhône to szersza apelacja; CdP jest bardziej prestiżowa, ściślej określona, z własnymi wymaganiami",
+   wrong:["Pochodzi z północnego Rodanu, a CdP z południowego",
+          "Może używać tylko jednego szczepu, a CdP kupażu",
+          "To wino białe, a CdP czerwone"],
+   info:"Oba pochodzą z południowego Rodanu i mogą wykorzystywać podobne szczepy. Côtes du Rhône to szersza apelacja, a Châteauneuf-du-Pape bardziej prestiżowa i ściślej określona. Wina z CdP są często bardziej skoncentrowane i złożone, choć wiele zależy od producenta i rocznika."},
+  {id:"bea-gsm", wine:"beauchene-cdr", tag:"Szczep", q:"GSM w tym winie oznacza…",
+   correct:"Grenache, Syrah, Mourvèdre", wrong:["Gamay, Sangiovese, Merlot","Grenache, Sauvignon, Malbec","Garnacha, Shiraz, Monastrell z Hiszpanii"],
+   info:"Klasyczny kupaż GSM: Grenache (owocowość i alkohol), Syrah (kolor i przyprawy), Mourvèdre (struktura i taniny)."},
+  {id:"bea-aromat", wine:"beauchene-cdr", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Czarna wiśnia, jeżyna, czarna porzeczka, lukrecja, runo leśne, wanilia i pieprz",
+   wrong:["Wiśnia, malina, zioła i delikatna wanilia","Ciemna śliwka, kawa, mokka i cedr","Owoce tropikalne i miód"],
+   info:"Dojrzałe czerwone i czarne owoce: czarna wiśnia, jeżyna, czarna porzeczka, a do tego lukrecja, runo leśne, wanilia i pieprz."},
+  {id:"bea-beczka", wine:"beauchene-cdr", tag:"Beczka", q:"Jak dojrzewa to wino i co daje mu beczka?",
+   correct:"6–12 miesięcy, częściowo we francuskim dębie: wanilia i przyprawy, bez dominowania nad owocem",
+   wrong:["18 miesięcy w dużych beczkach, mocno dębowe","Tylko w stali, bez kontaktu z dębem","3 miesiące w dębie amerykańskim: kokos i karmel"],
+   info:"Dojrzewa 6–12 miesięcy, częściowo w beczkach z francuskiego dębu. Wnosi to nuty wanilii i przypraw, niekoniecznie dominując nad owocem."},
+  {id:"bea-gleby", wine:"beauchene-cdr", tag:"Terroir", q:"Co w winnicy sprzyja koncentracji i dojrzałości owocu?",
+   correct:"Otoczaki rzeczne i czerwona glina oraz stare krzewy (ok. 30–100 lat)",
+   wrong:["Łupkowe gleby i młode krzewy","Piaszczyste gleby i nawadnianie","Wysokie położenie ponad 1500 m n.p.m."],
+   info:"Gleby obejmują otoczaki rzeczne i czerwoną glinę, które sprzyjają dojrzewaniu. Stare krzewy, w wieku ok. 30–100 lat, mogą przyczyniać się do koncentracji owocu."},
+  {id:"bea-usta", wine:"beauchene-cdr", tag:"W ustach", q:"Jak opiszesz gościowi to wino w ustach?",
+   correct:"Body średnie (+) do pełnego, taniny średnie, dojrzałe i miękkie, kwasowość średnia",
+   wrong:["Lekkie, niskie taniny, wysoka kwasowość","Pełne, wysokie, szorstkie taniny, niska kwasowość","Lekkie i słodkie"],
+   info:"Body średnie (+) do pełnego, taniny średnie, dojrzałe i miękkie, kwasowość średnia. Styl: wytrawne, owocowe, korzenne."},
+  {id:"bea-poludnie", wine:"beauchene-cdr", tag:"Region", q:"Co jest typowe dla win z południowego Rodanu?",
+   correct:"Ciepły klimat, dojrzałe owoce i często wyższy alkohol",
+   wrong:["Chłodny klimat, wysoka kwasowość i niski alkohol","Wina głównie białe i musujące","Wina zawsze z jednego szczepu"],
+   info:"Południowy Rodan: ciepły klimat, dojrzałe owoce i często wyższy alkohol. To wino ma 14%."},
+
+  /* ===== Villebois Pinot Noir ===== */
+  {id:"vil-region", wine:"villebois-pn", tag:"Region", q:"Skąd pochodzi to wino?",
+   correct:"Dolina Loary, Francja", wrong:["Burgundia, Francja","Alzacja, Francja","Dolina Rodanu, Francja"],
+   info:"Villebois Pinot Noir pochodzi z Doliny Loary, z oznaczeniem Vin de France."},
+  {id:"vil-vdf", wine:"villebois-pn", tag:"Etykieta", q:"Vin de France na etykiecie oznacza…",
+   correct:"Ogólnokrajową kategorię, a nie apelację AOC; nie oznacza automatycznie niższej jakości",
+   wrong:["Najwyższą francuską apelację, wyżej niż AOC","Wino z winogron zebranych w kilku krajach UE","Wino z jednej, konkretnej winnicy"],
+   info:"Vin de France to kategoria ogólnokrajowa, a nie apelacja AOC. Wino nie ma konkretnej apelacji regionalnej, co nie oznacza automatycznie niższej jakości."},
+  {id:"vil-pinot", wine:"villebois-pn", tag:"Szczep", q:"Pinot Noir to odmiana…",
+   correct:"O cienkiej skórce: jaśniejsza barwa, delikatniejsze taniny i wyraźne czerwone owoce",
+   wrong:["O grubej skórce: ciemna barwa i wysokie taniny","Biała, aromatyczna, z nutami liczi","Krzyżówka Cinsault i Syrah"],
+   info:"Pinot Noir ma cienką skórkę, dlatego zwykle daje wina o jaśniejszej barwie, delikatniejszych taninach i wyraźnych aromatach czerwonych owoców."},
+  {id:"vil-profil", wine:"villebois-pn", tag:"W ustach", q:"Jak opiszesz gościowi to wino w ustach?",
+   correct:"Lekkie do średniego, kwasowość średnia (+), delikatne taniny, krótki, świeży i owocowy finisz",
+   wrong:["Pełne, wysokie taniny, długi finisz","Pełne, słodkie, kremowe wykończenie","Średnie, szorstkie taniny, niska kwasowość"],
+   info:"Body lekkie do średniego, kwasowość średnia (+) i odświeżająca, taniny niskie do średnich i delikatne, finisz krótki, świeży i owocowy."},
+  {id:"vil-aromat", wine:"villebois-pn", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Wiśnia, malina, czerwone owoce, zioła i delikatna wanilia",
+   wrong:["Czarna wiśnia, jeżyna, lukrecja i pieprz","Ciemna śliwka, kawa i mokka","Czerwona porzeczka, czarny pieprz i mokry kamień"],
+   info:"Aromaty: wiśnia, malina, czerwone owoce, zioła i delikatna wanilia."},
+  {id:"vil-loara", wine:"villebois-pn", tag:"Region", q:"Z czego przede wszystkim znana jest Dolina Loary?",
+   correct:"Z win białych, choć robi też czerwone, m.in. z Pinot Noir i Cabernet Franc",
+   wrong:["Wyłącznie z win czerwonych z Grenache","Z win słodkich z botrytis","Z win wzmacnianych"],
+   info:"Dolina Loary jest znana przede wszystkim z win białych, ale produkuje również czerwone, m.in. z Pinot Noir i Cabernet Franc."},
+  {id:"vil-alk", wine:"villebois-pn", tag:"Alkohol", q:"Ile alkoholu ma to wino?",
+   correct:"13%", wrong:["14,5%","11%","15%"],
+   info:"Villebois Pinot Noir ma 13% alkoholu: lekkie, świeże, z delikatnymi taninami."},
+
+  /* ===== Które to wino? – nowe ===== */
+  {id:"id-boland", wine:"boland-pinotage", ident:true, tag:"Które wino?",
+   q:"RPA, krzyżówka Pinot Noir i Cinsault, ciemne śliwki, kawa i mokka, kremowe wykończenie. Które to wino?",
+   info:"To Boland Cellar Ahintof Coffee Pinotage."},
+  {id:"id-guigal", wine:"guigal-cdp", ident:true, tag:"Które wino?",
+   q:"Południowy Rodan, prestiżowa apelacja, 18 miesięcy w dużych beczkach, otoczaki galets roulés. Które to wino?",
+   info:"To E. Guigal Saintes Pierres de Nalys Châteauneuf-du-Pape Rouge."},
+  {id:"id-beauchene", wine:"beauchene-cdr", ident:true, tag:"Które wino?",
+   q:"Kupaż GSM z okolic Châteauneuf-du-Pape, ale z szerszej apelacji, stare krzewy 30–100 lat. Które to wino?",
+   info:"To Château Beauchêne Le Terroir Côtes du Rhône."},
+  {id:"id-villebois", wine:"villebois-pn", ident:true, tag:"Które wino?",
+   q:"Dolina Loary, Vin de France, lekkie, świeże, wiśnia i malina, 13% alkoholu. Które to wino?",
+   info:"To Villebois Pinot Noir."},
+
+  /* ===== La Petite Gargotte Cabernet Sauvignon ===== */
+  {id:"gar-opis", wine:"gargotte-cab", tag:"Smak", q:"Jak opiszesz gościowi to wino?",
+   correct:"Francuski Cabernet z południa: czarna porzeczka i jeżyna, miękkie taniny, kawowo-czekoladowy akcent",
+   wrong:["Lekkie, świeże: wiśnia, malina, zioła, krótki finisz",
+          "Słodkie i pełne: owoce tropikalne i miód",
+          "Mineralne i rześkie: agrest, cytryna, krzemień"],
+   info:"Francuski Cabernet Sauvignon z południa kraju, o aromatach czarnej porzeczki i jeżyn, z miękkimi taninami oraz kawowo-czekoladowym akcentem."},
+  {id:"gar-aromat", wine:"gargotte-cab", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Czarna porzeczka, jeżyna, konfitura śliwkowa, pieprz, goździki, wanilia, czekolada i kawa",
+   wrong:["Czarna wiśnia, fiołek, tytoń fajkowy, skóra i lukrecja",
+          "Śliwka, wiśnia, czereśnia i delikatne przyprawy",
+          "Wiśnia, malina, zioła i delikatna wanilia"],
+   info:"Aromaty: czarna porzeczka, jeżyna, konfitura śliwkowa, pieprz, goździki, wanilia, czekolada i kawa."},
+  {id:"gar-usta", wine:"gargotte-cab", tag:"W ustach", q:"Jak opiszesz gościowi to wino w ustach?",
+   correct:"Body średnie, kwasowość średnia, taniny miękkie i harmonijne, długi kawowy finisz",
+   wrong:["Lekkie, wysoka kwasowość, krótki finisz","Pełne, szorstkie taniny, krótki finisz","Słodkie, niskie taniny, kremowe wykończenie"],
+   info:"Body średnie (opis wspomina też o pełni), kwasowość średnia, taniny średnie, miękkie i harmonijne. Finisz długi, kawowy."},
+  {id:"gar-region", wine:"gargotte-cab", tag:"Region", q:"Skąd pochodzi to wino?",
+   correct:"Langwedocja, południe Francji", wrong:["Bordeaux, Francja","Dolina Loary, Francja","Dolina Rodanu Północnego, Francja"],
+   info:"Langwedocja to ciepły, śródziemnomorski region, sprzyjający dojrzewaniu winogron i uzyskiwaniu dojrzałego owocu."},
+  {id:"gar-styl", wine:"gargotte-cab", tag:"Styl", q:"Jaki jest to wino według opisu?",
+   correct:"Czerwone, półwytrawne", wrong:["Czerwone, słodkie","Różowe, wytrawne","Czerwone, musujące"],
+   info:"Według opisu to czerwone wino półwytrawne, z 13,5% alkoholu."},
+  {id:"gar-cab", wine:"gargotte-cab", tag:"Szczep", q:"Cabernet Sauvignon to odmiana…",
+   correct:"O grubej skórce, z dużą ilością barwników i tanin; typowo czarna porzeczka, cedr i ciemne owoce",
+   wrong:["O cienkiej skórce: jasna barwa, delikatne taniny, czerwone owoce",
+          "Biała, aromatyczna, z nutą agrestu",
+          "Krzyżówka Pinot Noir i Cinsault"],
+   info:"Cabernet Sauvignon ma grubą skórkę, dużo barwników i tanin. Typowe aromaty to czarna porzeczka, cedr i ciemne owoce."},
+  {id:"gar-igp", wine:"gargotte-cab", tag:"Etykieta", q:"Pays d’Oc IGP to…",
+   correct:"Szerokie oznaczenie geograficzne z Langwedocji i Roussillon, często dla win odmianowych",
+   wrong:["Prestiżowa apelacja jednej wioski w Langwedocji","Oznaczenie win z Doliny Rodanu","Klasyfikacja win słodkich z południa Francji"],
+   info:"Pays d’Oc IGP to szerokie oznaczenie geograficzne z Langwedocji i Roussillon, często stosowane dla win odmianowych, takich jak Cabernet Sauvignon."},
+  {id:"gar-kawa", wine:"gargotte-cab", tag:"Ciekawostka", q:"Czy nuty kawy, czekolady i wanilii oznaczają, że to wino leżało w beczce?",
+   correct:"Niekoniecznie: mogą wynikać z dębu lub technik winifikacji, a opis nie potwierdza beczki",
+   wrong:["Tak, zawsze oznaczają co najmniej 12 miesięcy w beczce","Tak, bo dodaje się aromat kawy","Nie, pochodzą wyłącznie z gleby"],
+   info:"Nuty kawy, czekolady i wanilii mogą wynikać z dojrzewania w dębie lub technik winifikacji, ale sam opis nie potwierdza użycia beczki."},
+
+  /* ===== Sammarco Arche Primitivo di Manduria ===== */
+  {id:"sam-aromat", wine:"sammarco-arche", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Czarna wiśnia, fiołek, tytoń fajkowy, skóra, lukrecja, czekolada i kawa",
+   wrong:["Śliwka, wiśnia, czereśnia i delikatne przyprawy",
+          "Czarna porzeczka, jeżyna, konfitura śliwkowa i goździki",
+          "Owoce tropikalne, miód i morela"],
+   info:"Aromaty: czarna wiśnia, fiołek, tytoń fajkowy, skóra, lukrecja, czekolada i kawa."},
+  {id:"sam-smak", wine:"sammarco-arche", tag:"Smak", q:"Jak opiszesz gościowi smak i strukturę tego wina?",
+   correct:"Czekolada, wanilia, słodkie przyprawy i owoce leśne; mocna struktura, aksamitne taniny, długi finisz",
+   wrong:["Wiśnia i zioła; lekka struktura, krótki, świeży finisz",
+          "Owocowe i proste; miękkie taniny, średni finisz z goryczką",
+          "Cytrusy i mineralność; wysoka kwasowość"],
+   info:"W smaku czekolada, wanilia, słodkie przyprawy i słodkie owoce leśne. Struktura mocna i skoncentrowana, taniny jedwabiste i aksamitne, finisz długi i harmonijny."},
+  {id:"sam-apelacja", wine:"sammarco-arche", tag:"Apelacja", q:"Jaką apelację ma to wino?",
+   correct:"DOP Primitivo di Manduria", wrong:["IGP Puglia","DOC Valpolicella","DOCG Chianti Classico"],
+   info:"To DOP Primitivo di Manduria: wino związane z konkretnym obszarem i zasadami produkcji."},
+  {id:"sam-manduria", wine:"sammarco-arche", tag:"Region", q:"Manduria to…",
+   correct:"Miejscowość w Apulii (prowincja Taranto), centrum apelacji Primitivo di Manduria",
+   wrong:["Rzeka w Toskanii","Szczep winorośli z Sycylii","Miasto w Piemoncie, centrum apelacji Barolo"],
+   info:"Manduria to miejscowość w Apulii, w prowincji Taranto, centrum apelacji Primitivo di Manduria. Obszar produkcji obejmuje określone tereny prowincji Taranto i Brindisi."},
+  {id:"sam-85", wine:"sammarco-arche", tag:"Apelacja", q:"Ile co najmniej Primitivo musi mieć wino z apelacji Primitivo di Manduria?",
+   correct:"85%", wrong:["50%","70%","100%"],
+   info:"Zgodnie z przepisami wino apelacji Primitivo di Manduria musi zawierać co najmniej 85% Primitivo."},
+  {id:"sam-zinfandel", wine:"sammarco-arche", tag:"Ciekawostka", q:"Primitivo to ta sama odmiana co…",
+   correct:"Kalifornijski Zinfandel", wrong:["Francuski Malbec","Hiszpańskie Tempranillo","Australijski Shiraz"],
+   info:"Primitivo i kalifornijski Zinfandel to ta sama odmiana, choć wina mogą różnić się stylem w zależności od miejsca uprawy i sposobu produkcji."},
+  {id:"sam-primitivo", wine:"sammarco-arche", tag:"Szczep", q:"Skąd wzięła się nazwa Primitivo?",
+   correct:"Od wczesnego dojrzewania gron", wrong:["Od nazwiska pierwszego winiarza","Od prymitywnych metod produkcji","Od miejscowości w Apulii"],
+   info:"Nazwa Primitivo nawiązuje do wczesnego dojrzewania gron. Szczep daje wina o intensywnej barwie, dojrzałych owocach i często wysokim alkoholu."},
+  {id:"sam-alk", wine:"sammarco-arche", tag:"Alkohol", q:"Ile alkoholu ma to wino i jak długo dojrzewa w beczce?",
+   correct:"15%, co najmniej 12 miesięcy w beczce", wrong:["13%, 3 miesiące w beczce","14%, 6 miesięcy w beczce","12,5%, bez beczki"],
+   info:"Sammarco Arche ma 15% alkoholu i dojrzewa co najmniej 12 miesięcy w beczce."},
+
+  /* ===== Rocca Antica Di Camillo Primitivo ===== */
+  {id:"roc-opis", wine:"rocca-antica", tag:"Smak", q:"Jak opiszesz gościowi to wino?",
+   correct:"Owocowe, gładkie i harmonijne: śliwka, wiśnia, czereśnia, delikatne przyprawy, miękkie taniny",
+   wrong:["Mocne i skoncentrowane: tytoń, skóra, lukrecja, kawa",
+          "Lekkie i świeże: malina, zioła, wysoka kwasowość",
+          "Słodkie i pełne: miód i owoce tropikalne"],
+   info:"Rocca Antica to owocowe, gładkie, harmonijne Primitivo z miękkimi taninami. Aromaty: śliwka, wiśnia, czereśnia i delikatne przyprawy korzenne."},
+  {id:"roc-usta", wine:"rocca-antica", tag:"W ustach", q:"Jak opiszesz gościowi to wino w ustach?",
+   correct:"Miękkie taniny, umiarkowana kwasowość, średni finisz: owocowy, z przyprawami i delikatną goryczką",
+   wrong:["Aksamitne taniny, mocna struktura, bardzo długi finisz","Wysokie taniny, wysoka kwasowość, krótki finisz","Słodkie, bez tanin, kremowe"],
+   info:"Taniny miękkie, kwasowość umiarkowana, finisz średniej długości, owocowy, z nutą przypraw i delikatną goryczką."},
+  {id:"roc-alk", wine:"rocca-antica", tag:"Alkohol", q:"Ile alkoholu ma to wino?",
+   correct:"13,5%", wrong:["15%","12%","14,5%"],
+   info:"Rocca Antica ma 13,5% alkoholu, mniej niż Sammarco Arche (15%)."},
+  {id:"roc-vs", wine:"rocca-antica", tag:"Porównanie", q:"Czym Rocca Antica różni się od Sammarco Arche?",
+   correct:"Jest lżejsza i bardziej owocowa: oznaczenie Puglia, 13,5%, miękkie taniny, średni finisz",
+   wrong:["Jest mocniejsza: 15%, min. 12 miesięcy w beczce, długi finisz",
+          "To inny szczep: Negroamaro zamiast Primitivo",
+          "Jest słodka, a Sammarco wytrawne"],
+   info:"Rocca Antica: Puglia, 13,5%, śliwka, wiśnia, czereśnia, miękkie taniny, średni finisz. Sammarco Arche: DOP Primitivo di Manduria, 15%, min. 12 miesięcy w beczce, czarna wiśnia, kawa, lukrecja, tytoń, aksamitne taniny, długi finisz."},
+  {id:"roc-puglia", wine:"rocca-antica", tag:"Apelacja", q:"Czym różni się oznaczenie Puglia od DOP Primitivo di Manduria?",
+   correct:"Puglia to szersze oznaczenie geograficzne; Primitivo di Manduria to konkretna apelacja",
+   wrong:["Puglia to apelacja bardziej prestiżowa niż Manduria","To dwie nazwy tego samego obszaru","Puglia oznacza wina białe, a Manduria czerwone"],
+   info:"DOP Primitivo di Manduria to konkretna apelacja, natomiast Puglia to szersze oznaczenie geograficzne."},
+
+  /* ===== Które to wino? ===== */
+  {id:"id-gargotte", wine:"gargotte-cab", ident:true, tag:"Które wino?",
+   q:"Langwedocja, Cabernet Sauvignon półwytrawny, czarna porzeczka i jeżyna, długi kawowy finisz. Które to wino?",
+   info:"To La Petite Gargotte Cabernet Sauvignon."},
+  {id:"id-sammarco", wine:"sammarco-arche", ident:true, tag:"Które wino?",
+   q:"Apulia, 15% alkoholu, min. 12 miesięcy w beczce, tytoń fajkowy, skóra i lukrecja. Które to wino?",
+   info:"To Sammarco Arche Primitivo di Manduria DOP."},
+  {id:"id-rocca", wine:"rocca-antica", ident:true, tag:"Które wino?",
+   q:"Apulia, 13,5%, oznaczenie Puglia, śliwka, wiśnia i czereśnia, miękkie taniny. Które to wino?",
+   info:"To Rocca Antica Di Camillo Primitivo Puglia."},
+
+  /* ===== Tenute del Pojo Imperium Montepulciano d'Abruzzo ===== */
+  {id:"poj-aromat", wine:"pojo-imperium", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Dojrzałe owoce leśne, słodkie śliwki, przyprawy korzenne i dym",
+   wrong:["Kwiaty, wiśnie, porzeczki i cynamon","Jeżyny, borówki, tytoń i skóra","Czarna wiśnia, fiołek, lukrecja i kawa"],
+   info:"Aromaty: dojrzałe owoce leśne, słodkie śliwki, przyprawy korzenne i dym."},
+  {id:"poj-smak", wine:"pojo-imperium", tag:"Smak", q:"Jak opiszesz gościowi smak i budowę tego wina?",
+   correct:"Dżem malinowy i kakao; pełne, gładkie taniny, głęboka struktura z dębu",
+   wrong:["Wiśnie w czekoladzie i cynamon; średnio pełne, delikatne","Czerwone owoce i zioła; lekkie, wysoka kwasowość","Owoce tropikalne i miód; słodkie"],
+   info:"W smaku dżem malinowy i kakao. Wino jest pełne, z gładkimi taninami i głęboką strukturą wzbogaconą dojrzewaniem w dębie."},
+  {id:"poj-region", wine:"pojo-imperium", tag:"Region", q:"Abruzja to region…",
+   correct:"We wschodniej części środkowych Włoch, nad Adriatykiem, pod wpływem morza i Apeninów",
+   wrong:["Na północy Włoch, u podnóża Alp","Na Sycylii, pod wpływem wulkanu Etna","W Toskanii, między Florencją a Sieną"],
+   info:"Abruzja leży we wschodniej części środkowych Włoch, nad Morzem Adriatyckim. Winiarstwo korzysta tam zarówno z wpływu morza, jak i pobliskich Apeninów."},
+  {id:"poj-szczepy-regionu", wine:"pojo-imperium", tag:"Region", q:"Z jakich szczepów słynie przede wszystkim Abruzja?",
+   correct:"Czerwonego Montepulciano i białego Trebbiano d’Abruzzo",
+   wrong:["Czerwonego Sangiovese i białego Vermentino","Czerwonego Nebbiolo i białego Arneis","Czerwonego Primitivo i białego Fiano"],
+   info:"Abruzja kojarzy się przede wszystkim z czerwonym szczepem Montepulciano oraz białym Trebbiano d’Abruzzo."},
+  {id:"poj-nie-pomyl", wine:"pojo-imperium", tag:"Uwaga", q:"Czym różni się Montepulciano d’Abruzzo od Vino Nobile di Montepulciano?",
+   correct:"Montepulciano d’Abruzzo to wino ze szczepu Montepulciano; Vino Nobile z Toskanii powstaje głównie z Sangiovese",
+   wrong:["To dwie nazwy tego samego wina","Oba powstają z Montepulciano, różni je tylko beczka","Vino Nobile to biała wersja Montepulciano d’Abruzzo"],
+   info:"Montepulciano d’Abruzzo to nazwa apelacji i wina, a Montepulciano to nazwa szczepu. Vino Nobile di Montepulciano z Toskanii powstaje głównie z Sangiovese."},
+  {id:"poj-montepulciano", wine:"pojo-imperium", tag:"Szczep", q:"Montepulciano to…",
+   correct:"Czerwona odmiana ważna w Abruzji: intensywna barwa, ciemne owoce, śliwki, wyraźne taniny",
+   wrong:["Miasteczko w Abruzji, od którego pochodzi nazwa wina","Biała odmiana z Toskanii","Inna nazwa Sangiovese"],
+   info:"Montepulciano to czerwona odmiana, szczególnie ważna w Abruzji. Wina mają intensywną barwę, aromaty ciemnych owoców i śliwek oraz wyraźną, przy odpowiednim dojrzewaniu gładką strukturę tanin."},
+  {id:"poj-beczka", wine:"pojo-imperium", tag:"Beczka", q:"Jak długo to wino dojrzewa w dębie?",
+   correct:"12–18 miesięcy", wrong:["3 miesiące","6 miesięcy","36 miesięcy"],
+   info:"Wino dojrzewa 12–18 miesięcy w dębowych beczkach. Riserva to kategoria z wymaganiami dotyczącymi dojrzewania."},
+  {id:"poj-krzewy", wine:"pojo-imperium", tag:"Winnica", q:"Ile średnio lat mają krzewy, z których powstaje to wino?",
+   correct:"20–30 lat", wrong:["3–5 lat","5–10 lat","Ponad 100 lat"],
+   info:"Wiek winorośli to średnio 20–30 lat."},
+
+  /* ===== Tenuta di Morzano Chianti Il Quarto Riserva ===== */
+  {id:"mor-aromat", wine:"morzano-chianti", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Kwiaty, wiśnie, śliwki, porzeczki i przyprawy, z nutami wanilii, cynamonu, kakao i lukrecji",
+   wrong:["Dojrzałe owoce leśne, słodkie śliwki i dym","Jeżyny, borówki, tytoń i skóra","Owoce tropikalne, miód i morela"],
+   info:"Aromaty: kwiaty, wiśnie, śliwki, porzeczki, przyprawy. Dodatkowe nuty: wanilia, cynamon, dąb, kakao i lukrecja."},
+  {id:"mor-usta", wine:"morzano-chianti", tag:"W ustach", q:"Jak opiszesz gościowi to wino w ustach?",
+   correct:"Body średnie, kwasowość średnia, taniny miękkie i harmonijne, finisz długi i elegancki",
+   wrong:["Pełne, szorstkie taniny, krótki finisz","Lekkie, wysoka kwasowość, krótki finisz","Pełne i słodkie, kremowe"],
+   info:"Body średnie, kwasowość średnia, taniny miękkie i harmonijne, finisz długi i elegancki."},
+  {id:"mor-szczepy", wine:"morzano-chianti", tag:"Szczep", q:"Z jakich szczepów powstaje to Chianti?",
+   correct:"Sangiovese i Merlot", wrong:["Nebbiolo i Barbera","Montepulciano i Sangiovese","Corvina i Rondinella"],
+   info:"Tenuta di Morzano Chianti Il Quarto Riserva powstaje z Sangiovese i Merlot."},
+  {id:"mor-dojrzewanie", wine:"morzano-chianti", tag:"Beczka", q:"Jak dojrzewa to wino?",
+   correct:"Co najmniej 12 miesięcy we francuskich beczkach, potem 8 miesięcy w butelce",
+   wrong:["18 miesięcy w dębie slawońskim, potem 6 miesięcy w butelce","6 miesięcy w stali","3 miesiące w dębie amerykańskim"],
+   info:"Dojrzewa co najmniej 12 miesięcy we francuskich beczkach, a następnie 8 miesięcy w butelce."},
+  {id:"mor-classico", wine:"morzano-chianti", tag:"Apelacja", q:"Chianti Classico to…",
+   correct:"Odrębna apelacja DOCG z historycznego obszaru między Florencją a Sieną, symbol: czarny kogut",
+   wrong:["Wyższa kategoria jakości zwykłego Chianti","Podregion Chianti DOCG","Chianti dojrzewające dłużej niż Riserva"],
+   info:"Chianti Classico to historyczne, centralne obszary między Florencją a Sieną, z których wywodzi się pierwotne Chianti. To odrębna apelacja DOCG, a nie wyższa kategoria ani podregion zwykłego Chianti. Symbol: czarny kogut, Gallo Nero."},
+  {id:"mor-riserva", wine:"morzano-chianti", tag:"Etykieta", q:"Riserva na etykiecie oznacza…",
+   correct:"Wino spełniające dodatkowe wymagania dotyczące dojrzewania; nie gwarantuje automatycznie lepszej jakości",
+   wrong:["Wino z najlepszego rocznika w dekadzie","Wino słodkie z późnego zbioru","Wino z jednej winnicy"],
+   info:"Riserva to wino spełniające dodatkowe wymagania dotyczące dojrzewania. Zwykle oznacza dłuższe starzenie i bardziej rozwinięty profil, ale nie gwarantuje automatycznie lepszej jakości."},
+  {id:"mor-docg", wine:"morzano-chianti", tag:"Etykieta", q:"DOCG to…",
+   correct:"Włoskie oznaczenie kontrolowanego i gwarantowanego pochodzenia",
+   wrong:["Nazwa szczepu z Toskanii","Styl wina dojrzewającego w beczce","Oznaczenie wina ekologicznego"],
+   info:"DOCG, czyli Denominazione di Origine Controllata e Garantita, to włoskie oznaczenie kontrolowanego i gwarantowanego pochodzenia. To kategoria oznaczenia pochodzenia, a nie szczep ani styl wina."},
+
+  /* ===== Begali Valpolicella Ripasso ===== */
+  {id:"beg-aromat", wine:"begali-ripasso", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Owoce leśne (jeżyny, borówki, maliny), dym, tytoń i skóra",
+   wrong:["Kwiaty, wiśnie, porzeczki i cynamon","Śliwka, wiśnia, czereśnia i delikatne przyprawy","Agrest, cytryna i krzemień"],
+   info:"Aromat: owoce leśne, czyli jeżyny, borówki, maliny, a do tego dym, tytoń i skóra."},
+  {id:"beg-smak", wine:"begali-ripasso", tag:"Smak", q:"Jak opiszesz gościowi smak i budowę tego wina?",
+   correct:"Jeżyny, wiśnie w czekoladzie, wanilia i cynamon; średnio pełne, miękkie, gładkie taniny",
+   wrong:["Dżem malinowy i kakao; pełne, głęboka struktura","Wiśnia i malina; lekkie, krótki finisz","Miód i morela; słodkie"],
+   info:"W smaku jeżyny, wiśnie w czekoladzie, wanilia i cynamon. Wino jest średnio pełne, miękkie i delikatne, z przyjemną kwasowością i gładkimi taninami."},
+  {id:"beg-ripasso", wine:"begali-ripasso", tag:"Winifikacja", q:"Co oznacza Ripasso?",
+   correct:"Ponowną fermentację na drożdżach i skórkach z Amarone, co daje intensywność i bogatszy charakter",
+   wrong:["Suszenie winogron przez kilka miesięcy przed fermentacją","Drugą fermentację w butelce, jak w szampanie","Zbiór winogron porażonych szlachetną pleśnią"],
+   info:"Ripasso: wino przechodzi ponowną fermentację na drożdżach i skórkach z Amarone. Dzięki temu zyskuje większą intensywność i bogatszy charakter."},
+  {id:"beg-szczepy", wine:"begali-ripasso", tag:"Szczep", q:"Z jakich szczepów powstaje to wino?",
+   correct:"Corvina, Rondinella, Molinara", wrong:["Sangiovese i Merlot","Nebbiolo","Grenache, Syrah, Mourvèdre"],
+   info:"Szczepy: Corvina, Rondinella, Molinara."},
+  {id:"beg-region", wine:"begali-ripasso", tag:"Region", q:"Skąd pochodzi to wino?",
+   correct:"Veneto, okolice Werony", wrong:["Toskania, okolice Sieny","Piemont, okolice Alby","Abruzja, nad Adriatykiem"],
+   info:"Begali to Veneto, okolice Werony, apelacja DOC Valpolicella Classico."},
+  {id:"beg-kolor", wine:"begali-ripasso", tag:"Kolor", q:"Jaki kolor ma to wino?",
+   correct:"Ciemnoczerwony z fioletowymi odcieniami", wrong:["Głęboki rubin z jasnymi refleksami","Jasna wiśnia","Granat z ceglastym brzegiem"],
+   info:"Kolor: ciemnoczerwony z fioletowymi odcieniami."},
+  {id:"beg-beczka", wine:"begali-ripasso", tag:"Beczka", q:"Ile alkoholu ma to wino i jak długo dojrzewa w dębie?",
+   correct:"14,5%, 12 miesięcy w dębowych beczkach", wrong:["13,5%, 8 miesięcy w butelce","15%, 24 miesiące w dębie","12%, bez beczki"],
+   info:"Wino ma 14,5% alkoholu i dojrzewa 12 miesięcy w dębowych beczkach."},
+
+  /* ===== Lodali Barbaresco ===== */
+  {id:"lod-aromat", wine:"lodali-barbaresco", tag:"Aromat", q:"Jak opiszesz gościowi aromat i kolor tego wina?",
+   correct:"Głęboki rubin z jasnymi refleksami; aromat intensywny i złożony, kwiatowo-owocowy",
+   wrong:["Ciemnoczerwony z fioletem; jeżyny, dym, tytoń","Ciemny rubin z fioletem; śliwka, kawa, wanilia","Jasna wiśnia; malina i zioła"],
+   info:"Wino ma głęboki, rubinowy kolor z jasnymi refleksami. Aromat jest intensywny i złożony, z nutami kwiatów i owoców."},
+  {id:"lod-usta", wine:"lodali-barbaresco", tag:"W ustach", q:"Jak opiszesz gościowi to wino w ustach?",
+   correct:"Harmonijne, bogate i długie, z dobrze zrównoważoną kwasowością i taninami",
+   wrong:["Lekkie, proste, krótki finisz","Słodkie, z niskimi taninami","Szorstkie, z wysoką kwasowością i krótkim finiszem"],
+   info:"Smak harmonijny, bogaty i długotrwały. Kwasowość i taniny są dobrze zrównoważone."},
+  {id:"lod-szczep", wine:"lodali-barbaresco", tag:"Szczep", q:"Z jakiego szczepu powstaje Barbaresco?",
+   correct:"Nebbiolo", wrong:["Barbera","Sangiovese","Dolcetto"],
+   info:"Barbaresco Rocche dei 7 Fratelli powstaje z wyselekcjonowanych winogron Nebbiolo."},
+  {id:"lod-beczka", wine:"lodali-barbaresco", tag:"Beczka", q:"Jak dojrzewa to wino?",
+   correct:"Minimum 18 miesięcy w dębie slawońskim, potem 6 miesięcy w butelce",
+   wrong:["12 miesięcy we francuskich beczkach, potem 8 miesięcy w butelce","6 miesięcy w stali","12 miesięcy w dębie amerykańskim"],
+   info:"Wino dojrzewa w beczkach z dębu ze Slawonii minimum 18 miesięcy. Potem jest butelkowane i leżakuje kolejne 6 miesięcy przed sprzedażą."},
+
+  /* ===== Które to wino? ===== */
+  {id:"id-pojo", wine:"pojo-imperium", ident:true, tag:"Które wino?",
+   q:"Abruzja, Riserva, 12–18 miesięcy w dębie, dżem malinowy, kakao i dym. Które to wino?",
+   info:"To Tenute del Pojo Imperium Riserva Montepulciano d’Abruzzo DOC."},
+  {id:"id-morzano", wine:"morzano-chianti", ident:true, tag:"Które wino?",
+   q:"Toskania, Sangiovese z Merlot, Riserva, 12 miesięcy we francuskim dębie i 8 w butelce. Które to wino?",
+   info:"To Tenuta di Morzano Chianti Il Quarto Riserva DOCG."},
+  {id:"id-begali", wine:"begali-ripasso", ident:true, tag:"Które wino?",
+   q:"Okolice Werony, ponowna fermentacja na skórkach z Amarone, wiśnie w czekoladzie i cynamon. Które to wino?",
+   info:"To Begali Valpolicella Ripasso Classico Superiore DOC."},
+  {id:"id-lodali", wine:"lodali-barbaresco", ident:true, tag:"Które wino?",
+   q:"Piemont, Barbaresco z Nebbiolo, 18 miesięcy w dębie slawońskim + 6 w butelce, kwiatowo-owocowy aromat. Które to wino?",
+   info:"To Lodali Barbaresco Rocche dei 7 Fratelli DOCG."},
+
+  /* ===== Nebbiolo d'Alba ===== */
+  {id:"neb-aromat", wine:"nebbiolo-alba", tag:"Aromat", q:"Jak opiszesz gościowi aromat i smak tego wina?",
+   correct:"Delikatne nuty kwiatowe, aromat subtelny i trwały; smak pełny, okrągły, długi i harmonijny",
+   wrong:["Intensywny: jeżyny, dym, tytoń i skóra; średnio pełne","Wiśnia w czekoladzie i cynamon; średnio pełne","Owoce tropikalne i miód; słodkie"],
+   info:"Aromat: delikatne nuty kwiatowe, subtelny i trwały. Smak: pełny, okrągły, długi i harmonijny."},
+  {id:"neb-kolor", wine:"nebbiolo-alba", tag:"Kolor", q:"Jaki kolor ma to wino?",
+   correct:"Jasny, rubinowoczerwony z granatowymi refleksami",
+   wrong:["Ciemnoczerwony z fioletowymi odcieniami","Głęboki, prawie czarny","Granat z ceglastym brzegiem"],
+   info:"Kolor: jasny, rubinowoczerwony z granatowymi refleksami."},
+  {id:"neb-beton", wine:"nebbiolo-alba", tag:"Dojrzewanie", q:"W czym dojrzewa to wino?",
+   correct:"W betonowych kadziach, potem 3 miesiące w butelce",
+   wrong:["18 miesięcy w dębie slawońskim","12 miesięcy we francuskich beczkach","36 miesięcy w dębie amerykańskim"],
+   info:"Wino dojrzewa w betonowych kadziach, a następnie 3 miesiące w butelce."},
+  {id:"neb-pocapaglia", wine:"nebbiolo-alba", tag:"Region", q:"Z jakiej gminy pochodzą winogrona do tego wina?",
+   correct:"Pocapaglia", wrong:["Treiso","Manduria","Montepulciano"],
+   info:"Obszar produkcji to gmina Pocapaglia, apelacja Nebbiolo d’Alba DOC."},
+  {id:"neb-zbior", wine:"nebbiolo-alba", tag:"Winnica", q:"Jak zbiera się winogrona do tego wina?",
+   correct:"Ręcznie, do skrzynek", wrong:["Maszynowo, nocą","Ręcznie, ale dopiero po przymrozku","Maszynowo, do dużych przyczep"],
+   info:"Zbiór jest ręczny, do skrzynek, a winogrona są potem delikatnie tłoczone."},
+  {id:"neb-vs-barbaresco", wine:"nebbiolo-alba", tag:"Porównanie", q:"Czym to wino różni się od Lodali Barbaresco?",
+   correct:"Oba to 100% Nebbiolo, ale to dojrzewa w betonie i jest jaśniejsze; Barbaresco min. 18 miesięcy w dębie",
+   wrong:["To inny szczep: Barbera zamiast Nebbiolo","To wino słodkie, a Barbaresco wytrawne","Oba dojrzewają tak samo, różni je tylko region"],
+   info:"Nebbiolo d’Alba: beton i 3 miesiące w butelce, jasny rubin, subtelne nuty kwiatowe. Lodali Barbaresco: min. 18 miesięcy w dębie slawońskim i 6 w butelce, głęboki rubin."},
+
+  /* ===== I Balzi Barbera Passito ===== */
+  {id:"bal-aromat", wine:"balzi-passito", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Owoce leśne i pestkowe, fiołki, wanilia, słodkie przyprawy",
+   wrong:["Delikatne nuty kwiatowe, subtelne i trwałe","Balsamiczne, kakao, minerały i drewno","Agrest, cytryna i krzemień"],
+   info:"Aromat: owoce leśne i pestkowe, fiołki, wanilia, słodkie przyprawy."},
+  {id:"bal-smak", wine:"balzi-passito", tag:"Smak", q:"Jak opiszesz gościowi smak tego wina?",
+   correct:"Skoncentrowany, aksamitny, wiśnia i porzeczka z delikatną słodyczą; długi, ciepły, lekko pikantny finisz",
+   wrong:["Lekki i rześki, wysoka kwasowość, krótki finisz","Bardzo słodki i gęsty, z nutą miodu","Wytrawny i mineralny, z nutą mokrego kamienia"],
+   info:"Smak skoncentrowany i aksamitny, z nutami wiśni i porzeczki oraz delikatną słodyczą. Finisz długi, ciepły, lekko pikantny."},
+  {id:"bal-passito", wine:"balzi-passito", tag:"Winifikacja", q:"Co oznacza passito?",
+   correct:"Metodę z podsuszanymi winogronami, co koncentruje cukry i aromaty",
+   wrong:["Ponowną fermentację na skórkach z Amarone","Zbiór winogron zamrożonych na krzewie","Dojrzewanie w betonowych kadziach"],
+   info:"Passito to metoda wykorzystująca podsuszane winogrona. Utrata części wody koncentruje cukry i aromaty. Takie wina często są słodkie, ale sama nazwa nie przesądza o końcowej słodyczy."},
+  {id:"bal-slodycz", wine:"balzi-passito", tag:"Styl", q:"Jakie jest to wino pod względem słodyczy?",
+   correct:"Półwytrawne", wrong:["Wytrawne","Słodkie","Bardzo słodkie, deserowe"],
+   info:"I Balzi to czerwone wino półwytrawne. Passito często daje wina słodkie, ale sama nazwa nie przesądza o słodyczy."},
+  {id:"bal-szczep", wine:"balzi-passito", tag:"Szczep", q:"Z jakiego szczepu powstaje to wino?",
+   correct:"Barbera", wrong:["Nebbiolo","Primitivo","Corvina"],
+   info:"To 100% Barbera z Piemontu, apelacja DOC Piemonte."},
+  {id:"bal-jedzenie", wine:"balzi-passito", tag:"Do jedzenia", q:"Do czego polecisz to wino?",
+   correct:"Do mięs w sosach, dziczyzny, dojrzewających serów i deserów czekoladowych",
+   wrong:["Do ostryg i owoców morza","Do lekkich sałatek z kozim serem","Tylko jako aperitif do przekąsek"],
+   info:"Proponowane połączenia: mięsa w sosach, dziczyzna, dojrzewające sery i desery czekoladowe. Można je też pić samodzielnie."},
+  {id:"bal-beczka", wine:"balzi-passito", tag:"Beczka", q:"Co daje temu winu dojrzewanie w beczkach?",
+   correct:"Aksamitną strukturę i nuty wanilii", wrong:["Wysoką kwasowość","Mineralność","Bąbelki"],
+   info:"Wino dojrzewa w beczkach, co nadaje mu aksamitną strukturę i nuty wanilii. Czas dojrzewania nie jest podany."},
+
+  /* ===== Marqués de Reinosa Reserva ===== */
+  {id:"rei-aromat", wine:"reinosa-reserva", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Nuty balsamiczne i korzenne, kakao, minerały, drewno, truskawki i jeżyny",
+   wrong:["Owoce leśne i pestkowe, fiołki i wanilia","Delikatne nuty kwiatowe","Czerwona porzeczka, czarny pieprz i mokry kamień"],
+   info:"Aromat: nuty balsamiczne, korzenne, kakao, minerały, drewno, truskawki i jeżyny."},
+  {id:"rei-usta", wine:"reinosa-reserva", tag:"W ustach", q:"Jak opiszesz gościowi to wino w ustach?",
+   correct:"Wytrawne, pełne, z dobrze zintegrowanymi taninami i długim, owocowym finiszem",
+   wrong:["Półwytrawne, aksamitne, z lekko pikantnym finiszem","Lekkie, z wysoką kwasowością i krótkim finiszem","Pełne, ale z szorstkimi taninami"],
+   info:"Smak wytrawny, pełny, z dobrze zintegrowanymi taninami. Finisz długi, owocowy."},
+  {id:"rei-szczepy", wine:"reinosa-reserva", tag:"Szczep", q:"Z jakich szczepów powstaje to wino?",
+   correct:"Tempranillo i Garnacha", wrong:["Tempranillo i Cabernet Sauvignon","100% Garnacha","Monastrell i Syrah"],
+   info:"Marqués de Reinosa Reserva to Tempranillo i Garnacha z DOCa Rioja."},
+  {id:"rei-beczka", wine:"reinosa-reserva", tag:"Beczka", q:"Jak długo i w jakich beczkach dojrzewa to wino?",
+   correct:"Minimum 36 miesięcy w dębie amerykańskim i francuskim",
+   wrong:["12 miesięcy w dębie francuskim","24 miesiące w dębie slawońskim","6 miesięcy w dębie amerykańskim"],
+   info:"Wino dojrzewa minimum 36 miesięcy w beczkach z dębu amerykańskiego i francuskiego, co daje mu złożony i intensywny charakter."},
+  {id:"rei-reserva", wine:"reinosa-reserva", tag:"Etykieta", q:"Czerwona Rioja Reserva wymaga co najmniej…",
+   correct:"3 lat łącznie, w tym min. 12 miesięcy w dębie i 6 miesięcy w butelce",
+   wrong:["2 lat łącznie, w tym min. 12 miesięcy w dębie","5 lat łącznie, w tym min. 24 miesięcy w dębie","36 miesięcy w beczce i 2 lat w butelce"],
+   info:"Reserva = min. 3 lata łącznie, w tym min. rok w dębie i min. pół roku w butelce. Marqués de Reinosa spędza w beczce aż 36 miesięcy, ale to cecha tego wina, a nie wymóg dla każdej Reservy."},
+  {id:"rei-kategorie", wine:"reinosa-reserva", tag:"Etykieta", q:"Gran Reserva w Rioja to minimum…",
+   correct:"24 miesiące w dębie, 5 lat łącznie",
+   wrong:["12 miesięcy w dębie, 2 lata łącznie","12 miesięcy w dębie, 3 lata łącznie","6 miesięcy w dębie, 1 rok łącznie"],
+   info:"Crianza: min. 12 mies. w dębie, 2 lata łącznie. Reserva: min. 12 mies. w dębie, 3 lata łącznie. Gran Reserva: min. 24 mies. w dębie, 5 lat łącznie."},
+  {id:"rei-crianza", wine:"reinosa-reserva", tag:"Etykieta", q:"Crianza w Rioja to minimum…",
+   correct:"12 miesięcy w dębie, 2 lata łącznie",
+   wrong:["24 miesiące w dębie, 5 lat łącznie","12 miesięcy w dębie, 3 lata łącznie","36 miesięcy w dębie"],
+   info:"Crianza: min. 12 mies. w dębie, 2 lata łącznie. Reserva: 12 mies. w dębie, 3 lata łącznie. Gran Reserva: 24 mies. w dębie, 5 lat łącznie."},
+  {id:"rei-doca", wine:"reinosa-reserva", tag:"Etykieta", q:"DOCa na etykiecie Rioja oznacza…",
+   correct:"Denominación de Origen Calificada: kwalifikowaną, kontrolowaną apelację pochodzenia",
+   wrong:["Wino dojrzewające ponad 3 lata","Wino ekologiczne","Nazwę producenta"],
+   info:"DOCa to Denominación de Origen Calificada. Potwierdza, że wino pochodzi z określonego regionu i spełnia wymagania dotyczące produkcji i jakości. Rioja ma ten status."},
+
+  /* ===== Które to wino? ===== */
+  {id:"id-nebbiolo", wine:"nebbiolo-alba", ident:true, tag:"Które wino?",
+   q:"100% Nebbiolo z gminy Pocapaglia, dojrzewa w betonie, jasny rubin, subtelne nuty kwiatowe. Które to wino?",
+   info:"To Nebbiolo d’Alba DOC."},
+  {id:"id-balzi", wine:"balzi-passito", ident:true, tag:"Które wino?",
+   q:"Piemont, podsuszane winogrona Barbera, półwytrawne, fiołki i słodkie przyprawy. Które to wino?",
+   info:"To I Balzi Barbera Passito Piemonte DOC."},
+  {id:"id-reinosa", wine:"reinosa-reserva", ident:true, tag:"Które wino?",
+   q:"Hiszpania, Tempranillo z Garnachą, 36 miesięcy w dębie amerykańskim i francuskim. Które to wino?",
+   info:"To Marqués de Reinosa Reserva DOCa Rioja."},
+
+  /* ===== Borsao Zarihs ===== */
+  {id:"zar-aromat", wine:"borsao-zarihs", tag:"Aromat", q:"Jak opiszesz gościowi aromat tego wina?",
+   correct:"Jeżyny, dym, czekolada, wanilia, cedr, lukrecja i przyprawy",
+   wrong:["Dojrzałe czerwone owoce leśne i delikatne przyprawy","Truskawka, żurawina i delikatny dym","Owoce leśne i pestkowe, fiołki"],
+   info:"Aromat: jeżyny, dym, czekolada, wanilia, cedr, lukrecja i przyprawy."},
+  {id:"zar-smak", wine:"borsao-zarihs", tag:"Smak", q:"Jak opiszesz gościowi smak i finisz tego wina?",
+   correct:"Pełny i miękki; długi, owocowy finisz: ciemne jagody, suszone śliwki, pieprz i espresso",
+   wrong:["Gładki i owocowy, lekki; krótki finisz","Elegancki i soczysty, wyraźna kwasowość","Słodki i gęsty, z nutą miodu"],
+   info:"Smak pełny i miękki, z dobrze zintegrowanymi taninami i kwasowością. Finisz długi, owocowy: ciemne jagody, suszone śliwki, pieprz i espresso."},
+  {id:"zar-szczep", wine:"borsao-zarihs", tag:"Szczep", q:"Z jakiego szczepu powstaje Borsao Zarihs?",
+   correct:"Syrah", wrong:["Tempranillo","Garnacha","Monastrell"],
+   info:"Borsao Zarihs to Syrah z Aragonii, DO Campo de Borja."},
+  {id:"zar-region", wine:"borsao-zarihs", tag:"Region", q:"Skąd pochodzi to wino?",
+   correct:"Aragonia, DO Campo de Borja", wrong:["Rioja, DOCa Rioja","Katalonia, DOQ Priorat","Kastylia, DO Ribera del Duero"],
+   info:"Hiszpania, Aragonia, apelacja DO Campo de Borja. Winnice u podnóża Moncayo, na wysokości 350–600 m n.p.m."},
+  {id:"zar-beczka", wine:"borsao-zarihs", tag:"Beczka", q:"Jak dojrzewa to wino?",
+   correct:"14 miesięcy w nowych beczkach z dębu amerykańskiego",
+   wrong:["36 miesięcy w dębie amerykańskim i francuskim","6 miesięcy w używanym dębie francuskim","Bez beczki"],
+   info:"Wino dojrzewa 14 miesięcy w nowych beczkach z dębu amerykańskiego."},
+  {id:"zar-cierzo", wine:"borsao-zarihs", tag:"Terroir", q:"Czym jest Cierzo i jak pomaga winnicom?",
+   correct:"Silny wiatr z północnego zachodu, ponad 200 dni w roku; odświeża winogrona, ogranicza choroby i przegrzewanie",
+   wrong:["Ciepły wiatr z Afryki, który przyspiesza dojrzewanie","Mgła znad morza, która chłodzi winnice rano","Nazwa gleby wapiennej w Aragonii"],
+   info:"Cierzo to silny wiatr z północnego zachodu, wiejący ponad 200 dni w roku. Pomaga odświeżać winogrona i ograniczać choroby oraz przegrzewanie."},
+  {id:"zar-gleby", wine:"borsao-zarihs", tag:"Terroir", q:"Gdzie i na jakich glebach rosną winogrona do Zarihs?",
+   correct:"U podnóża Moncayo, 350–600 m n.p.m., gleby piaszczyste, żwirowe i wapienne",
+   wrong:["Nad morzem, na glebach gliniastych","Na 900–1600 m n.p.m., na glebach wulkanicznych","W dolinie rzeki, na żyznych madach"],
+   info:"Winnice leżą u podnóża Moncayo, na wysokości 350–600 m n.p.m. Gleby są piaszczyste, żwirowe i wapienne."},
+  {id:"zar-alk", wine:"borsao-zarihs", tag:"Alkohol", q:"Ile alkoholu ma Borsao Zarihs?",
+   correct:"15%", wrong:["13%","12,5%","14%"],
+   info:"Zarihs ma 15% alkoholu, sporo więcej niż Borsao Delincuente (13%)."},
+
+  /* ===== Winnica Turnau Pinot Noir 2022 ===== */
+  {id:"tur-aromat", wine:"turnau-pn", tag:"Aromat", q:"Jak opiszesz gościowi aromat i smak tego wina?",
+   correct:"W aromacie truskawka, żurawina i delikatny dym; w smaku wiśnia, czerwona porzeczka, czekolada i czarny pieprz",
+   wrong:["Wiśnia, malina, zioła i delikatna wanilia; lekkie i krótkie","Jeżyny, dym, lukrecja; pełne i 15% alkoholu","Owoce tropikalne i miód"],
+   info:"Aromat: truskawka, żurawina, delikatny dym z beczki. Smak: wiśnia, czerwona porzeczka, czekolada i czarny pieprz."},
+  {id:"tur-styl", wine:"turnau-pn", tag:"W ustach", q:"Jak opiszesz gościowi charakter tego wina?",
+   correct:"Eleganckie, finezyjne, soczyste i owocowe; subtelne taniny, wyraźna kwasowość",
+   wrong:["Mocne i skoncentrowane; szorstkie taniny","Słodkie i kremowe","Ciężkie, niska kwasowość"],
+   info:"Charakter elegancki, finezyjny, soczysty i owocowy. Taniny subtelne, a wyraźna kwasowość nadaje świeżość i harmonię."},
+  {id:"tur-beczka", wine:"turnau-pn", tag:"Beczka", q:"Jak długo to wino dojrzewa w dębie?",
+   correct:"30 miesięcy", wrong:["6 miesięcy","12 miesięcy","Nie dojrzewa w beczce"],
+   info:"Turnau Pinot Noir 2022 dojrzewa 30 miesięcy w dębowych beczkach."},
+  {id:"tur-nagroda", wine:"turnau-pn", tag:"Ciekawostka", q:"Jaką nagrodę zdobył Turnau Pinot Noir?",
+   correct:"Zwycięstwo w konkursie Polskie Korki w kategorii polskich win czerwonych",
+   wrong:["Złoty medal Decanter w kategorii Pinot Noir","Tytuł wina roku magazynu Wine Spectator","Nagrodę Grand Prix Vinexpo"],
+   info:"Wino zwyciężyło w konkursie Polskie Korki w kategorii polskich win czerwonych."},
+  {id:"tur-vs-villebois", wine:"turnau-pn", tag:"Porównanie", q:"Czym Turnau Pinot Noir różni się od Villebois Pinot Noir?",
+   correct:"Turnau: 30 miesięcy w dębie, truskawka, żurawina, dym, czekolada i pieprz; Villebois lżejsze i świeże",
+   wrong:["To inny szczep: Turnau to Pinot Gris","Turnau jest słodkie, Villebois wytrawne","Villebois dojrzewa dłużej w dębie"],
+   info:"Oba to Pinot Noir. Villebois: lekkość, świeżość, wiśnia, malina i zioła. Turnau: truskawka, żurawina, dym, czekolada, pieprz i 30 miesięcy w dębie."},
+  {id:"tur-kraj", wine:"turnau-pn", tag:"Region", q:"Skąd pochodzi Pinot Noir od Winnicy Turnau?",
+   correct:"Z Polski", wrong:["Z Niemiec","Z Doliny Loary","Z Austrii"],
+   info:"Winnica Turnau to polski producent. Rocznik 2022."},
+
+  /* ===== Borsao Delincuente Tinto ===== */
+  {id:"del-aromat", wine:"borsao-delincuente", tag:"Aromat", q:"Jak opiszesz gościowi to wino?",
+   correct:"Dojrzałe czerwone owoce leśne i pikantne przyprawy; gładkie, owocowe, miękkie taniny, długi finisz",
+   wrong:["Jeżyny, dym, czekolada i cedr; pełne, 15%","Balsamiczne, kakao, drewno; 36 miesięcy w dębie","Truskawka, żurawina, dym; 30 miesięcy w dębie"],
+   info:"Aromat: dojrzałe czerwone owoce leśne i delikatne, pikantne nuty przyprawowe. Smak gładki, owocowy i dobrze zbalansowany, taniny miękkie i delikatne, finisz długi i przyjemny."},
+  {id:"del-szczep", wine:"borsao-delincuente", tag:"Szczep", q:"Z jakiego szczepu powstaje Borsao Delincuente?",
+   correct:"Tempranillo", wrong:["Syrah","Garnacha","Cabernet Sauvignon"],
+   info:"Delincuente to Tempranillo z Aragonii, 13% alkoholu."},
+  {id:"del-kolor", wine:"borsao-delincuente", tag:"Kolor", q:"Jaki kolor ma to wino?",
+   correct:"Jasny czereśniowoczerwony z fioletowymi refleksami",
+   wrong:["Ciemnofioletowy z rubinowymi refleksami","Głęboki rubinowy","Granat z ceglastym brzegiem"],
+   info:"Kolor: jasny czereśniowoczerwony z fioletowymi refleksami."},
+  {id:"del-klimat", wine:"borsao-delincuente", tag:"Region", q:"Jaki klimat mają winnice Borsao Delincuente?",
+   correct:"Kontynentalny z silnymi wpływami śródziemnomorskimi, u stóp Moncayo",
+   wrong:["Oceaniczny, chłodny i wilgotny","Tropikalny, z porą deszczową","Wysokogórski, 900–1600 m n.p.m."],
+   info:"Winnice leżą u stóp pasma Moncayo. Klimat kontynentalny z silnymi wpływami śródziemnomorskimi; zimny i suchy wiatr Cierzo chroni uprawy przed wilgocią."},
+  {id:"del-vs-zarihs", wine:"borsao-delincuente", tag:"Porównanie", q:"Czym Delincuente różni się od Zarihs (oba Borsao)?",
+   correct:"Delincuente: Tempranillo, 13%, lżejsze i owocowe; Zarihs: Syrah, 15%, 14 miesięcy w nowym dębie amerykańskim",
+   wrong:["Delincuente to Syrah, a Zarihs Tempranillo","Oba to Syrah, różni je tylko rocznik","Delincuente jest słodkie, a Zarihs wytrawne"],
+   info:"Borsao Delincuente: Tempranillo, 13%, jasny czereśniowy kolor, czerwone owoce i przyprawy, miękkie taniny. Borsao Zarihs: Syrah, 15%, 14 miesięcy w nowym dębie amerykańskim, jeżyny, dym, czekolada."},
+
+  /* ===== Które to wino? ===== */
+  {id:"id-zarihs", wine:"borsao-zarihs", ident:true, tag:"Które wino?",
+   q:"Aragonia, Syrah, 15%, 14 miesięcy w nowym dębie amerykańskim, finisz z espresso. Które to wino?",
+   info:"To Borsao Zarihs."},
+  {id:"id-turnau", wine:"turnau-pn", ident:true, tag:"Które wino?",
+   q:"Polska, Pinot Noir, 30 miesięcy w dębie, truskawka, żurawina i dym. Które to wino?",
+   info:"To Winnica Turnau Pinot Noir 2022."},
+  {id:"id-delincuente", wine:"borsao-delincuente", ident:true, tag:"Które wino?",
+   q:"Aragonia, Tempranillo, 13%, jasny czereśniowy kolor, miękkie taniny. Które to wino?",
+   info:"To Borsao Delincuente Tinto."},
+
+  /* ===== Dom Diogo Padeiro Rosé ===== */
+  {id:"dd-aromat", wine:"dom-diogo-rose", tag:"Aromat", q:"Jak opiszesz gościowi aromat i smak tego wina?",
+   correct:"Truskawki, czerwona porzeczka, nuty kwiatowe i ziołowe; smak żywy, owocowy, z dobrą strukturą",
+   wrong:["Owoce tropikalne i miód; słodkie i pełne","Jeżyny, dym i czekolada; pełne i taniczne","Zielone jabłko i cytryna; lekko musujące"],
+   info:"Aromat: truskawki, czerwona porzeczka, nuty kwiatowe i ziołowe. Smak żywy, owocowy, z wyrazistymi czerwonymi owocami i dobrą strukturą."},
+  {id:"dd-finisz", wine:"dom-diogo-rose", tag:"W ustach", q:"Jak opiszesz gościowi kwasowość i finisz tego wina?",
+   correct:"Żywa kwasowość; finisz długi, orzeźwiający, soczysty i świeży",
+   wrong:["Niska kwasowość; finisz krótki i słodki","Średnia kwasowość; finisz ciepły i lekko pikantny","Wysokie taniny; finisz kawowy"],
+   info:"Kwasowość żywa, finisz długi, orzeźwiający, soczysty i świeży."},
+  {id:"dd-kolor", wine:"dom-diogo-rose", tag:"Kolor", q:"Jaki kolor ma to wino?",
+   correct:"Ciemnoróżowy z łososiowymi refleksami",
+   wrong:["Bladoróżowy, prawie przezroczysty","Jasny czereśniowoczerwony z fioletem","Złoty z zielonkawymi refleksami"],
+   info:"Kolor: ciemnoróżowy z łososiowymi refleksami."},
+  {id:"dd-szczep", wine:"dom-diogo-rose", tag:"Szczep", q:"Z jakiego szczepu powstaje to rosé?",
+   correct:"100% Padeiro", wrong:["Touriga Nacional","Alvarinho","Pinot Noir"],
+   info:"Dom Diogo to 100% Padeiro, rzadkiej odmiany z regionu Vinho Verde."},
+  {id:"dd-vinho-verde", wine:"dom-diogo-rose", tag:"Region", q:"Vinho Verde DOC to…",
+   correct:"Region w północno-zachodniej Portugalii i kontrolowana nazwa pochodzenia",
+   wrong:["Styl wina z niedojrzałych, zielonych winogron","Region w południowej Hiszpanii","Nazwa szczepu białego"],
+   info:"Vinho Verde to region w północno-zachodniej Portugalii. DOC (Denominação de Origem Controlada) oznacza kontrolowaną nazwę pochodzenia z określonymi zasadami produkcji."},
+  {id:"dd-zielone", wine:"dom-diogo-rose", tag:"Uwaga", q:"Czy Vinho Verde to zawsze białe, „zielone” wino?",
+   correct:"Nie, wina z tego regionu mogą być białe, różowe lub czerwone",
+   wrong:["Tak, to zawsze białe wino z zielonych winogron","Tak, to zawsze lekko musujące białe wino","Nie, to zawsze wino różowe"],
+   info:"Vinho Verde nie oznacza po prostu „zielonego wina”. Wina z tego regionu mogą być białe, różowe lub czerwone."},
+  {id:"dd-styl", wine:"dom-diogo-rose", tag:"Styl", q:"Jakie jest to rosé pod względem słodyczy i alkoholu?",
+   correct:"Wytrawne, 12%", wrong:["Półsłodkie, 10%","Wytrawne, 14,5%","Półwytrawne, 13%"],
+   info:"To różowe, wytrawne, spokojne wino z 12% alkoholu."},
+  {id:"id-domdiogo", wine:"dom-diogo-rose", ident:true, tag:"Które wino?",
+   q:"Portugalia, rzadka odmiana Padeiro, ciemnoróżowe, truskawki i zioła, wytrawne. Które to wino?",
+   info:"To Dom Diogo Padeiro Rosé."},
+
+  /* ===== Ca'Tullio Prosecco Extra Dry ===== */
+  {id:"cat-aromat", wine:"catullio-prosecco", tag:"Aromat", q:"Jak opiszesz gościowi aromat i smak tego Prosecco?",
+   correct:"Skórka brzoskwini i słodkie owoce, mineralność; w smaku żółta śliwka, cytrusy i delikatna wanilia",
+   wrong:["Zielone jabłko, cytrusy, nuta drożdżowa; wyraźnie wytrawne","Cytrusy, jabłka, morele i nuty chlebowe","Truskawki, poziomki, landrynki"],
+   info:"Aromat owocowy i mineralny: skórka brzoskwini, słodkie owoce. Smak: żółta śliwka, cytrusy, delikatna wanilia."},
+  {id:"cat-babelki", wine:"catullio-prosecco", tag:"W ustach", q:"Jak opiszesz gościowi bąbelki i charakter tego wina?",
+   correct:"Drobne, kremowe bąbelki; mineralność i kwasowość kontrastują z owocową słodyczą, finisz orzeźwiający",
+   wrong:["Grube, agresywne bąbelki; bardzo wytrawne i surowe","Bez bąbelków; spokojne i pełne","Delikatne bąbelki; wino słodkie, deserowe"],
+   info:"Bąbelki drobne i kremowe. Wino dobrze zbalansowane: wyraźna mineralność i kwasowość kontrastują z owocową słodyczą. Finisz trwały, orzeźwiający i przyjemny."},
+  {id:"cat-extradry", wine:"catullio-prosecco", tag:"Pułapka", q:"Extra Dry w porównaniu z Brut jest…",
+   correct:"Słodsze (12–17 g/l cukru vs do 12 g/l)", wrong:["Bardziej wytrawne","Tak samo słodkie","Zawsze bez cukru"],
+   info:"Pułapka: Extra Dry jest słodsze niż Brut. Extra Dry to 12–17 g/l, Brut do 12 g/l."},
+  {id:"cat-kolejnosc", wine:"catullio-prosecco", tag:"Cukier", q:"Ułóż od najbardziej wytrawnego: która kolejność jest poprawna?",
+   correct:"Brut Nature → Extra Brut → Brut → Extra Dry → Dry → Demi-Sec",
+   wrong:["Extra Dry → Brut → Extra Brut → Dry → Demi-Sec","Brut → Brut Nature → Extra Dry → Dry → Demi-Sec","Dry → Extra Dry → Brut → Demi-Sec → Extra Brut"],
+   info:"Od najmniej do najbardziej słodkiego: Brut Nature → Extra Brut → Brut → Extra Dry → Dry → Demi-Sec → Doux. Extra Dry jest słodsze od Brut, a Dry słodsze od Extra Dry."},
+  {id:"cat-szczep", wine:"catullio-prosecco", tag:"Szczep", q:"Z jakiego szczepu powstaje Prosecco?",
+   correct:"Glera", wrong:["Chardonnay","Seyval Blanc","Pinot Grigio"],
+   info:"Glera to szczep, Prosecco DOC to apelacja, a Friuli to region."},
+  {id:"cat-friuli", wine:"catullio-prosecco", tag:"Region", q:"Gdzie leży Friuli?",
+   correct:"W północno-wschodnich Włoszech, blisko Słowenii i Austrii", wrong:["Na południu Włoch, w Apulii","W północno-zachodnich Włoszech, w Piemoncie","W środkowych Włoszech, nad Adriatykiem"],
+   info:"Friuli to obszar winiarski w północno-wschodnich Włoszech, w regionie Friuli-Wenecja Julijska, blisko granicy ze Słowenią i Austrią. Znany szczególnie z win białych."},
+  {id:"cat-brut-gl", wine:"catullio-prosecco", tag:"Cukier", q:"Ile cukru może mieć wino musujące Brut?",
+   correct:"0–12 g/l", wrong:["12–17 g/l","17–32 g/l","32–50 g/l"],
+   info:"Brut: 0–12 g/l. Extra Dry: 12–17 g/l. Dry/Sec: 17–32 g/l. Demi-Sec: 32–50 g/l."},
+
+  /* ===== Jackowiak-Rondeau Cuvée Tradition Brut ===== */
+  {id:"jac-aromat", wine:"jackowiak-brut", tag:"Aromat", q:"Jak opiszesz gościowi ten szampan?",
+   correct:"Cytrusy, jabłka, świeże morele i delikatne nuty chlebowe; soczysty, z wytrawnym, cytrusowym finiszem",
+   wrong:["Skórka brzoskwini, żółta śliwka, wanilia; Extra Dry","Zielone jabłko, biała brzoskwinia; lekkie Charmat","Truskawki i poziomki; półwytrawne"],
+   info:"Aromat: cytrusy, jabłka, świeże morele i delikatne nuty chlebowe. Smak soczysty, z wytrawnym, cytrusowym finiszem. Dobry jako aperitif."},
+  {id:"jac-szczepy", wine:"jackowiak-brut", tag:"Szczep", q:"Z jakich szczepów powstaje Cuvée Tradition?",
+   correct:"Pinot Meunier 55%, Pinot Noir 30%, Chardonnay 15%",
+   wrong:["Chardonnay 55%, Pinot Noir 30%, Pinot Meunier 15%","100% Chardonnay","Pinot Noir 55%, Chardonnay 45%"],
+   info:"Pinot Meunier 55%, Pinot Noir 30%, Chardonnay 15%. Przewaga Pinot Meunier to jeden z wyróżników tego wina."},
+  {id:"jac-historia", wine:"jackowiak-brut", tag:"Historia", q:"Kto i kiedy założył winnicę Jackowiak-Rondeau?",
+   correct:"Władysław Jackowiak z żoną z domu Rondeau, w 1946 r.",
+   wrong:["David Jackowiak w 2005 r.","Rodzina Rondeau w XIX wieku","Polska spółdzielnia winiarska w 1990 r."],
+   info:"Winnica została założona w 1946 r. przez Władysława Jackowiaka i jego żonę z domu Rondeau. Dziś zarządza nią trzecie pokolenie, winnicę prowadzi David Jackowiak."},
+  {id:"jac-orzel", wine:"jackowiak-brut", tag:"Ciekawostka", q:"Co charakterystycznego jest na etykiecie Jackowiak-Rondeau?",
+   correct:"Polski orzeł w koronie", wrong:["Czarny kogut","Wieża Eiffla","Herb Reims"],
+   info:"Charakterystycznym elementem etykiety jest polski orzeł w koronie: to szampan z polsko-francuską historią."},
+  {id:"jac-miejsce", wine:"jackowiak-brut", tag:"Region", q:"Gdzie leży winnica Jackowiak-Rondeau?",
+   correct:"W Pargny-lès-Reims w Szampanii", wrong:["W Charbielinie na Opolszczyźnie","W Épernay, w Burgundii","W Pawłowicach na Opolszczyźnie"],
+   info:"Winnica znajduje się w miejscowości Pargny-lès-Reims w Szampanii. Na początku rodzina miała 0,6 ha winnicy Premier Cru."},
+  {id:"jac-szampania", wine:"jackowiak-brut", tag:"Region", q:"Jaka jest Szampania jako region winiarski?",
+   correct:"Jeden z najbardziej północnych regionów Francji, chłodny, z glebami z porowatego wapienia",
+   wrong:["Ciepły, śródziemnomorski, z glebami z otoczaków","Wysokogórski, z nawadnianiem ze śniegu","Nadmorski, z glebami piaszczystymi"],
+   info:"Szampania to jeden z najbardziej wysuniętych na północ regionów Francji. Klimat chłodny, przymrozki zagrażają winnicom. Gleby to głównie porowate wapienie, które dobrze zatrzymują wodę."},
+  {id:"jac-brut", wine:"jackowiak-brut", tag:"Cukier", q:"Ile cukru maksymalnie ma szampan Brut?",
+   correct:"12 g/l", wrong:["3 g/l","17 g/l","32 g/l"],
+   info:"Brut to maksymalnie 12 g cukru na litr. Brut jest bardziej wytrawny niż Extra Dry (12–17 g/l)."},
+
+  /* ===== Dom Charbielin C Charmat Brut ===== */
+  {id:"cha-aromat", wine:"charbielin-c", tag:"Aromat", q:"Jak opiszesz gościowi to wino musujące?",
+   correct:"Zielone jabłko, cytrusy, biała brzoskwinia, nuta drożdżowa; lekkie, rześkie, wyraźnie wytrawne",
+   wrong:["Żółta śliwka, wanilia; słodsze, Extra Dry","Cytrusy, morele, nuty chlebowe; szampan","Truskawki i maliny; półwytrawne"],
+   info:"Aromat: zielone jabłko, dojrzałe cytrusy, biała brzoskwinia i delikatna nuta drożdżowa. Smak lekki, rześki, wyraźnie wytrawny, z żywą kwasowością. Finisz czysty i odświeżający."},
+  {id:"cha-szczep", wine:"charbielin-c", tag:"Szczep", q:"Z jakiego szczepu powstaje Dom Charbielin C?",
+   correct:"Seyval Blanc", wrong:["Glera","Chardonnay","Solaris"],
+   info:"Dom Charbielin C to Seyval Blanc z Charbielina w woj. opolskim."},
+  {id:"cha-metoda", wine:"charbielin-c", tag:"Metoda", q:"Jaką metodą powstaje to wino musujące?",
+   correct:"Metodą Charmat (ciśnieniową)", wrong:["Metodą tradycyjną, jak szampan","Metodą Ripasso","Metodą passito"],
+   info:"Dom Charbielin C powstaje metodą Charmat, czyli ciśnieniową. Ma to w nazwie: C Charmat Brut."},
+  {id:"cha-miejsce", wine:"charbielin-c", tag:"Region", q:"Skąd pochodzi to wino?",
+   correct:"Charbielin, woj. opolskie", wrong:["Pawłowice, Opolszczyzna","Pargny-lès-Reims, Szampania","Friuli, Włochy"],
+   info:"Dom Charbielin z Charbielina w województwie opolskim."},
+
+  /* ===== Dom Bliskowice Canva ===== */
+  {id:"bli-aromat", wine:"bliskowice-canva", tag:"Aromat", q:"Jak opiszesz gościowi aromat i smak Canvy?",
+   correct:"Przydymiona papryka, czarna porzeczka, wędzone śliwki; w smaku kandyzowane czarne jagody i wapienna cierpkość",
+   wrong:["Dojrzałe jeżyny, czarna porzeczka, delikatny dąb; gładkie i miękkie","Truskawka, żurawina, dym; elegancki Pinot Noir","Truskawki, poziomki, landrynki"],
+   info:"Aromat: przydymiona papryka, dojrzała czarna porzeczka, przypalone i wędzone śliwki. Smak: papryka charakterystyczna dla caberneta, kandyzowane czarne jagody, wapienna cierpkość. Wino wyraziste, dymno-owocowe."},
+  {id:"bli-szczepy", wine:"bliskowice-canva", tag:"Szczep", q:"Z jakich szczepów powstaje Canva?",
+   correct:"Regent 71%, Cabernet Cortis 29%", wrong:["100% Cabernet Cortis","Rondo 71%, Regent 29%","Pinot Noir 71%, Regent 29%"],
+   info:"Canva to Regent 71% i Cabernet Cortis 29%."},
+  {id:"bli-podloze", wine:"bliskowice-canva", tag:"Terroir", q:"Na jakim podłożu rośnie winorośl do Canvy?",
+   correct:"Wapiennym, z cienką warstwą humusu", wrong:["Ciężkim, gliniastym","Piaszczystym i żwirowym","Łupkowym"],
+   info:"Podłoże jest wapienne, z cienką warstwą humusu. Krzewy 11-letnie, parcele „Zawadzka” i „Dudzińska”."},
+  {id:"bli-podanie", wine:"bliskowice-canva", tag:"Serwis", q:"Co trzeba wiedzieć, podając Canvę?",
+   correct:"Jest niefiltrowana, zalecana dekantacja", wrong:["Trzeba ją podać od razu, bez otwierania wcześniej","Trzeba ją wypić od razu po otwarciu, bez dekantacji","To wino musujące, otwieramy jak szampana"],
+   info:"Wino jest niefiltrowane i zaleca się dekantację. Przechowywać maksymalnie w 15–17°C."},
+  {id:"bli-jedzenie", wine:"bliskowice-canva", tag:"Do jedzenia", q:"Do czego polecisz Canvę?",
+   correct:"Do steków, kaczki w sosie śliwkowym, dziczyzny, jagnięciny i dojrzewających serów",
+   wrong:["Do ostryg i lekkich sałatek","Do deserów owocowych","Tylko jako aperitif"],
+   info:"Pasuje do steków, duszonej wołowiny, kaczki w sosie śliwkowym, dziczyzny, jagnięciny, grillowanych mięs, pieczonego bakłażana z pomidorami i serem oraz dojrzewających i pleśniowych serów."},
+  {id:"bli-dojrzewanie", wine:"bliskowice-canva", tag:"Dojrzewanie", q:"Jak według opisu dojrzewa Canva?",
+   correct:"20 miesięcy w stali, 20 w 5-letnich beczkach z dębu francuskiego, potem 20 w stali",
+   wrong:["12 miesięcy w nowym dębie amerykańskim","30 miesięcy w dębowych beczkach","Tylko 3 miesiące w butelce"],
+   info:"Według opisu: 20 miesięcy w stali, 20 miesięcy w 5-letnich beczkach z dębu francuskiego, a następnie 20 miesięcy w stali."},
+
+  /* ===== Winnica Godyla Cuvée A ===== */
+  {id:"god-aromat", wine:"godyla-cuvee-a", tag:"Aromat", q:"Jak opiszesz gościowi Cuvée A?",
+   correct:"Dojrzałe jeżyny, czarna porzeczka, delikatny dąb; gładkie, miękkie, zaokrąglone i harmonijne",
+   wrong:["Przydymiona papryka, wędzone śliwki, wapienna cierpkość","Truskawka, żurawina, dym; wyraźna kwasowość","Truskawki, poziomki, landrynki; półwytrawne"],
+   info:"Aromat: dojrzałe jeżyny, czarna porzeczka, delikatne nuty dębowe. Smak gładki, miękki, zaokrąglony i harmonijny. Charakter owocowy, łagodny, z subtelnym wpływem beczki."},
+  {id:"god-szczep", wine:"godyla-cuvee-a", tag:"Szczep", q:"Z jakiego szczepu powstaje Godyla Cuvée A?",
+   correct:"100% Cabernet Cortis", wrong:["Regent 71%, Cabernet Cortis 29%","Rondo","100% Pinot Noir"],
+   info:"Cuvée A to 100% Cabernet Cortis. Nie myl z Canvą z Bliskowic (Regent 71%, Cabernet Cortis 29%)."},
+  {id:"god-beczka", wine:"godyla-cuvee-a", tag:"Beczka", q:"Jak długo Cuvée A dojrzewa w dębie?",
+   correct:"12 miesięcy", wrong:["30 miesięcy","6 miesięcy","Nie dojrzewa w beczce"],
+   info:"Cuvée A dojrzewa 12 miesięcy w dębowych beczkach. Wpływ beczki jest subtelny."},
+  {id:"god-winnica", wine:"godyla-cuvee-a", tag:"Winnica", q:"Co wiesz o winnicy Godyla?",
+   correct:"Założona w 2015 r. na południowym zboczu Pawłowickiej Góry; gleba ciężka, gliniasta",
+   wrong:["Założona w 1946 r. w Szampanii","Na wapiennym podłożu z cienkim humusem","U podnóża Moncayo, 350–600 m n.p.m."],
+   info:"Pałacowa Winnica Godyla w Pawłowicach (Opolszczyzna) została założona w 2015 r. na południowym zboczu Pawłowickiej Góry. Gleba ciężka, gliniasta."},
+  {id:"god-jedzenie", wine:"godyla-cuvee-a", tag:"Do jedzenia", q:"Do czego polecisz Cuvée A?",
+   correct:"Do czerwonych mięs, pieczeni, dań z grilla i potraw z intensywnymi sosami",
+   wrong:["Do owoców morza i lekkich sałatek","Do deserów ze świeżymi owocami","Tylko jako aperitif"],
+   info:"Pasuje do czerwonych mięs i pieczeni, dań z grilla oraz potraw z intensywnymi sosami."},
+
+  /* ===== Winnica Godyla Rosé ===== */
+  {id:"gro-aromat", wine:"godyla-rose", tag:"Aromat", q:"Jak opiszesz gościowi Godyla Rosé?",
+   correct:"Świeże truskawki, poziomki, maliny, landrynkowy bukiet; lekkie, świeża kwasowość i delikatna słodycz",
+   wrong:["Truskawki, czerwona porzeczka, zioła; wytrawne, żywa kwasowość","Jeżyny i czarna porzeczka; gładkie i miękkie","Cytrusy, morele i nuty chlebowe"],
+   info:"Aromat: świeże truskawki, poziomki, maliny, landrynkowy bukiet. Smak lekki, harmonijny, orzeźwiający, ze świeżą kwasowością i delikatną słodyczą. Finisz długi, soczysty i owocowy."},
+  {id:"gro-szczep", wine:"godyla-rose", tag:"Szczep", q:"Z jakiego szczepu powstaje Godyla Rosé?",
+   correct:"Rondo", wrong:["Padeiro","Regent","Pinot Noir"],
+   info:"Godyla Rosé 2025 powstaje z Rondo."},
+  {id:"gro-styl", wine:"godyla-rose", tag:"Styl", q:"Jakie jest Godyla Rosé pod względem słodyczy?",
+   correct:"Półwytrawne", wrong:["Wytrawne","Słodkie","Brut"],
+   info:"To różowe wino półwytrawne: świeża kwasowość połączona z delikatną słodyczą. W odróżnieniu od niego Dom Diogo Rosé jest wytrawne."},
+  {id:"gro-jedzenie", wine:"godyla-rose", tag:"Do jedzenia", q:"Do czego polecisz Godyla Rosé?",
+   correct:"Do lekkich sałatek, owoców morza, deserów z owocami, grillowanych warzyw lub jako aperitif",
+   wrong:["Do steków i dziczyzny","Do duszonej wołowiny i pleśniowych serów","Do pieczeni z intensywnym sosem"],
+   info:"Pasuje do lekkich sałatek i owoców morza, deserów ze świeżymi owocami, grillowanych warzyw i letnich pikników. Dobre jako aperitif."},
+
+  /* ===== Które to wino? ===== */
+  {id:"id-catullio", wine:"catullio-prosecco", ident:true, tag:"Które wino?",
+   q:"Friuli, Glera, Extra Dry, kremowe bąbelki, żółta śliwka i wanilia. Które to wino?",
+   info:"To Ca’Tullio Prosecco Spumante DOC Extra Dry."},
+  {id:"id-jackowiak", wine:"jackowiak-brut", ident:true, tag:"Które wino?",
+   q:"Szampania, 55% Pinot Meunier, założona w 1946 r., polski orzeł na etykiecie. Które to wino?",
+   info:"To Jackowiak-Rondeau Cuvée Tradition Brut."},
+  {id:"id-charbielin", wine:"charbielin-c", ident:true, tag:"Które wino?",
+   q:"Polska, Seyval Blanc, metoda Charmat, zielone jabłko i biała brzoskwinia. Które to wino?",
+   info:"To Dom Charbielin C Charmat Brut."},
+  {id:"id-canva", wine:"bliskowice-canva", ident:true, tag:"Które wino?",
+   q:"Polska, Regent z Cabernet Cortis, przydymiona papryka i wędzone śliwki, niefiltrowane. Które to wino?",
+   info:"To Dom Bliskowice Canva."},
+  {id:"id-godyla-a", wine:"godyla-cuvee-a", ident:true, tag:"Które wino?",
+   q:"Opolszczyzna, 100% Cabernet Cortis, 12 miesięcy w dębie, jeżyny i czarna porzeczka. Które to wino?",
+   info:"To Winnica Godyla Cuvée A 2024."},
+  {id:"id-godyla-rose", wine:"godyla-rose", ident:true, tag:"Które wino?",
+   q:"Polska, Rondo, różowe półwytrawne, poziomki i landrynki. Które to wino?",
+   info:"To Winnica Godyla Rosé 2025."}
+];
+
+/* pytania „Które to wino?” – odpowiedzi to nazwy win z karty */
+QUESTIONS.forEach(q=>{
+  if(!q.ident) return;
+  const w = WINES.find(x=>x.id===q.wine);
+  q.hideWine = true; q.correct = w.name;
+  q.wrong = WINES.filter(x=>x.id!==w.id).map(x=>x.name).sort(()=>Math.random()-.5).slice(0,3);
+});
+/* ---------- storage ---------- */
+const LS = "slonce-quiz-v2";
+function load(){
+  try{ const s = JSON.parse(localStorage.getItem(LS)); if(s && typeof s==="object") return s; }catch(e){}
+  return {};
+}
+let store = Object.assign({hard:[], stats:{}, run:null}, load());
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(store)); }catch(e){} }
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const byId = id => QUESTIONS.find(q=>q.id===id);
+const isHard = id => store.hard.includes(id);
+const wineById = id => WINES.find(w=>w.id===id);
+function wineCard(id){
+  const w = id && wineById(id); if(!w) return "";
+  const row = (k,v) => v ? `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>` : "";
+  const story = (w.story||[]).map(s=>`<div class="story"><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></div>`).join("");
+  return `<div class="wine-card">
+    <div class="wc-head">
+      <p class="wine-name">${esc(w.name)}</p>
+      <p class="wine-by">${[w.producer, w.region].filter(Boolean).map(esc).join(" · ")}</p>
+    </div>
+    <dl class="facts">${row("Szczep",w.grape)}${row("Styl",w.style)}${row("Alkohol",w.alcohol)}${row("Kolor",w.color)}${row("Zapach",w.nose)}${row("Smak",w.taste)}${row("W ustach",w.palate)}${row("Winifikacja",w.making)}${row("Beczka",w.oak)}${row("Podawanie",w.serve)}${row("Do jedzenia",w.pairing)}</dl>
+    ${story?`<div class="stories">${story}</div>`:""}
+  </div>`;
+}
+const hardIds = () => store.hard.filter(byId);
+
+/* ---------- kategorie win (do ekranu wyboru) ---------- */
+function wineCat(w){
+  const s = (w.style||"").toLowerCase(), r = w.region||"";
+  if(s.includes("musując")) return "Musujące";
+  if(s.includes("różowe")) return "Różowe";
+  if(s.startsWith("słodkie")) return "Słodkie";
+  if(/Włoch/.test(r)) return "Czerwone · Włochy";
+  if(/Franc/.test(r)) return "Czerwone · Francja";
+  if(/Hiszpan/.test(r)) return "Czerwone · Hiszpania";
+  if(/Polsk/.test(r)) return "Czerwone · Polska";
+  return "Czerwone · Nowy Świat";
+}
+const CATS = ["Musujące","Różowe","Czerwone · Włochy","Czerwone · Francja","Czerwone · Hiszpania","Czerwone · Polska","Czerwone · Nowy Świat","Słodkie"];
+const qCountFor = wid => QUESTIONS.filter(q=>q.wine===wid).length;
+
+/* ---------- przebieg (zapisany w localStorage, przetrwa odświeżenie) ---------- */
+/* pytania „Jak opiszesz gościowi…” idą na początek quizu */
+const isFirst = q => /^Jak opiszesz gościowi/.test(q.q);
+function idsFor(cfg){
+  if(cfg.mode==="hard") return hardIds();
+  if(cfg.mode==="wines") return QUESTIONS.filter(q=>cfg.wines.includes(q.wine)).map(q=>q.id);
+  return QUESTIONS.map(q=>q.id);
+}
+function runLabel(cfg){
+  if(cfg.mode==="hard") return "Trudne pytania";
+  if(cfg.mode==="wines") return cfg.wines.length===1 ? (wineById(cfg.wines[0])||{}).name || "Wybrane wino" : `Wybrane wina (${cfg.wines.length})`;
+  return "Wszystkie wina";
+}
+function newRun(cfg){
+  cfg = {mode:cfg.mode, wines:(cfg.wines||[]).filter(wineById)};
+  const ids = idsFor(cfg);
+  if(!ids.length){ store.run = null; save(); return false; }
+  const order = [...shuffle(ids.filter(id=>isFirst(byId(id)))), ...shuffle(ids.filter(id=>!isFirst(byId(id))))];
+  const opts = {};
+  order.forEach(id=>{ const q=byId(id); opts[id]=shuffle([q.correct, ...q.wrong]); });
+  store.run = {...cfg, order, opts, idx:0, answers:{}};
+  save();
+  return true;
+}
+function validRun(){
+  const r = store.run;
+  return r && Array.isArray(r.order) && r.order.length && r.order.every(byId) && r.opts && r.answers;
+}
+const runCfg = () => store.run ? {mode:store.run.mode==="all"||store.run.mode==="hard"||store.run.mode==="wines"?store.run.mode:"all", wines:store.run.wines||[]} : {mode:"all", wines:[]};
+const inProgress = () => validRun() && store.run.idx>0 && store.run.idx<store.run.order.length;
+
+let view = "home";
+
+function render(){
+  updateBottom();
+  $("#hard-count").textContent = hardIds().length;
+  setPressed(view);
+  $("#m-quiz").disabled = !validRun();
+  if(view==="list") return renderList();
+  if(view==="home" || !validRun()) { view="home"; setPressed("home"); return renderHome(); }
+  const r = store.run;
+  if(r.idx >= r.order.length) return renderEnd();
+  renderQuestion();
+}
+
+function startRun(cfg){
+  if(!newRun(cfg)) return;
+  view = "quiz"; render(); window.scrollTo({top:0});
+}
+
+/* ---------- ekran startowy ---------- */
+function renderHome(){
+  const pick = (store.pick||[]).filter(wineById);
+  const pickQ = QUESTIONS.filter(q=>pick.includes(q.wine)).length;
+  const h = hardIds().length;
+  const r = store.run;
+  const groups = CATS.map(c=>({c, wines:WINES.filter(w=>wineCat(w)===c)})).filter(g=>g.wines.length);
+
+  $("#app").innerHTML = `
+    ${inProgress()?`
+    <section class="card resume">
+      <div><small>Masz rozpoczęty quiz</small><b>${esc(runLabel(r))}</b><span>Pytanie ${r.idx+1} z ${r.order.length}</span></div>
+      <button class="btn primary" id="resume">Kontynuuj →</button>
+    </section>`:""}
+
+    <section class="card">
+      <h1 class="q" style="margin-top:0">Czego się dziś uczysz?</h1>
+      <div class="choices">
+        <button class="choice" id="start-all">
+          <small>Cała karta</small><b>Wszystkie wina</b>
+          <span>${WINES.length} win · ${QUESTIONS.length} pytań</span>
+        </button>
+        <a class="choice" href="#wybor" id="jump-pick">
+          <small>Na wybór</small><b>Wybrane wina</b>
+          <span>Zaznacz wina z listy poniżej</span>
+        </a>
+        <button class="choice" id="start-hard" ${h?"":"disabled"}>
+          <small>Powtórka</small><b>Trudne pytania</b>
+          <span>${h?`${h} zapisanych`:"Brak zapisanych"}</span>
+        </button>
+      </div>
+      <p class="hint-line">Zawsze zaczynasz od pytań „Jak opiszesz gościowi…”, potem reszta.</p>
+    </section>
+
+    <section class="card" id="wybor">
+      <div class="pick-head">
+        <h2 class="h2">Wybierz wina</h2>
+        <div class="pick-tools">
+          <button class="btn small" id="pick-all">Zaznacz wszystkie</button>
+          <button class="btn small" id="pick-none">Wyczyść</button>
+        </div>
+      </div>
+      ${groups.map(g=>`
+        <div class="pick-group">
+          <div class="pg-head"><h3>${g.c}</h3><button class="link-btn" data-group="${g.c}">zaznacz grupę</button></div>
+          <ul class="pick-list">
+            ${g.wines.map(w=>`
+              <li>
+                <label class="pick" for="pw-${w.id}">
+                  <input type="checkbox" id="pw-${w.id}" data-wine="${w.id}" ${pick.includes(w.id)?"checked":""}>
+                  <span class="pk-txt"><b>${esc(w.name)}</b><small>${esc(w.region||"")} · ${qCountFor(w.id)} pytań</small></span>
+                </label>
+                <button class="only" data-only="${w.id}" title="Ucz się tylko tego wina">Tylko to</button>
+              </li>`).join("")}
+          </ul>
+        </div>`).join("")}
+      <div class="pick-go">
+        <span id="pick-sum">${pick.length?`${pick.length} win · ${pickQ} pytań`:"Nic nie zaznaczono"}</span>
+        <button class="btn primary" id="start-pick" ${pick.length?"":"disabled"}>Start z wybranymi →</button>
+      </div>
+    </section>`;
+
+  const rs = $("#resume"); if(rs) rs.addEventListener("click",()=>{ view="quiz"; render(); window.scrollTo({top:0}); });
+  $("#start-all").addEventListener("click",()=>startRun({mode:"all"}));
+  $("#start-hard").addEventListener("click",()=>startRun({mode:"hard"}));
+  $("#jump-pick").addEventListener("click",e=>{ e.preventDefault(); $("#wybor").scrollIntoView({behavior:"smooth",block:"start"}); });
+  const setPick = ids => { store.pick = ids; save(); renderHome(); };
+  document.querySelectorAll("[data-wine]").forEach(cb=>cb.addEventListener("change",()=>{
+    const ids = [...document.querySelectorAll("[data-wine]:checked")].map(x=>x.dataset.wine);
+    store.pick = ids; save();
+    const n = QUESTIONS.filter(q=>ids.includes(q.wine)).length;
+    $("#pick-sum").textContent = ids.length ? `${ids.length} win · ${n} pytań` : "Nic nie zaznaczono";
+    $("#start-pick").disabled = !ids.length;
+  }));
+  $("#pick-all").addEventListener("click",()=>setPick(WINES.map(w=>w.id)));
+  $("#pick-none").addEventListener("click",()=>setPick([]));
+  document.querySelectorAll("[data-group]").forEach(b=>b.addEventListener("click",()=>{
+    const add = WINES.filter(w=>wineCat(w)===b.dataset.group).map(w=>w.id);
+    setPick([...new Set([...(store.pick||[]), ...add])]);
+  }));
+  document.querySelectorAll("[data-only]").forEach(b=>b.addEventListener("click",()=>startRun({mode:"wines", wines:[b.dataset.only]})));
+  $("#start-pick").addEventListener("click",()=>startRun({mode:"wines", wines:(store.pick||[]).filter(wineById)}));
+}
+
+function renderQuestion(){
+  const r = store.run, id = r.order[r.idx], q = byId(id), opts = r.opts[id];
+  const long = opts.some(o=>o.length>60);
+  const picked = r.answers[id];
+  const w = q.wine && !q.hideWine ? wineById(q.wine) : null;
+  $("#app").innerHTML = `
+    <section class="card">
+      ${w?`<div class="wine-top"><small>Wino</small><b>${esc(w.name)}</b>${w.producer?`<span>${esc(w.producer)}</span>`:""}</div>`:""}
+      <div class="meta"><span>${esc(runLabel(r))}</span><span class="chip">${esc(q.tag||"Pytanie")}</span></div>
+      <h1 class="q">${esc(q.q)}</h1>
+      <div class="opts ${long?"long":""}">
+        ${opts.map((o,i)=>`<button class="opt" id="opt-${i}" data-i="${i}"><span class="k">${"ABCD"[i]}</span><span>${esc(o)}</span></button>`).join("")}
+      </div>
+      ${picked===undefined?`<p class="wait">Wybierz odpowiedź, aby przejść dalej · klawisze 1–4</p>`:""}
+      <div class="actions q-actions" id="q-actions"></div>
+    </section>
+    <div id="fb-slot"></div>`;
+  document.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>answer(+b.dataset.i)));
+  if(picked!==undefined) showResult(picked, false);
+}
+
+function answer(i){
+  const r = store.run, id = r.order[r.idx];
+  if(r.answers[id]!==undefined) return;
+  const ok = r.opts[id][i]===byId(id).correct;
+  r.answers[id] = i;
+  const st = store.stats[id] || {seen:0, ok:0}; st.seen++; if(ok) st.ok++; store.stats[id] = st;
+  save();
+  updateBottom();
+  const w = $(".wait"); if(w) w.remove();
+  showResult(i, true);
+}
+
+function showResult(i, scroll){
+  const r = store.run, id = r.order[r.idx], q = byId(id), opts = r.opts[id];
+  const ok = opts[i]===q.correct;
+  document.querySelectorAll(".opt").forEach((b,j)=>{
+    b.disabled = true;
+    if(opts[j]===q.correct) b.classList.add("right");
+    else if(j===i) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+  const last = r.idx+1 >= r.order.length;
+  $("#fb-slot").innerHTML = `
+    <section class="fb ${ok?"ok":"no"}" id="fb">
+      <div class="fb-head"><strong>${ok?"Dobrze!":"Niestety nie"}</strong></div>
+      <div class="fb-body">
+        ${ok?"":`<p class="answer-line"><small>Poprawna odpowiedź</small>${esc(q.correct)}</p>`}
+        <p class="info">${esc(q.info)}</p>
+        ${wineCard(q.wine)}
+      </div>
+    </section>`;
+  $("#q-actions").innerHTML = `
+    <button class="btn small ${isHard(id)?"on":""}" id="hard-btn">${hardLabel(id)}</button>
+    <button class="btn primary" id="next-btn">${last?"Zobacz wynik":"Dalej →"}</button>`;
+  $("#hard-btn").addEventListener("click",()=>toggleHard(id));
+  $("#next-btn").addEventListener("click", goNext);
+  if(scroll){
+    $("#next-btn").focus({preventScroll:true});
+    $("#q-actions").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth", block:"nearest"});
+  }
+}
+
+function goNext(){
+  const r = store.run, id = r.order[r.idx];
+  if(r.answers[id]===undefined) return;   // bez odpowiedzi nie ma przejścia dalej
+  r.idx++; save(); render(); window.scrollTo({top:0});
+}
+
+const hardLabel = id => isHard(id) ? "★ Zapisane jako trudne" : "☆ Zapisz jako trudne";
+function toggleHard(id){
+  store.hard = isHard(id) ? store.hard.filter(x=>x!==id) : [...store.hard, id];
+  save();
+  $("#hard-count").textContent = hardIds().length;
+  const b = $("#hard-btn"); if(b){ b.textContent = hardLabel(id); b.classList.toggle("on", isHard(id)); }
+}
+
+function counts(){
+  const r = store.run; if(!validRun()) return {total:0, done:0, ok:0};
+  let ok = 0, done = 0;
+  r.order.forEach(id=>{ const a = r.answers[id]; if(a!==undefined){ done++; if(r.opts[id][a]===byId(id).correct) ok++; } });
+  return {total:r.order.length, done, ok};
+}
+
+function renderEnd(){
+  const {total, ok} = counts(), pct = total ? Math.round(ok/total*100) : 0;
+  const msg = pct===100 ? "Komplet. Wszystko się zgadza." : pct>=70 ? "Bardzo dobrze. Powtórz trudne pytania i będzie komplet." : "Przejdź jeszcze raz albo poćwicz tylko trudne pytania.";
+  const h = hardIds().length;
+  $("#app").innerHTML = `
+    <section class="card">
+      <div class="meta"><span>${esc(runLabel(store.run))}</span><span class="chip">${pct}%</span></div>
+      <p class="big">${ok}/${total}</p>
+      <p class="lead">${msg}</p>
+      <div class="actions" style="justify-content:flex-start">
+        <button class="btn primary" id="again">Jeszcze raz</button>
+        <button class="btn" id="go-home">Wybierz inny zakres</button>
+        ${h && store.run.mode!=="hard"?`<button class="btn" id="go-hard">Ćwicz trudne (${h})</button>`:""}
+      </div>
+    </section>`;
+  $("#again").addEventListener("click",()=>startRun(runCfg()));
+  $("#go-home").addEventListener("click",()=>{ view="home"; render(); window.scrollTo({top:0}); });
+  const gh = $("#go-hard"); if(gh) gh.addEventListener("click",()=>startRun({mode:"hard"}));
+}
+
+function renderList(){
+  const items = hardIds().map(byId);
+  $("#app").innerHTML = `
+    <section class="card">
+      <div class="meta"><span>Lista trudnych</span><span class="chip">${items.length}</span></div>
+      <h1 class="q">Pytania do powtórki</h1>
+      ${items.length ? `<ul class="list">${items.map(q=>{
+          const st = store.stats[q.id];
+          const wn = q.wine && wineById(q.wine);
+          return `<li><div><small>${wn?esc(wn.name)+" · ":""}${esc(q.tag||"Pytanie")}${st?` · ${st.ok}/${st.seen} dobrze`:""}</small>${esc(q.q)}</div>
+            <button class="btn small" data-rm="${esc(q.id)}">Usuń</button></li>`;}).join("")}</ul>
+          <div class="actions" style="margin-top:18px;justify-content:flex-start"><button class="btn primary" id="go-hard">Ćwicz trudne</button></div>`
+        : `<p class="empty">Pusto. Zapisuj pytania podczas quizu przyciskiem „☆ Zapisz jako trudne”.</p>`}
+    </section>`;
+  document.querySelectorAll("[data-rm]").forEach(b=>b.addEventListener("click",()=>{
+    store.hard = store.hard.filter(x=>x!==b.dataset.rm); save(); render();
+  }));
+  const gh = $("#go-hard"); if(gh) gh.addEventListener("click",()=>startRun({mode:"hard"}));
+}
+
+function setPressed(v){ document.querySelectorAll(".mode").forEach(b=>b.setAttribute("aria-pressed", b.dataset.view===v)); }
+document.querySelectorAll(".mode").forEach(b=>b.addEventListener("click",()=>{
+  view = b.dataset.view; render(); window.scrollTo({top:0});
+}));
+
+/* ---------- dolny pasek ---------- */
+function updateBottom(){
+  const {total, done, ok} = counts();
+  const r = store.run;
+  const cur = total ? Math.min(r.idx+1, total) : 0;
+  $("#pos").textContent = total ? (r.idx>=total ? `Koniec · ${total} / ${total}` : `Pytanie ${cur} / ${total}`) : "Wybierz zakres";
+  $("#score").textContent = `${ok} / ${done}`;
+  $("#fill-ok").style.width = total ? (ok/total*100)+"%" : "0";
+  $("#fill-no").style.width = total ? ((done-ok)/total*100)+"%" : "0";
+  $("#track").setAttribute("aria-valuenow", total ? Math.round(done/total*100) : 0);
+}
+
+function resetIdle(){
+  $("#reset-zone").innerHTML = `<button class="reset" id="reset-btn">RESET</button>`;
+  $("#reset-btn").addEventListener("click", resetAsk);
+}
+function resetAsk(){
+  $("#reset-zone").innerHTML = `<div class="confirm"><span>Zacząć od nowa?</span>
+    <button class="reset" id="reset-yes">TAK</button><button class="reset ghost" id="reset-no">NIE</button></div>`;
+  $("#reset-yes").addEventListener("click",()=>{
+    resetIdle();
+    if(validRun()) startRun(runCfg()); else { view="home"; render(); }
+  });
+  $("#reset-no").addEventListener("click", resetIdle);
+}
+
+/* ---------- klawiatura ---------- */
+document.addEventListener("keydown",e=>{
+  if(view!=="quiz" || !validRun()) return;
+  const r = store.run, id = r.order[r.idx]; if(!id) return;
+  const map = {"1":0,"2":1,"3":2,"4":3};
+  if(e.key in map && r.answers[id]===undefined && document.getElementById("opt-"+map[e.key])){ answer(map[e.key]); e.preventDefault(); }
+  else if(e.key==="Enter" && r.answers[id]!==undefined && document.activeElement?.id!=="next-btn"){ goNext(); e.preventDefault(); }
+});
+
+/* start — gdy baza pytań się zmieni, podejście startuje od nowa z tym samym zakresem */
+const SIG = QUESTIONS.map(q=>q.id).join("|");
+if(store.sig!==SIG){ store.sig = SIG; if(store.run) newRun(runCfg()); }
+if(!validRun()) store.run = null;
+view = inProgress() ? "quiz" : "home";
+resetIdle();
+render();
+</script>
+
+</body></html>
